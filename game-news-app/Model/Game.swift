@@ -10,7 +10,7 @@ import Foundation
 struct Game: Decodable {
     let name_original: String
     let metacritic: Int
-    let released: Date
+    let released: String
     let background_image: URL
     let website: URL
     let rating: Double

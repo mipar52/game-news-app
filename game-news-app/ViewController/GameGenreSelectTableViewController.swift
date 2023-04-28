@@ -8,10 +8,11 @@
 import UIKit
 
 class GameGenreSelectTableViewController: UITableViewController {
-
+    var gameGanres: [Results?]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.title = "Select your category"
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -21,25 +22,51 @@ class GameGenreSelectTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        if let gameGanres = gameGanres {
+            return gameGanres.count
+        } else {
+            return 1
+        }
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "gameGanresCell")
+        
+        if let gameGanres = gameGanres {
+            let ganre = gameGanres[indexPath.row]
+            cell.textLabel?.text = ganre!.name
+            cell.textLabel?.font = Fonts.bold(ofSite: 30)
+//            TODO: download game category image -> https://stackoverflow.com/questions/24231680/loading-downloading-image-from-url-on-swift
+            if let url = URL(string: "\(ganre!.image_background)" ) {
+                let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                    guard let data = data, error == nil else { return }
+                    
+                    DispatchQueue.main.async { /// execute on main thread
+                        cell.imageView?.image = UIImage(data: data)
+                        //tableView.reloadData()
+                    }
+                }
+                
+                task.resume()
+            }
+            cell.detailTextLabel?.text = "Games in the category: \(ganre!.games.count)"
+            cell.detailTextLabel?.font = Fonts.semibold(ofSite: 15)
+            cell.backgroundColor = Colors.orangeish
+        }
         return cell
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120.0
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let gameListVC = GameListTableViewController()
+        gameListVC.gameList = gameGanres?[indexPath.row]?.games
+        navigationController?.pushViewController(gameListVC, animated: true)
+    }
 
     /*
     // Override to support conditional editing of the table view.

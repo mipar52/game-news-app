@@ -22,6 +22,12 @@
 		A1DC194429FBDAC000B0F08F /* GameGenreSelectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC194329FBDAC000B0F08F /* GameGenreSelectTableViewController.swift */; };
 		A1DC194629FBDAD300B0F08F /* GameListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC194529FBDAD300B0F08F /* GameListTableViewController.swift */; };
 		A1DC194829FBDAE800B0F08F /* GameDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC194729FBDAE800B0F08F /* GameDetailTableViewController.swift */; };
+		A1DC194B29FBDDD700B0F08F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC194A29FBDDD700B0F08F /* Colors.swift */; };
+		A1DC194E29FBDE9C00B0F08F /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC194D29FBDE9C00B0F08F /* UIColor+Extension.swift */; };
+		A1DC195129FBDF8200B0F08F /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC195029FBDF8200B0F08F /* Fonts.swift */; };
+		A1DC195329FBDFD000B0F08F /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC195229FBDFD000B0F08F /* Text.swift */; };
+		A1DC195529FBE60600B0F08F /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC195429FBE60600B0F08F /* LogoView.swift */; };
+		A1DC195729FC1F5D00B0F08F /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC195629FC1F5D00B0F08F /* UIImageView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +48,12 @@
 		A1DC194329FBDAC000B0F08F /* GameGenreSelectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGenreSelectTableViewController.swift; sourceTree = "<group>"; };
 		A1DC194529FBDAD300B0F08F /* GameListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListTableViewController.swift; sourceTree = "<group>"; };
 		A1DC194729FBDAE800B0F08F /* GameDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailTableViewController.swift; sourceTree = "<group>"; };
+		A1DC194A29FBDDD700B0F08F /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		A1DC194D29FBDE9C00B0F08F /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		A1DC195029FBDF8200B0F08F /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		A1DC195229FBDFD000B0F08F /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
+		A1DC195429FBE60600B0F08F /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
+		A1DC195629FC1F5D00B0F08F /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +86,8 @@
 		A1DC191B29FAA70E00B0F08F /* game-news-app */ = {
 			isa = PBXGroup;
 			children = (
+				A1DC194F29FBDF6E00B0F08F /* Theme */,
+				A1DC194C29FBDE8C00B0F08F /* Extension */,
 				A1DC194929FBDAF000B0F08F /* View */,
 				A1DC194229FBDA9600B0F08F /* ViewController */,
 				A1DC193229FAAA8E00B0F08F /* Model */,
@@ -114,8 +128,28 @@
 		A1DC194929FBDAF000B0F08F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A1DC195429FBE60600B0F08F /* LogoView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		A1DC194C29FBDE8C00B0F08F /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A1DC194D29FBDE9C00B0F08F /* UIColor+Extension.swift */,
+				A1DC195629FC1F5D00B0F08F /* UIImageView+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		A1DC194F29FBDF6E00B0F08F /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				A1DC195029FBDF8200B0F08F /* Fonts.swift */,
+				A1DC194A29FBDDD700B0F08F /* Colors.swift */,
+				A1DC195229FBDFD000B0F08F /* Text.swift */,
+			);
+			path = Theme;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,14 +223,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1DC195529FBE60600B0F08F /* LogoView.swift in Sources */,
 				A1DC192129FAA70E00B0F08F /* HomeViewController.swift in Sources */,
 				A1DC194129FBD0FE00B0F08F /* Game.swift in Sources */,
 				A1DC193F29FBCDE200B0F08F /* GameGenres.swift in Sources */,
 				A1DC191D29FAA70E00B0F08F /* AppDelegate.swift in Sources */,
 				A1DC193429FAAA9B00B0F08F /* NetworkManager.swift in Sources */,
 				A1DC193629FAABD500B0F08F /* NetworkError.swift in Sources */,
+				A1DC195129FBDF8200B0F08F /* Fonts.swift in Sources */,
 				A1DC194829FBDAE800B0F08F /* GameDetailTableViewController.swift in Sources */,
+				A1DC194E29FBDE9C00B0F08F /* UIColor+Extension.swift in Sources */,
 				A1DC191F29FAA70E00B0F08F /* SceneDelegate.swift in Sources */,
+				A1DC195329FBDFD000B0F08F /* Text.swift in Sources */,
+				A1DC195729FC1F5D00B0F08F /* UIImageView+Extension.swift in Sources */,
+				A1DC194B29FBDDD700B0F08F /* Colors.swift in Sources */,
 				A1DC194629FBDAD300B0F08F /* GameListTableViewController.swift in Sources */,
 				A1DC194429FBDAC000B0F08F /* GameGenreSelectTableViewController.swift in Sources */,
 				A1DC193929FAAF0800B0F08F /* GameList.swift in Sources */,

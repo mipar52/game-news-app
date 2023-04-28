@@ -8,10 +8,11 @@
 import UIKit
 
 class GameDetailTableViewController: UITableViewController {
-
+    var game: Game?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = Colors.yellowish
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -23,23 +24,28 @@ class GameDetailTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 10
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 1
     }
 
-    /*
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50.0
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: "gameDetailCell")
+        
+        cell.textLabel?.text = game?.name_original
+        cell.detailTextLabel?.text = game?.reddit_name
         // Configure the cell...
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
