@@ -1,0 +1,423 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A1DC191D29FAA70E00B0F08F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC191C29FAA70E00B0F08F /* AppDelegate.swift */; };
+		A1DC191F29FAA70E00B0F08F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC191E29FAA70E00B0F08F /* SceneDelegate.swift */; };
+		A1DC192129FAA70E00B0F08F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC192029FAA70E00B0F08F /* HomeViewController.swift */; };
+		A1DC192429FAA70E00B0F08F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1DC192229FAA70E00B0F08F /* Main.storyboard */; };
+		A1DC192629FAA71000B0F08F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1DC192529FAA71000B0F08F /* Assets.xcassets */; };
+		A1DC192929FAA71000B0F08F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1DC192729FAA71000B0F08F /* LaunchScreen.storyboard */; };
+		A1DC193129FAAA6B00B0F08F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC193029FAAA6B00B0F08F /* Constants.swift */; };
+		A1DC193429FAAA9B00B0F08F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC193329FAAA9B00B0F08F /* NetworkManager.swift */; };
+		A1DC193629FAABD500B0F08F /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC193529FAABD500B0F08F /* NetworkError.swift */; };
+		A1DC193929FAAF0800B0F08F /* GameList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC193829FAAF0800B0F08F /* GameList.swift */; };
+		A1DC193F29FBCDE200B0F08F /* GameGenres.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC193E29FBCDE200B0F08F /* GameGenres.swift */; };
+		A1DC194129FBD0FE00B0F08F /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC194029FBD0FE00B0F08F /* Game.swift */; };
+		A1DC194429FBDAC000B0F08F /* GameGenreSelectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC194329FBDAC000B0F08F /* GameGenreSelectTableViewController.swift */; };
+		A1DC194629FBDAD300B0F08F /* GameListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC194529FBDAD300B0F08F /* GameListTableViewController.swift */; };
+		A1DC194829FBDAE800B0F08F /* GameDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC194729FBDAE800B0F08F /* GameDetailTableViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A1DC191929FAA70E00B0F08F /* game-news-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "game-news-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1DC191C29FAA70E00B0F08F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A1DC191E29FAA70E00B0F08F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		A1DC192029FAA70E00B0F08F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		A1DC192329FAA70E00B0F08F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A1DC192529FAA71000B0F08F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A1DC192829FAA71000B0F08F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A1DC192A29FAA71000B0F08F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1DC193029FAAA6B00B0F08F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A1DC193329FAAA9B00B0F08F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		A1DC193529FAABD500B0F08F /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		A1DC193829FAAF0800B0F08F /* GameList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameList.swift; sourceTree = "<group>"; };
+		A1DC193E29FBCDE200B0F08F /* GameGenres.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGenres.swift; sourceTree = "<group>"; };
+		A1DC194029FBD0FE00B0F08F /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		A1DC194329FBDAC000B0F08F /* GameGenreSelectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameGenreSelectTableViewController.swift; sourceTree = "<group>"; };
+		A1DC194529FBDAD300B0F08F /* GameListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameListTableViewController.swift; sourceTree = "<group>"; };
+		A1DC194729FBDAE800B0F08F /* GameDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailTableViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1DC191629FAA70E00B0F08F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A1DC191029FAA70E00B0F08F = {
+			isa = PBXGroup;
+			children = (
+				A1DC191B29FAA70E00B0F08F /* game-news-app */,
+				A1DC191A29FAA70E00B0F08F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A1DC191A29FAA70E00B0F08F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1DC191929FAA70E00B0F08F /* game-news-app.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A1DC191B29FAA70E00B0F08F /* game-news-app */ = {
+			isa = PBXGroup;
+			children = (
+				A1DC194929FBDAF000B0F08F /* View */,
+				A1DC194229FBDA9600B0F08F /* ViewController */,
+				A1DC193229FAAA8E00B0F08F /* Model */,
+				A1DC191C29FAA70E00B0F08F /* AppDelegate.swift */,
+				A1DC191E29FAA70E00B0F08F /* SceneDelegate.swift */,
+				A1DC192229FAA70E00B0F08F /* Main.storyboard */,
+				A1DC192529FAA71000B0F08F /* Assets.xcassets */,
+				A1DC192729FAA71000B0F08F /* LaunchScreen.storyboard */,
+				A1DC192A29FAA71000B0F08F /* Info.plist */,
+				A1DC193029FAAA6B00B0F08F /* Constants.swift */,
+			);
+			path = "game-news-app";
+			sourceTree = "<group>";
+		};
+		A1DC193229FAAA8E00B0F08F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A1DC193329FAAA9B00B0F08F /* NetworkManager.swift */,
+				A1DC193529FAABD500B0F08F /* NetworkError.swift */,
+				A1DC193829FAAF0800B0F08F /* GameList.swift */,
+				A1DC193E29FBCDE200B0F08F /* GameGenres.swift */,
+				A1DC194029FBD0FE00B0F08F /* Game.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A1DC194229FBDA9600B0F08F /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A1DC192029FAA70E00B0F08F /* HomeViewController.swift */,
+				A1DC194329FBDAC000B0F08F /* GameGenreSelectTableViewController.swift */,
+				A1DC194529FBDAD300B0F08F /* GameListTableViewController.swift */,
+				A1DC194729FBDAE800B0F08F /* GameDetailTableViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		A1DC194929FBDAF000B0F08F /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A1DC191829FAA70E00B0F08F /* game-news-app */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1DC192D29FAA71000B0F08F /* Build configuration list for PBXNativeTarget "game-news-app" */;
+			buildPhases = (
+				A1DC191529FAA70E00B0F08F /* Sources */,
+				A1DC191629FAA70E00B0F08F /* Frameworks */,
+				A1DC191729FAA70E00B0F08F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "game-news-app";
+			productName = "game-news-app";
+			productReference = A1DC191929FAA70E00B0F08F /* game-news-app.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A1DC191129FAA70E00B0F08F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					A1DC191829FAA70E00B0F08F = {
+						CreatedOnToolsVersion = 14.3;
+					};
+				};
+			};
+			buildConfigurationList = A1DC191429FAA70E00B0F08F /* Build configuration list for PBXProject "game-news-app" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A1DC191029FAA70E00B0F08F;
+			productRefGroup = A1DC191A29FAA70E00B0F08F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A1DC191829FAA70E00B0F08F /* game-news-app */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A1DC191729FAA70E00B0F08F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1DC192929FAA71000B0F08F /* LaunchScreen.storyboard in Resources */,
+				A1DC192629FAA71000B0F08F /* Assets.xcassets in Resources */,
+				A1DC192429FAA70E00B0F08F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1DC191529FAA70E00B0F08F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1DC192129FAA70E00B0F08F /* HomeViewController.swift in Sources */,
+				A1DC194129FBD0FE00B0F08F /* Game.swift in Sources */,
+				A1DC193F29FBCDE200B0F08F /* GameGenres.swift in Sources */,
+				A1DC191D29FAA70E00B0F08F /* AppDelegate.swift in Sources */,
+				A1DC193429FAAA9B00B0F08F /* NetworkManager.swift in Sources */,
+				A1DC193629FAABD500B0F08F /* NetworkError.swift in Sources */,
+				A1DC194829FBDAE800B0F08F /* GameDetailTableViewController.swift in Sources */,
+				A1DC191F29FAA70E00B0F08F /* SceneDelegate.swift in Sources */,
+				A1DC194629FBDAD300B0F08F /* GameListTableViewController.swift in Sources */,
+				A1DC194429FBDAC000B0F08F /* GameGenreSelectTableViewController.swift in Sources */,
+				A1DC193929FAAF0800B0F08F /* GameList.swift in Sources */,
+				A1DC193129FAAA6B00B0F08F /* Constants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A1DC192229FAA70E00B0F08F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1DC192329FAA70E00B0F08F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A1DC192729FAA71000B0F08F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1DC192829FAA71000B0F08F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A1DC192B29FAA71000B0F08F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A1DC192C29FAA71000B0F08F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A1DC192E29FAA71000B0F08F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 73YN9D8LV2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "game-news-app/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.game-news-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A1DC192F29FAA71000B0F08F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 73YN9D8LV2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "game-news-app/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.game-news-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A1DC191429FAA70E00B0F08F /* Build configuration list for PBXProject "game-news-app" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1DC192B29FAA71000B0F08F /* Debug */,
+				A1DC192C29FAA71000B0F08F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1DC192D29FAA71000B0F08F /* Build configuration list for PBXNativeTarget "game-news-app" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1DC192E29FAA71000B0F08F /* Debug */,
+				A1DC192F29FAA71000B0F08F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A1DC191129FAA70E00B0F08F /* Project object */;
+}
