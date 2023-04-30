@@ -9,50 +9,63 @@ import UIKit
 
 class ViewController: UIViewController {
     let manager = NetworkManager()
-
+    let logoView = LogoView()
+    var pageView : GamePageView?
+    let startView = StartView()
+    let bottomLabel = UILabelFactory.build(text: Text.UIStrings.bottomLabelStartScreen, font: Fonts.regular(ofSite: 15))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Colors.primary
+        //setupUI()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        pageView = GamePageView(frame: CGRect(x: 200, y: 200, width: view.frame.width, height: 200))
         setupUI()
-//        Task {
-//            let manager = NetworkManager()
-//            do {
-//                try await manager.getGamebyId()
-//            } catch {
-//                print(error.localizedDescription)
-//            }
-//        }
     }
     
-    func setupUI() {
-        lazy var startButton = {
-           let button = UIButton()
-            button.setTitle(Text.UIStrings.homeScreenButtonText, for: .normal)
-            button.titleLabel?.font = Fonts.bold(ofSite: 24)
-            button.backgroundColor = Colors.buttonColor
-            button.setTitleColor(.white, for: .normal)
-            button.frame = CGRect(x: 100, y: 100, width: 300, height: 50)
-            button.addTarget(self, action: #selector(didTapStartButton), for: .touchUpInside)
-            return button
-        }()
-        view.addSubview(startButton)
-    }
-    
-    @objc func didTapStartButton() {
+    private lazy var verticalStackView: UIStackView = {
+        let verticalStackView = UIStackView(arrangedSubviews: [
+        logoView,
+        pageView!,
+        startView,
+        bottomLabel
+        ])
         
-        let rootVC = GameGenreSelectTableViewController()
-        Task {
-            do {
-                rootVC.gameGanres = try await manager.getGamesGenres().sorted(by: {$0!.name < $1!.name})
-            } catch {
-                print(error)
-            }
-            let navigationVC = UINavigationController(rootViewController: rootVC)
-            navigationVC.navigationBar.prefersLargeTitles = true
-            //rootVC.title = rootVC.gameResults?.results[0].genres[0].name
-            navigationVC.modalPresentationStyle = .fullScreen
-            present(navigationVC, animated: true)
+        verticalStackView.axis = .vertical
+        verticalStackView.spacing = 36
+        return verticalStackView
+    }()
+        
+    func setupUI() {
+        view.backgroundColor = Colors.backgroundColor
+        view.addSubview(verticalStackView)
+        
+        verticalStackView.snp.makeConstraints { make in
+            make.leading.equalTo(view.snp.leadingMargin).offset(16)
+            make.trailing.equalTo(view.snp.trailingMargin).offset(-16)
+            make.bottom.equalTo(view.snp.bottomMargin).offset(-16)
+            make.top.equalTo(view.snp.topMargin).offset(16)
         }
+        
+        logoView.snp.makeConstraints { make in
+            make.height.equalTo(100)
+        }
+        pageView!.snp.makeConstraints { make in
+            make.height.equalTo(200)
+        }
+        
+        startView.snp.makeConstraints { make in
+            make.height.equalTo(150)
+        }
+        
+        bottomLabel.snp.makeConstraints { make in
+          //  make.leading.equalTo(view.snp.leadingMargin).offset(20)
+            make.height.equalTo(30)
+        }
+        bottomLabel.adjustsFontSizeToFitWidth = true
+        
+
     }
 
 }

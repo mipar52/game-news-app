@@ -13,7 +13,7 @@ class GameListTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = Colors.secondary
+        view.backgroundColor = Colors.backgroundColor
         setupBarItem()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -44,7 +44,7 @@ class GameListTableViewController: UITableViewController {
             cell.textLabel?.text = gameList[indexPath.row].name
             cell.accessoryType = .disclosureIndicator
             cell.detailTextLabel?.text = "\(gameList[indexPath.row].id)"
-            cell.backgroundColor = Colors.primary
+            cell.backgroundColor = Colors.headerText
         } else {
             cell.textLabel?.text = "No games to show!"
         }
@@ -67,7 +67,7 @@ class GameListTableViewController: UITableViewController {
     }
     
     func setupBarItem() {
-        let image = UIImage(systemName: "slider.horizontal.3")?.withTintColor(Colors.secondary, renderingMode: .automatic)
+        let image = UIImage(systemName: "slider.horizontal.3")?.withTintColor(Colors.buttonColor, renderingMode: .automatic)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: image,style: .plain, target: self, action: #selector(sortSettings))
         self.navigationItem.rightBarButtonItem?.tintColor = Colors.redish
