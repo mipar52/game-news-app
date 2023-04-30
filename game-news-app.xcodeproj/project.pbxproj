@@ -28,6 +28,13 @@
 		A1DC195329FBDFD000B0F08F /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC195229FBDFD000B0F08F /* Text.swift */; };
 		A1DC195529FBE60600B0F08F /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC195429FBE60600B0F08F /* LogoView.swift */; };
 		A1DC195729FC1F5D00B0F08F /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC195629FC1F5D00B0F08F /* UIImageView+Extension.swift */; };
+		A1DC195929FE51A600B0F08F /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC195829FE51A600B0F08F /* StartView.swift */; };
+		A1DC195C29FE5BDD00B0F08F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1DC195B29FE5BDD00B0F08F /* SnapKit */; };
+		A1DC195F29FE609200B0F08F /* UILabelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC195E29FE609200B0F08F /* UILabelFactory.swift */; };
+		A1DC196129FE615700B0F08F /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC196029FE615700B0F08F /* UIView+Extension.swift */; };
+		A1DC196329FE712600B0F08F /* GamePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC196229FE712600B0F08F /* GamePageView.swift */; };
+		A1DC196529FE7D6C00B0F08F /* ScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC196429FE7D6C00B0F08F /* ScrollView+Extension.swift */; };
+		A1DC196729FE84DB00B0F08F /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC196629FE84DB00B0F08F /* OnboardingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +61,12 @@
 		A1DC195229FBDFD000B0F08F /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		A1DC195429FBE60600B0F08F /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		A1DC195629FC1F5D00B0F08F /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		A1DC195829FE51A600B0F08F /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
+		A1DC195E29FE609200B0F08F /* UILabelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelFactory.swift; sourceTree = "<group>"; };
+		A1DC196029FE615700B0F08F /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		A1DC196229FE712600B0F08F /* GamePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePageView.swift; sourceTree = "<group>"; };
+		A1DC196429FE7D6C00B0F08F /* ScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScrollView+Extension.swift"; sourceTree = "<group>"; };
+		A1DC196629FE84DB00B0F08F /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1DC195C29FE5BDD00B0F08F /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +100,7 @@
 		A1DC191B29FAA70E00B0F08F /* game-news-app */ = {
 			isa = PBXGroup;
 			children = (
+				A1DC195D29FE607E00B0F08F /* UIFactory */,
 				A1DC194F29FBDF6E00B0F08F /* Theme */,
 				A1DC194C29FBDE8C00B0F08F /* Extension */,
 				A1DC194929FBDAF000B0F08F /* View */,
@@ -97,7 +112,6 @@
 				A1DC192529FAA71000B0F08F /* Assets.xcassets */,
 				A1DC192729FAA71000B0F08F /* LaunchScreen.storyboard */,
 				A1DC192A29FAA71000B0F08F /* Info.plist */,
-				A1DC193029FAAA6B00B0F08F /* Constants.swift */,
 			);
 			path = "game-news-app";
 			sourceTree = "<group>";
@@ -129,6 +143,9 @@
 			isa = PBXGroup;
 			children = (
 				A1DC195429FBE60600B0F08F /* LogoView.swift */,
+				A1DC195829FE51A600B0F08F /* StartView.swift */,
+				A1DC196229FE712600B0F08F /* GamePageView.swift */,
+				A1DC196629FE84DB00B0F08F /* OnboardingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -138,6 +155,8 @@
 			children = (
 				A1DC194D29FBDE9C00B0F08F /* UIColor+Extension.swift */,
 				A1DC195629FC1F5D00B0F08F /* UIImageView+Extension.swift */,
+				A1DC196029FE615700B0F08F /* UIView+Extension.swift */,
+				A1DC196429FE7D6C00B0F08F /* ScrollView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -148,8 +167,17 @@
 				A1DC195029FBDF8200B0F08F /* Fonts.swift */,
 				A1DC194A29FBDDD700B0F08F /* Colors.swift */,
 				A1DC195229FBDFD000B0F08F /* Text.swift */,
+				A1DC193029FAAA6B00B0F08F /* Constants.swift */,
 			);
 			path = Theme;
+			sourceTree = "<group>";
+		};
+		A1DC195D29FE607E00B0F08F /* UIFactory */ = {
+			isa = PBXGroup;
+			children = (
+				A1DC195E29FE609200B0F08F /* UILabelFactory.swift */,
+			);
+			path = UIFactory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,6 +196,9 @@
 			dependencies = (
 			);
 			name = "game-news-app";
+			packageProductDependencies = (
+				A1DC195B29FE5BDD00B0F08F /* SnapKit */,
+			);
 			productName = "game-news-app";
 			productReference = A1DC191929FAA70E00B0F08F /* game-news-app.app */;
 			productType = "com.apple.product-type.application";
@@ -196,6 +227,9 @@
 				Base,
 			);
 			mainGroup = A1DC191029FAA70E00B0F08F;
+			packageReferences = (
+				A1DC195A29FE5BDD00B0F08F /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = A1DC191A29FAA70E00B0F08F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -224,21 +258,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1DC195529FBE60600B0F08F /* LogoView.swift in Sources */,
+				A1DC195929FE51A600B0F08F /* StartView.swift in Sources */,
 				A1DC192129FAA70E00B0F08F /* HomeViewController.swift in Sources */,
 				A1DC194129FBD0FE00B0F08F /* Game.swift in Sources */,
 				A1DC193F29FBCDE200B0F08F /* GameGenres.swift in Sources */,
 				A1DC191D29FAA70E00B0F08F /* AppDelegate.swift in Sources */,
 				A1DC193429FAAA9B00B0F08F /* NetworkManager.swift in Sources */,
+				A1DC196529FE7D6C00B0F08F /* ScrollView+Extension.swift in Sources */,
+				A1DC196329FE712600B0F08F /* GamePageView.swift in Sources */,
 				A1DC193629FAABD500B0F08F /* NetworkError.swift in Sources */,
 				A1DC195129FBDF8200B0F08F /* Fonts.swift in Sources */,
 				A1DC194829FBDAE800B0F08F /* GameDetailTableViewController.swift in Sources */,
 				A1DC194E29FBDE9C00B0F08F /* UIColor+Extension.swift in Sources */,
 				A1DC191F29FAA70E00B0F08F /* SceneDelegate.swift in Sources */,
 				A1DC195329FBDFD000B0F08F /* Text.swift in Sources */,
+				A1DC195F29FE609200B0F08F /* UILabelFactory.swift in Sources */,
 				A1DC195729FC1F5D00B0F08F /* UIImageView+Extension.swift in Sources */,
+				A1DC196129FE615700B0F08F /* UIView+Extension.swift in Sources */,
 				A1DC194B29FBDDD700B0F08F /* Colors.swift in Sources */,
 				A1DC194629FBDAD300B0F08F /* GameListTableViewController.swift in Sources */,
 				A1DC194429FBDAC000B0F08F /* GameGenreSelectTableViewController.swift in Sources */,
+				A1DC196729FE84DB00B0F08F /* OnboardingView.swift in Sources */,
 				A1DC193929FAAF0800B0F08F /* GameList.swift in Sources */,
 				A1DC193129FAAA6B00B0F08F /* Constants.swift in Sources */,
 			);
@@ -458,6 +498,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A1DC195A29FE5BDD00B0F08F /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A1DC195B29FE5BDD00B0F08F /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1DC195A29FE5BDD00B0F08F /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A1DC191129FAA70E00B0F08F /* Project object */;
 }
