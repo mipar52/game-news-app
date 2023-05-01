@@ -6,111 +6,108 @@
 //
 
 import UIKit
+import Kingfisher
 
 class GameGenreSelectTableViewController: UITableViewController {
     var gameGanres: [Results?]?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupBarItem()
+       // setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView = UITableView(frame: .zero, style: .insetGrouped)
+        self.tableView.separatorStyle = .singleLine
+        setupUI()
+    }
+    
+    private func setupUI() {
         self.title = "Select your category"
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        view.backgroundColor = Colors.headerText
+        self.tableView.backgroundColor = Colors.backgroundColor
+        self.tableView.separatorStyle = .singleLine
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.title = "Select your category"
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+    override func numberOfSections(in tableView: UITableView) -> Int {
         if let gameGanres = gameGanres {
             return gameGanres.count
         } else {
-            return 1
+            return 0
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = Colors.backgroundColor
+        return view
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "gameGanresCell")
-        
-        if let gameGanres = gameGanres {
-            let ganre = gameGanres[indexPath.row]
-            cell.textLabel?.text = ganre!.name
-            cell.textLabel?.font = Fonts.bold(ofSite: 30)
-//            TODO: download game category image -> https://stackoverflow.com/questions/24231680/loading-downloading-image-from-url-on-swift
-            if let url = URL(string: "\(ganre!.image_background)" ) {
-                let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                    guard let data = data, error == nil else { return }
-                    
-                    DispatchQueue.main.async { /// execute on main thread
-                        cell.imageView?.image = UIImage(data: data)
-                        //tableView.reloadData()
-                    }
-                }
-                
-                task.resume()
-            }
-            cell.detailTextLabel?.text = "Games in the category: \(ganre!.games.count)"
-            cell.detailTextLabel?.font = Fonts.semibold(ofSite: 15)
-            cell.backgroundColor = Colors.orangeish
+            cell.textLabel?.text = Text.UIStrings.loadingData
+        cell.backgroundColor = Colors.headerText
+        //    cell.imageView?.image = UIImage(systemName: Text.UIImages.controllerFill)
+        //    cell.imageView?.tintColor = Colors.headerText
+
+        if let gameGanres = gameGanres,
+           let games = gameGanres[indexPath.section]?.games {
+           let ganre = gameGanres[indexPath.section]
+            cell.imageView?.kf.setImage(with: ganre?.image_background, placeholder: UIImage(systemName: Text.UIImages.controllerFill))
+            cell.imageView?.tintColor = Colors.backgroundColor
+            cell.textLabel?.text = gameGanres[indexPath.section]?.name
+            cell.textLabel?.font = Fonts.bold(ofSite: 20)
+            cell.textLabel?.textColor = Colors.backgroundColor
+            cell.textLabel?.adjustsFontSizeToFitWidth = true
+            cell.detailTextLabel?.text = "Games like \(games.first!.name)"
+            cell.detailTextLabel?.font = Fonts.regular(ofSite: 10)
+            cell.detailTextLabel?.textColor = Colors.backgroundColor
+            cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
         }
+        
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120.0
-    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let gameListVC = GameListTableViewController()
-        gameListVC.gameList = gameGanres?[indexPath.row]?.games
-        navigationController?.pushViewController(gameListVC, animated: true)
+        let manager = NetworkManager()
+        let titleView = UIImageView()
+        Task {
+            let gameListVC = GameListTableViewController()
+            do {
+                let games = gameGanres?[indexPath.section]?.games
+                titleView.kf.setImage(with: gameGanres![indexPath.section]?.image_background)
+                for game in games! {
+                    let obtainedGame = try await manager.getGamebyId(id: game.id)
+                    gameListVC.gameList.append(obtainedGame!)
+                }
+            } catch {
+                print(error)
+            }
+            
+            gameListVC.titleImageView = titleView
+            gameListVC.gameGenreTitle = gameGanres![indexPath.section]!.name
+            navigationController?.pushViewController(gameListVC, animated: true)
+        }
+    }
+    
+    func setupBarItem() {
+        let image = UIImage(systemName: Text.UIImages.restartArrow)?.withTintColor(Colors.buttonColor, renderingMode: .automatic)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image,style: .plain, target: self, action: #selector(restartFlow))
+        self.navigationItem.leftBarButtonItem?.tintColor = Colors.headerText
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    @objc func restartFlow() {
+        dismiss(animated: true)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

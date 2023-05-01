@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Combine
+import CombineCocoa
 
 class StartView: UIView {
     
@@ -20,7 +22,11 @@ class StartView: UIView {
         startButton.addCornerRadius(radius: 8.0)
         let text = NSMutableAttributedString(string: Text.UIStrings.pickCategory, attributes: [.font: Fonts.semibold(ofSite: 20), .foregroundColor: Colors.backgroundColor])
         startButton.setAttributedTitle(text, for: .normal)
-       // startButton.addTarget(, action: , for: )
+        startButton.addTarget(self, action: #selector(searchForCategories), for: .touchUpInside)
+//        startButton.tapPublisher.sink { [weak self] _ in
+//            self?.searchForCategories()
+//        }.store(in: &cancelables)
+        
         return startButton
     }()
     
@@ -74,6 +80,43 @@ class StartView: UIView {
         view.heightAnchor.constraint(equalToConstant: height).isActive = true
         return view
     }
+    
+    @objc func searchForCategories() {
+                let rootVC = GameGenreSelectTableViewController()
+                let networkManager = NetworkManager()
+                Task {
+                    do {
+                        rootVC.gameGanres = try await networkManager.getGamesGenres().sorted(by: {$0!.name < $1!.name})
+                    } catch {
+                        print(error)
+                    }
+                    let navigationVC = UINavigationController(rootViewController: rootVC)
+                    navigationVC.navigationBar.prefersLargeTitles = true
+                    //rootVC.title = rootVC.gameResults?.results[0].genres[0].name
+                    navigationVC.modalPresentationStyle = .fullScreen
+                    parentViewController?.present(navigationVC, animated: true)
+                }
+
+    }
+    
+//    static func createSpinnerView() {
+//        let child = SpinnerViewController()
+//
+//        // add the spinner view controller
+//        parentViewController?.addChild(child)
+//        child.view.frame = view.frame
+//        view.addSubview(child.view)
+//        child.didMove(toParent: self)
+//
+//        // wait two seconds to simulate some work happening
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//            // then remove the spinner view controller
+//            child.willMove(toParent: nil)
+//            child.view.removeFromSuperview()
+//            child.removeFromParent()
+//        }
+//    }
+
     
 //    @objc func didTapStartButton() {
 //        

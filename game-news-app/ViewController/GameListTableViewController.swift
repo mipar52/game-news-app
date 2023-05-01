@@ -6,68 +6,84 @@
 //
 
 import UIKit
+import Kingfisher
 
 class GameListTableViewController: UITableViewController {
-    
-    var gameList: [Games]?
+    var gameGenreTitle = String()
+    var gameList: [Game] = []
+    var titleImageView: UIImageView = UIImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //titleImageView.contentMode = .scaleAspectFill
         view.backgroundColor = Colors.backgroundColor
+        titleImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
+        navigationItem.titleView = titleImageView
         setupBarItem()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        setupUI()
     }
 
     // MARK: - Table view data source
 
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView = UITableView(frame: .zero, style: .insetGrouped)
+        self.tableView.separatorStyle = .singleLine
+    }
+    
+    private func setupUI() {
+        self.title = gameGenreTitle
+        view.backgroundColor = Colors.backgroundColor
+        self.tableView.backgroundColor = Colors.backgroundColor
+        self.tableView.separatorStyle = .singleLine
+        self.tableView.rowHeight = UITableView.automaticDimension
+        tableView.reloadData()
+    }
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return gameList.count
+    }
+    
+ 
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let gameList = gameList {
-            return gameList.count
-        } else {
-            return 0
-        }
+        return 1
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .value1, reuseIdentifier: "gameListCell")
-        if let gameList = gameList {
-            cell.textLabel?.text = gameList[indexPath.row].name
-            cell.accessoryType = .disclosureIndicator
-            cell.detailTextLabel?.text = "\(gameList[indexPath.row].id)"
-            cell.backgroundColor = Colors.headerText
-        } else {
-            cell.textLabel?.text = "No games to show!"
-        }
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "gameListCell")
+        let game = gameList[indexPath.section]
+        
+        cell.imageView?.kf.setImage(with: game.background_image, placeholder: UIImage(systemName: Text.UIImages.controllerFill))
+         cell.imageView?.tintColor = Colors.headerText
+        cell.textLabel?.text = game.name_original
+         cell.textLabel?.font = Fonts.bold(ofSite: 20)
+         cell.textLabel?.textColor = Colors.headerText
+        cell.textLabel?.adjustsFontSizeToFitWidth = true
+        cell.detailTextLabel?.text = "Metacritic score: \(game.metacritic)"
+         cell.detailTextLabel?.font = Fonts.regular(ofSite: 10)
+         cell.detailTextLabel?.textColor = Colors.textColor
+        cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
+
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let gameDetailVC = GameDetailTableViewController()
-        Task {
-            let manager = NetworkManager()
-            do {
-                let id = gameList![indexPath.row].id
-                gameDetailVC.game = try await manager.getGamebyId(id: id)
-                navigationController?.pushViewController(gameDetailVC, animated: true)
-            } catch {
-                print(error)
-            }
-        }
+        let gameDetailVC = GameDetailViewController()
+        gameDetailVC.game = gameList[indexPath.section]
+        navigationController?.pushViewController(gameDetailVC, animated: true)
     }
     
     func setupBarItem() {
-        let image = UIImage(systemName: "slider.horizontal.3")?.withTintColor(Colors.buttonColor, renderingMode: .automatic)
+        let image = UIImage(systemName: Text.UIImages.sortSlider)?.withTintColor(Colors.buttonColor, renderingMode: .automatic)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: image,style: .plain, target: self, action: #selector(sortSettings))
         self.navigationItem.rightBarButtonItem?.tintColor = Colors.redish

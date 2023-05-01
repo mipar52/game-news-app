@@ -12,7 +12,7 @@ struct Game: Decodable {
     let metacritic: Int
     let released: String
     let background_image: URL
-    let website: URL
+  //  let website: URL
     let rating: Double
     let playtime: Int
     let reddit_name: String

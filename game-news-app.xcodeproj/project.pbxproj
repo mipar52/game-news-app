@@ -35,6 +35,14 @@
 		A1DC196329FE712600B0F08F /* GamePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC196229FE712600B0F08F /* GamePageView.swift */; };
 		A1DC196529FE7D6C00B0F08F /* ScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC196429FE7D6C00B0F08F /* ScrollView+Extension.swift */; };
 		A1DC196729FE84DB00B0F08F /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC196629FE84DB00B0F08F /* OnboardingView.swift */; };
+		A1DC196A29FFC19000B0F08F /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = A1DC196929FFC19000B0F08F /* CombineCocoa */; };
+		A1DC196D29FFC2AC00B0F08F /* UIResponder+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC196C29FFC2AC00B0F08F /* UIResponder+Extension.swift */; };
+		A1DC197029FFC30900B0F08F /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC196F29FFC30900B0F08F /* GameViewModel.swift */; };
+		A1DC197429FFC73400B0F08F /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC197329FFC73400B0F08F /* Spinner.swift */; };
+		A1DC197629FFC78E00B0F08F /* SpinnerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC197529FFC78E00B0F08F /* SpinnerController.swift */; };
+		A1DC197929FFCEEF00B0F08F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A1DC197829FFCEEF00B0F08F /* Kingfisher */; };
+		A1DC197B29FFE4FF00B0F08F /* UIImageView+Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC197A29FFE4FF00B0F08F /* UIImageView+Extenstion.swift */; };
+		A1DC197D2A00253600B0F08F /* GameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC197C2A00253600B0F08F /* GameDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +75,12 @@
 		A1DC196229FE712600B0F08F /* GamePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePageView.swift; sourceTree = "<group>"; };
 		A1DC196429FE7D6C00B0F08F /* ScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScrollView+Extension.swift"; sourceTree = "<group>"; };
 		A1DC196629FE84DB00B0F08F /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		A1DC196C29FFC2AC00B0F08F /* UIResponder+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Extension.swift"; sourceTree = "<group>"; };
+		A1DC196F29FFC30900B0F08F /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		A1DC197329FFC73400B0F08F /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
+		A1DC197529FFC78E00B0F08F /* SpinnerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerController.swift; sourceTree = "<group>"; };
+		A1DC197A29FFE4FF00B0F08F /* UIImageView+Extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extenstion.swift"; sourceTree = "<group>"; };
+		A1DC197C2A00253600B0F08F /* GameDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +88,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1DC197929FFCEEF00B0F08F /* Kingfisher in Frameworks */,
+				A1DC196A29FFC19000B0F08F /* CombineCocoa in Frameworks */,
 				A1DC195C29FE5BDD00B0F08F /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -100,6 +116,7 @@
 		A1DC191B29FAA70E00B0F08F /* game-news-app */ = {
 			isa = PBXGroup;
 			children = (
+				A1DC196E29FFC2FA00B0F08F /* GameViewModel */,
 				A1DC195D29FE607E00B0F08F /* UIFactory */,
 				A1DC194F29FBDF6E00B0F08F /* Theme */,
 				A1DC194C29FBDE8C00B0F08F /* Extension */,
@@ -146,6 +163,8 @@
 				A1DC195829FE51A600B0F08F /* StartView.swift */,
 				A1DC196229FE712600B0F08F /* GamePageView.swift */,
 				A1DC196629FE84DB00B0F08F /* OnboardingView.swift */,
+				A1DC197529FFC78E00B0F08F /* SpinnerController.swift */,
+				A1DC197C2A00253600B0F08F /* GameDetailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -157,6 +176,8 @@
 				A1DC195629FC1F5D00B0F08F /* UIImageView+Extension.swift */,
 				A1DC196029FE615700B0F08F /* UIView+Extension.swift */,
 				A1DC196429FE7D6C00B0F08F /* ScrollView+Extension.swift */,
+				A1DC196C29FFC2AC00B0F08F /* UIResponder+Extension.swift */,
+				A1DC197A29FFE4FF00B0F08F /* UIImageView+Extenstion.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -176,8 +197,17 @@
 			isa = PBXGroup;
 			children = (
 				A1DC195E29FE609200B0F08F /* UILabelFactory.swift */,
+				A1DC197329FFC73400B0F08F /* Spinner.swift */,
 			);
 			path = UIFactory;
+			sourceTree = "<group>";
+		};
+		A1DC196E29FFC2FA00B0F08F /* GameViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A1DC196F29FFC30900B0F08F /* GameViewModel.swift */,
+			);
+			path = GameViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,6 +228,8 @@
 			name = "game-news-app";
 			packageProductDependencies = (
 				A1DC195B29FE5BDD00B0F08F /* SnapKit */,
+				A1DC196929FFC19000B0F08F /* CombineCocoa */,
+				A1DC197829FFCEEF00B0F08F /* Kingfisher */,
 			);
 			productName = "game-news-app";
 			productReference = A1DC191929FAA70E00B0F08F /* game-news-app.app */;
@@ -229,6 +261,8 @@
 			mainGroup = A1DC191029FAA70E00B0F08F;
 			packageReferences = (
 				A1DC195A29FE5BDD00B0F08F /* XCRemoteSwiftPackageReference "SnapKit" */,
+				A1DC196829FFC19000B0F08F /* XCRemoteSwiftPackageReference "CombineCocoa" */,
+				A1DC197729FFCEEF00B0F08F /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = A1DC191A29FAA70E00B0F08F /* Products */;
 			projectDirPath = "";
@@ -258,18 +292,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1DC195529FBE60600B0F08F /* LogoView.swift in Sources */,
+				A1DC197429FFC73400B0F08F /* Spinner.swift in Sources */,
 				A1DC195929FE51A600B0F08F /* StartView.swift in Sources */,
+				A1DC197D2A00253600B0F08F /* GameDetailView.swift in Sources */,
 				A1DC192129FAA70E00B0F08F /* HomeViewController.swift in Sources */,
 				A1DC194129FBD0FE00B0F08F /* Game.swift in Sources */,
 				A1DC193F29FBCDE200B0F08F /* GameGenres.swift in Sources */,
 				A1DC191D29FAA70E00B0F08F /* AppDelegate.swift in Sources */,
+				A1DC197029FFC30900B0F08F /* GameViewModel.swift in Sources */,
 				A1DC193429FAAA9B00B0F08F /* NetworkManager.swift in Sources */,
+				A1DC197629FFC78E00B0F08F /* SpinnerController.swift in Sources */,
 				A1DC196529FE7D6C00B0F08F /* ScrollView+Extension.swift in Sources */,
+				A1DC196D29FFC2AC00B0F08F /* UIResponder+Extension.swift in Sources */,
 				A1DC196329FE712600B0F08F /* GamePageView.swift in Sources */,
 				A1DC193629FAABD500B0F08F /* NetworkError.swift in Sources */,
 				A1DC195129FBDF8200B0F08F /* Fonts.swift in Sources */,
 				A1DC194829FBDAE800B0F08F /* GameDetailTableViewController.swift in Sources */,
 				A1DC194E29FBDE9C00B0F08F /* UIColor+Extension.swift in Sources */,
+				A1DC197B29FFE4FF00B0F08F /* UIImageView+Extenstion.swift in Sources */,
 				A1DC191F29FAA70E00B0F08F /* SceneDelegate.swift in Sources */,
 				A1DC195329FBDFD000B0F08F /* Text.swift in Sources */,
 				A1DC195F29FE609200B0F08F /* UILabelFactory.swift in Sources */,
@@ -508,6 +548,22 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		A1DC196829FFC19000B0F08F /* XCRemoteSwiftPackageReference "CombineCocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CombineCommunity/CombineCocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.1;
+			};
+		};
+		A1DC197729FFCEEF00B0F08F /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -515,6 +571,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A1DC195A29FE5BDD00B0F08F /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		A1DC196929FFC19000B0F08F /* CombineCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1DC196829FFC19000B0F08F /* XCRemoteSwiftPackageReference "CombineCocoa" */;
+			productName = CombineCocoa;
+		};
+		A1DC197829FFCEEF00B0F08F /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1DC197729FFCEEF00B0F08F /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

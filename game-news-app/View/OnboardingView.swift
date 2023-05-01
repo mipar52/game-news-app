@@ -17,19 +17,22 @@ class OnboardingView: UIView {
     private lazy var imageView: UIImageView = {
        let imageView = UIImageView()
         imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = Colors.headerText
+
         return imageView
     }()
     
     private lazy var titleLabel: UILabel = {
-        UILabelFactory.build(text: title, font: Fonts.bold(ofSite: 18), textColor: Colors.headerText, textAligment: .center)
+        UILabelFactory.build(text: title, font: Fonts.bold(ofSite: 16), textColor: Colors.headerText, textAligment: .center)
     }()
     
     private lazy var descriptionLabel: UILabel = {
        let label = UILabel()
         label.textAlignment = .center
-        label.numberOfLines = 3
-        label.textColor = Colors.backgroundColor
-        let text = NSMutableAttributedString(string: infoDescription, attributes: [.font: Fonts.semibold(ofSite: 12)])
+        label.numberOfLines = 5
+        label.textColor = Colors.textColor
+        let text = NSMutableAttributedString(string: infoDescription, attributes: [.font: Fonts.semibold(ofSite: 15)])
         
       //  text.addAttributes([.font: Fonts.semibold(ofSite: 16)], range: NSMakeRange(text.string.count - 1, 1))
         label.attributedText = text
@@ -42,6 +45,7 @@ class OnboardingView: UIView {
     private lazy var stackView: UIStackView = {
         let stackView: UIStackView = UIStackView(arrangedSubviews: [
         imageView,
+        UIView(),
         titleLabel,
         descriptionLabel])
         stackView.axis = .vertical
@@ -66,8 +70,6 @@ class OnboardingView: UIView {
         addSubview(stackView)
         
         stackView.snp.makeConstraints { make in
-//            make.height.equalTo(25)
-//            make.width.equalTo(25)
             make.edges.equalToSuperview()
 //            make.top.equalTo(snp.top).offset(24)
 //            make.leading.equalTo(snp.leading).offset(24)
@@ -75,11 +77,12 @@ class OnboardingView: UIView {
 //            make.bottom.equalTo(snp.bottom).offset(-24)
         }
         
-//        imageView.snp.makeConstraints { make in
-//            make.height.equalTo(30)
-//            make.width.equalTo(30)
-//
-//        }
+        imageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(30)
+            make.height.equalTo(30)
+            
+        }
     }
     
 //    func configure(amount: Double) {
