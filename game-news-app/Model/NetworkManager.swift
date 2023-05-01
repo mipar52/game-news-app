@@ -91,5 +91,9 @@ struct NetworkManager {
            return nil
        }
    }
+    
+//    func downloadImage(url: URL) -> Data? {
+//        return Data?
+//    }
 
 }

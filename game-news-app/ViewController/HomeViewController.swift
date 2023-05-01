@@ -8,7 +8,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-    let manager = NetworkManager()
     let logoView = LogoView()
     var pageView : GamePageView?
     let startView = StartView()
@@ -20,7 +19,7 @@ class ViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        pageView = GamePageView(frame: CGRect(x: 200, y: 200, width: view.frame.width, height: 200))
+        pageView = GamePageView(contentWidth: view.frame.width - CGFloat(55), contentHeight: view.frame.height)
         setupUI()
     }
     
@@ -64,8 +63,5 @@ class ViewController: UIViewController {
             make.height.equalTo(30)
         }
         bottomLabel.adjustsFontSizeToFitWidth = true
-        
-
     }
-
 }
