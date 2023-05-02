@@ -7,9 +7,12 @@
 
 import Foundation
 
-struct NetworkManager {
+class NetworkManager {
     
    static let sharedInstance = NetworkManager()
+    
+    private init() {}
+    
     private let baseUrl = "https://api.rawg.io/api/"
     
      func getGames() async throws -> GameList? {
@@ -55,8 +58,9 @@ struct NetworkManager {
        request.httpMethod = "GET"
        
        do {
-           let (data, response) = try await URLSession.shared.data(for: request)
+           let (data, _) = try await URLSession.shared.data(for: request)
           // print("Reponse: \(response.description)")
+           
            let result = try JSONDecoder().decode(GameGenre.self, from: data)
            let gamesGenres = result.results
            return gamesGenres

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A15A14412A01731B00A1D2B9 /* StartButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A14402A01731B00A1D2B9 /* StartButtonProtocol.swift */; };
+		A15A14432A0176E500A1D2B9 /* GameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A14422A0176E500A1D2B9 /* GameHeaderView.swift */; };
+		A15A14452A017A3400A1D2B9 /* ReleaseInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A14442A017A3400A1D2B9 /* ReleaseInfoView.swift */; };
+		A15A14472A01843F00A1D2B9 /* ScreenshotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A14462A01843F00A1D2B9 /* ScreenshotView.swift */; };
+		A15A144B2A01882400A1D2B9 /* AllReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A144A2A01882300A1D2B9 /* AllReviewView.swift */; };
 		A1DC191D29FAA70E00B0F08F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC191C29FAA70E00B0F08F /* AppDelegate.swift */; };
 		A1DC191F29FAA70E00B0F08F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC191E29FAA70E00B0F08F /* SceneDelegate.swift */; };
 		A1DC192129FAA70E00B0F08F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC192029FAA70E00B0F08F /* HomeViewController.swift */; };
@@ -50,6 +55,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A15A14402A01731B00A1D2B9 /* StartButtonProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartButtonProtocol.swift; sourceTree = "<group>"; };
+		A15A14422A0176E500A1D2B9 /* GameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHeaderView.swift; sourceTree = "<group>"; };
+		A15A14442A017A3400A1D2B9 /* ReleaseInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseInfoView.swift; sourceTree = "<group>"; };
+		A15A14462A01843F00A1D2B9 /* ScreenshotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotView.swift; sourceTree = "<group>"; };
+		A15A144A2A01882300A1D2B9 /* AllReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllReviewView.swift; sourceTree = "<group>"; };
 		A1DC191929FAA70E00B0F08F /* game-news-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "game-news-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1DC191C29FAA70E00B0F08F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1DC191E29FAA70E00B0F08F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +115,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A15A143F2A01730800A1D2B9 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				A15A14402A01731B00A1D2B9 /* StartButtonProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		A1DC191029FAA70E00B0F08F = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +142,7 @@
 		A1DC191B29FAA70E00B0F08F /* game-news-app */ = {
 			isa = PBXGroup;
 			children = (
+				A15A143F2A01730800A1D2B9 /* Protocols */,
 				A1DC196E29FFC2FA00B0F08F /* GameViewModel */,
 				A1DC195D29FE607E00B0F08F /* UIFactory */,
 				A1DC194F29FBDF6E00B0F08F /* Theme */,
@@ -175,6 +194,10 @@
 				A1DC197C2A00253600B0F08F /* GameDetailView.swift */,
 				A1DC197E2A0100B400B0F08F /* PlatformView.swift */,
 				A1DC19852A01463900B0F08F /* ReviewView.swift */,
+				A15A14422A0176E500A1D2B9 /* GameHeaderView.swift */,
+				A15A14442A017A3400A1D2B9 /* ReleaseInfoView.swift */,
+				A15A14462A01843F00A1D2B9 /* ScreenshotView.swift */,
+				A15A144A2A01882300A1D2B9 /* AllReviewView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -305,10 +328,12 @@
 			files = (
 				A1DC195529FBE60600B0F08F /* LogoView.swift in Sources */,
 				A1DC197429FFC73400B0F08F /* Spinner.swift in Sources */,
+				A15A144B2A01882400A1D2B9 /* AllReviewView.swift in Sources */,
 				A1DC195929FE51A600B0F08F /* StartView.swift in Sources */,
 				A1DC19812A01012B00B0F08F /* UIButtonFactory.swift in Sources */,
 				A1DC197D2A00253600B0F08F /* GameDetailView.swift in Sources */,
 				A1DC192129FAA70E00B0F08F /* HomeViewController.swift in Sources */,
+				A15A14472A01843F00A1D2B9 /* ScreenshotView.swift in Sources */,
 				A1DC194129FBD0FE00B0F08F /* Game.swift in Sources */,
 				A1DC19842A01359C00B0F08F /* UIAlertFactory.swift in Sources */,
 				A1DC193F29FBCDE200B0F08F /* GameGenres.swift in Sources */,
@@ -317,6 +342,7 @@
 				A1DC193429FAAA9B00B0F08F /* NetworkManager.swift in Sources */,
 				A1DC197629FFC78E00B0F08F /* SpinnerController.swift in Sources */,
 				A1DC196529FE7D6C00B0F08F /* ScrollView+Extension.swift in Sources */,
+				A15A14412A01731B00A1D2B9 /* StartButtonProtocol.swift in Sources */,
 				A1DC19862A01463900B0F08F /* ReviewView.swift in Sources */,
 				A1DC196D29FFC2AC00B0F08F /* UIResponder+Extension.swift in Sources */,
 				A1DC196329FE712600B0F08F /* GamePageView.swift in Sources */,
@@ -331,12 +357,14 @@
 				A1DC195F29FE609200B0F08F /* UILabelFactory.swift in Sources */,
 				A1DC195729FC1F5D00B0F08F /* UIImageView+Extension.swift in Sources */,
 				A1DC196129FE615700B0F08F /* UIView+Extension.swift in Sources */,
+				A15A14432A0176E500A1D2B9 /* GameHeaderView.swift in Sources */,
 				A1DC194B29FBDDD700B0F08F /* Colors.swift in Sources */,
 				A1DC194629FBDAD300B0F08F /* GameListTableViewController.swift in Sources */,
 				A1DC194429FBDAC000B0F08F /* GameGenreSelectTableViewController.swift in Sources */,
 				A1DC196729FE84DB00B0F08F /* OnboardingView.swift in Sources */,
 				A1DC193929FAAF0800B0F08F /* GameList.swift in Sources */,
 				A1DC193129FAAA6B00B0F08F /* Constants.swift in Sources */,
+				A15A14452A017A3400A1D2B9 /* ReleaseInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
