@@ -20,7 +20,7 @@ class GameListTableViewController: UITableViewController {
         titleImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
         navigationItem.titleView = titleImageView
         setupBarItem()
-        setupUI()
+      //  setupUI()
     }
 
     // MARK: - Table view data source
@@ -28,6 +28,7 @@ class GameListTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.tableView = UITableView(frame: .zero, style: .insetGrouped)
         self.tableView.separatorStyle = .singleLine
+        setupUI()
     }
     
     private func setupUI() {

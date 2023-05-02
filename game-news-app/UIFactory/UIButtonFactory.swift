@@ -5,4 +5,19 @@
 //  Created by Milan Parađina on 02.05.2023..
 //
 
-import Foundation
+import UIKit
+
+struct UIButtonFactory {
+    
+    static func build(color: UIColor, text: String) -> UIButton {
+        let button = UIButton(type: .custom)
+        button.backgroundColor = color
+        button.tintColor = .white
+        button.addCornerRadius(radius: 8.0)
+        let text = NSMutableAttributedString(string: text, attributes: [.font: Fonts.bold(ofSite: 20),.foregroundColor: UIColor.white])
+        
+//        text.addAttributes([.font:Fonts.semibold(ofSite: 14)], range: NSMakeRange(2, 1))
+        button.setAttributedTitle(text, for: .normal)
+        return button
+    }
+}

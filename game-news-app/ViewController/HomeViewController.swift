@@ -5,6 +5,8 @@
 //  Created by Milan Parađina on 27.04.2023..
 //
 
+//TODO: -> Create GameDetailVC, add alerts, fix navigation controller, additional -> fix scroll view on HomeVC, add firebase, fix cells on GameListVC
+
 import UIKit
 
 class ViewController: UIViewController {

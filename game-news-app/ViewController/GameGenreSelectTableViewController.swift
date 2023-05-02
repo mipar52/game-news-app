@@ -24,6 +24,9 @@ class GameGenreSelectTableViewController: UITableViewController {
     
     private func setupUI() {
         self.title = "Select your category"
+        navigationController?.navigationBar.barTintColor = Colors.headerText
+//        navigationController?.navigationBar.tintColor = Colors.headerText
+//        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Colors.headerText]
         view.backgroundColor = Colors.headerText
         self.tableView.backgroundColor = Colors.backgroundColor
         self.tableView.separatorStyle = .singleLine
@@ -55,7 +58,7 @@ class GameGenreSelectTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "gameGanresCell")
             cell.textLabel?.text = Text.UIStrings.loadingData
-        cell.backgroundColor = Colors.headerText
+        cell.backgroundColor = Colors.textColor
         //    cell.imageView?.image = UIImage(systemName: Text.UIImages.controllerFill)
         //    cell.imageView?.tintColor = Colors.headerText
 
@@ -66,12 +69,22 @@ class GameGenreSelectTableViewController: UITableViewController {
             cell.imageView?.tintColor = Colors.backgroundColor
             cell.textLabel?.text = gameGanres[indexPath.section]?.name
             cell.textLabel?.font = Fonts.bold(ofSite: 20)
-            cell.textLabel?.textColor = Colors.backgroundColor
+            cell.textLabel?.textColor = Colors.headerText
             cell.textLabel?.adjustsFontSizeToFitWidth = true
             cell.detailTextLabel?.text = "Games like \(games.first!.name)"
-            cell.detailTextLabel?.font = Fonts.regular(ofSite: 10)
+            cell.detailTextLabel?.font = Fonts.semibold(ofSite: 15)
             cell.detailTextLabel?.textColor = Colors.backgroundColor
             cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
+            
+            cell.imageView?.snp.makeConstraints { make in
+                make.height.equalTo(100)
+                make.width.equalTo(130)
+                make.topMargin.equalTo(cell.snp.topMargin).offset(5)
+                make.bottomMargin.equalTo(cell.snp.bottomMargin).offset(10)
+               // make.leftMargin.equalTo(cell.snp.leftMargin)
+            }
+            
+            cell.imageView?.addRoundedCorners(corners: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner], radius: 8.0)
         }
         
         return cell

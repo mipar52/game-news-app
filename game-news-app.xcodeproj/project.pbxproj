@@ -43,6 +43,8 @@
 		A1DC197929FFCEEF00B0F08F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A1DC197829FFCEEF00B0F08F /* Kingfisher */; };
 		A1DC197B29FFE4FF00B0F08F /* UIImageView+Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC197A29FFE4FF00B0F08F /* UIImageView+Extenstion.swift */; };
 		A1DC197D2A00253600B0F08F /* GameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC197C2A00253600B0F08F /* GameDetailView.swift */; };
+		A1DC197F2A0100B400B0F08F /* PlatformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC197E2A0100B400B0F08F /* PlatformView.swift */; };
+		A1DC19812A01012B00B0F08F /* UIButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC19802A01012B00B0F08F /* UIButtonFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +83,8 @@
 		A1DC197529FFC78E00B0F08F /* SpinnerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerController.swift; sourceTree = "<group>"; };
 		A1DC197A29FFE4FF00B0F08F /* UIImageView+Extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extenstion.swift"; sourceTree = "<group>"; };
 		A1DC197C2A00253600B0F08F /* GameDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailView.swift; sourceTree = "<group>"; };
+		A1DC197E2A0100B400B0F08F /* PlatformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformView.swift; sourceTree = "<group>"; };
+		A1DC19802A01012B00B0F08F /* UIButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,7 @@
 				A1DC196629FE84DB00B0F08F /* OnboardingView.swift */,
 				A1DC197529FFC78E00B0F08F /* SpinnerController.swift */,
 				A1DC197C2A00253600B0F08F /* GameDetailView.swift */,
+				A1DC197E2A0100B400B0F08F /* PlatformView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -198,6 +203,7 @@
 			children = (
 				A1DC195E29FE609200B0F08F /* UILabelFactory.swift */,
 				A1DC197329FFC73400B0F08F /* Spinner.swift */,
+				A1DC19802A01012B00B0F08F /* UIButtonFactory.swift */,
 			);
 			path = UIFactory;
 			sourceTree = "<group>";
@@ -294,6 +300,7 @@
 				A1DC195529FBE60600B0F08F /* LogoView.swift in Sources */,
 				A1DC197429FFC73400B0F08F /* Spinner.swift in Sources */,
 				A1DC195929FE51A600B0F08F /* StartView.swift in Sources */,
+				A1DC19812A01012B00B0F08F /* UIButtonFactory.swift in Sources */,
 				A1DC197D2A00253600B0F08F /* GameDetailView.swift in Sources */,
 				A1DC192129FAA70E00B0F08F /* HomeViewController.swift in Sources */,
 				A1DC194129FBD0FE00B0F08F /* Game.swift in Sources */,
@@ -312,6 +319,7 @@
 				A1DC197B29FFE4FF00B0F08F /* UIImageView+Extenstion.swift in Sources */,
 				A1DC191F29FAA70E00B0F08F /* SceneDelegate.swift in Sources */,
 				A1DC195329FBDFD000B0F08F /* Text.swift in Sources */,
+				A1DC197F2A0100B400B0F08F /* PlatformView.swift in Sources */,
 				A1DC195F29FE609200B0F08F /* UILabelFactory.swift in Sources */,
 				A1DC195729FC1F5D00B0F08F /* UIImageView+Extension.swift in Sources */,
 				A1DC196129FE615700B0F08F /* UIView+Extension.swift in Sources */,
