@@ -8,38 +8,38 @@
 import UIKit
 
 class ReviewView: UIView {
-    
-    
-    private lazy var reviewOne: UIButton = {
-        let button = UIButtonFactory.build(color: Colors.textColor, text: "Meh: 50")
-        return button
-    }()
-    
-    private lazy var reviewTwo: UIButton = {
-        let button = UIButtonFactory.build(color: Colors.textColor, text: "Cool: 50")
-        return button
-    }()
-    
-    private lazy var reviewThree: UIButton = {
-        let button = UIButtonFactory.build(color: Colors.textColor, text: "Meh: 50")
-        return button
+    let reviews: [Ratings]
+    let metacritic: String
+    private lazy var reviewButtons: [UIButton] = {
+        var buttons : [UIButton] = []
+        
+        for review in reviews {
+            let reviewName = "\(review.title): "
+            let reviewCount = "\(review.count)"
+            let button = UIButtonFactory.build(color: Colors.textColor, text: "\(review.title): \(review.count)")
+            button.titleLabel?.adjustsFontSizeToFitWidth = true
+           // button.backgroundColor = Colors.textColor
+            let text = NSMutableAttributedString(string: reviewName.capitalized + reviewCount , attributes: [.font: Fonts.bold(ofSite: 15), .foregroundColor: Colors.headerText])
+            
+            text.addAttributes([.font: Fonts.bold(ofSite: 15), .foregroundColor: Colors.backgroundColor], range: NSMakeRange(reviewName.count - 1, reviewCount.count + 1))
+            button.setAttributedTitle(text, for: .normal)
+            buttons.append(button)
+        }
+        return buttons
     }()
     
     private lazy var metacriticReview: UIButton = {
         let button: UIButton = UIButton()
-        button.setTitle("Custom tip", for: .normal)
+        button.setTitle("Metacritic: \(metacritic)", for: .normal)
         button.titleLabel?.font = Fonts.bold(ofSite: 20)
         button.backgroundColor = Colors.headerText
-        button.tintColor = .white
+        button.tintColor = Colors.backgroundColor
         button.addCornerRadius(radius: 8.0)
         return button
     }()
     
-    private lazy var hStack: UIStackView = {
-        let hStackView: UIStackView = UIStackView(arrangedSubviews: [
-            reviewOne,
-            reviewTwo,
-            reviewThree])
+    private lazy var goodhStack: UIStackView = {
+        let hStackView: UIStackView = UIStackView(arrangedSubviews: Array(reviewButtons[0...reviews.count/2]))
         hStackView.distribution = .fillEqually
         hStackView.spacing = 16
         hStackView.axis = .horizontal
@@ -47,9 +47,18 @@ class ReviewView: UIView {
         return hStackView
     }()
     
+    private lazy var badhStack: UIStackView = {
+        let hStackView: UIStackView = UIStackView(arrangedSubviews: Array(reviewButtons[reviews.count/2..<reviews.count]))
+        hStackView.distribution = .fillEqually
+        hStackView.spacing = 16
+        hStackView.axis = .horizontal
+        return hStackView
+    }()
+    
     private lazy var buttonVStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
-            hStack,
+            goodhStack,
+            badhStack,
             metacriticReview])
         
         stack.axis = .vertical
@@ -58,7 +67,9 @@ class ReviewView: UIView {
         return stack
     }()
             
-    init() {
+    init(reviews: [Ratings], metacritic: String) {
+        self.reviews = reviews
+        self.metacritic = metacritic
         super.init(frame: .zero)
         layout()
     }

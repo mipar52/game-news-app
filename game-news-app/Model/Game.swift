@@ -17,6 +17,8 @@ struct Game: Decodable {
     let playtime: Int
     let reddit_name: String
     let developers: [Developers]
+    let ratings: [Ratings]
+    let stores: [Stores]
 }
 
 struct MetacriticPlatforms: Decodable {
@@ -24,6 +26,17 @@ struct MetacriticPlatforms: Decodable {
     let url: URL
     let platform: Platform
 }
+
+struct Stores: Decodable {
+    let store: Store
+
+}
+
+struct Store: Decodable {
+    let name: String
+    let domain: String
+}
+
 struct Developers: Decodable {
     let name: String
     let image_background: URL

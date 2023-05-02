@@ -62,16 +62,35 @@ class GameListTableViewController: UITableViewController {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "gameListCell")
         let game = gameList[indexPath.section]
         
+        cell.textLabel?.text = Text.UIStrings.loadingData
+        cell.backgroundColor = Colors.backgroundColor
+        
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = 5
+        cell.layer.borderWidth = 2
+        cell.layer.borderColor = Colors.textColor.cgColor
+        
         cell.imageView?.kf.setImage(with: game.background_image, placeholder: UIImage(systemName: Text.UIImages.controllerFill))
-         cell.imageView?.tintColor = Colors.headerText
+        
+        cell.imageView?.tintColor = Colors.backgroundColor
         cell.textLabel?.text = game.name_original
-         cell.textLabel?.font = Fonts.bold(ofSite: 20)
-         cell.textLabel?.textColor = Colors.headerText
+        cell.textLabel?.font = Fonts.bold(ofSite: 20)
+        cell.textLabel?.textColor = Colors.headerText
         cell.textLabel?.adjustsFontSizeToFitWidth = true
         cell.detailTextLabel?.text = "Metacritic score: \(game.metacritic)"
-         cell.detailTextLabel?.font = Fonts.regular(ofSite: 10)
+         cell.detailTextLabel?.font = Fonts.regular(ofSite: 15)
          cell.detailTextLabel?.textColor = Colors.textColor
         cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
+
+        cell.textLabel?.adjustsFontSizeToFitWidth = true
+        
+        cell.imageView?.snp.makeConstraints { make in
+            make.height.equalTo(100)
+            make.width.equalTo(130)
+            make.topMargin.equalTo(cell.snp.topMargin).offset(5)
+            make.bottomMargin.equalTo(cell.snp.bottomMargin).offset(10)
+           // make.leftMargin.equalTo(cell.snp.leftMargin)
+        }
 
 
         return cell

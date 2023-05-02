@@ -5,7 +5,7 @@
 //  Created by Milan Parađina on 27.04.2023..
 //
 
-//TODO: -> add alerts, fix navigation controller, additional -> fix scroll view on HomeVC, add firebase, fix cells on GameListVC
+//TODO: -> padding, cells, error handling, firebase, readme
 
 import UIKit
 

@@ -15,6 +15,8 @@ class GameDetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Colors.backgroundColor
         navigationItem.largeTitleDisplayMode = .never
+        platformView.delegate = self
+        releaseInfoView.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -25,7 +27,7 @@ class GameDetailViewController: UIViewController {
     private lazy var verticalscrollView: UIScrollView = {
        let scrollView = UIScrollView()
         scrollView.bounces = true
-        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height * 1.2)
+        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height * 1.3)
         return scrollView
     }()
     
@@ -35,12 +37,12 @@ class GameDetailViewController: UIViewController {
     }()
     
     private lazy var releaseInfoView: ReleaseInfoView = {
-        let releaseInfo = ReleaseInfoView(developers: game!.developers, releaseDate: game!.released)
+        let releaseInfo = ReleaseInfoView(developers: game!.developers, releaseDate: game!.released, website: "\(game!.website!)")
         return releaseInfo
     }()
     
     private lazy var platformView : PlatformView = {
-        return PlatformView()
+        return PlatformView(stores: (game?.stores)!)
     }()
     
     
@@ -62,7 +64,7 @@ class GameDetailViewController: UIViewController {
     }()
     
     private lazy var reviewView: AllReviewView = {
-        let reviewView = AllReviewView()
+        let reviewView = AllReviewView(reviews: game!.ratings, metacritic: "\(game!.metacritic)")
         return reviewView
     }()
     
@@ -86,6 +88,7 @@ class GameDetailViewController: UIViewController {
        
         verticalscrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+
 //            make.top.bottom.edges.equalToSuperview()
 //            make.left.edges.equalToSuperview().offset(5)
 //            make.right.edges.equalToSuperview().offset(-5)
@@ -101,7 +104,7 @@ class GameDetailViewController: UIViewController {
         
         vStack.snp.makeConstraints { make in
             
-            make.width.equalToSuperview()//.offset(10)
+            make.width.equalToSuperview().offset(10)
             //            make.height.equalTo(100)
         }
         
@@ -109,4 +112,27 @@ class GameDetailViewController: UIViewController {
             make.rightMargin.equalToSuperview().offset(-10)
         }        
     }
+}
+
+extension GameDetailViewController: StoreButtonDelegate {
+    func storeButtonPressed(link: String) {
+        if let url = URL(string: "https://\(link)") {
+            UIApplication.shared.openURL(url)
+        } else {
+            print("Invalid url")
+        }
+    }
+}
+
+extension GameDetailViewController: WebsiteLabelDelegate {
+    func labelPressed(link: String) {
+        if let url = URL(string: link) {
+            UIApplication.shared.openURL(url)
+        } else {
+            print("Invalid url")
+        }
+
+    }
+    
+    
 }

@@ -14,7 +14,7 @@ struct Text {
         static let game = "game"
         static let news = "NEWS"
         static let animationLabel = "Everything game related"
-        static let bottomLabelStartScreen = "Don't worry, you can always go back and pick another category :)"
+        static let bottomLabelStartScreen = "Don't worry, you can always go back to the onboarding screen :)"
         static let pickCategory = "Pick a category"
         
         static let onboardingTitleOne = "Application info"
