@@ -8,7 +8,8 @@
 import UIKit
 
 class AllReviewView: UIView {
-    
+    let reviews: [Ratings]
+    let metacritic: String
     private lazy var reviewlabelView: UILabel = {
         let label = UILabelFactory.build(text: "Game reviews", font: Fonts.bold(ofSite: 20))
         label.numberOfLines = 0
@@ -19,7 +20,7 @@ class AllReviewView: UIView {
 
     
     private lazy var reviewView: ReviewView = {
-        let reviewView = ReviewView()
+        let reviewView = ReviewView(reviews: reviews, metacritic: metacritic)
         return reviewView
     }()
 
@@ -30,7 +31,9 @@ class AllReviewView: UIView {
        return vStack
     }()
     
-    init() {
+    init(reviews: [Ratings], metacritic: String) {
+        self.reviews = reviews
+        self.metacritic = metacritic
         super.init(frame: .zero)
         layout()
     }

@@ -10,3 +10,11 @@ import UIKit
 protocol StartButtonDelegate {
    func startButtonPressed(_ sender:UIButton)
 }
+
+protocol WebsiteLabelDelegate {
+    func labelPressed(link: String)
+}
+
+protocol StoreButtonDelegate {
+    func storeButtonPressed(link: String)
+}

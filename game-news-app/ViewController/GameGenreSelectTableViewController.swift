@@ -59,9 +59,13 @@ class GameGenreSelectTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "gameGanresCell")
             cell.textLabel?.text = Text.UIStrings.loadingData
-        cell.backgroundColor = Colors.textColor
+        cell.backgroundColor = Colors.backgroundColor
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = 5
+        cell.layer.borderWidth = 2
         //    cell.imageView?.image = UIImage(systemName: Text.UIImages.controllerFill)
         //    cell.imageView?.tintColor = Colors.headerText
+        cell.layer.borderColor = Colors.textColor.cgColor
 
         if let gameGanres = gameGanres,
            let games = gameGanres[indexPath.section]?.games {
@@ -72,9 +76,9 @@ class GameGenreSelectTableViewController: UITableViewController {
             cell.textLabel?.font = Fonts.bold(ofSite: 20)
             cell.textLabel?.textColor = Colors.headerText
             cell.textLabel?.adjustsFontSizeToFitWidth = true
-            cell.detailTextLabel?.text = "Games like \(games.first!.name)"
+            cell.detailTextLabel?.text = "\(games.first!.name) & more"
             cell.detailTextLabel?.font = Fonts.semibold(ofSite: 15)
-            cell.detailTextLabel?.textColor = Colors.backgroundColor
+            cell.detailTextLabel?.textColor = Colors.textColor
             cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
             
             cell.imageView?.snp.makeConstraints { make in
@@ -86,6 +90,8 @@ class GameGenreSelectTableViewController: UITableViewController {
             }
             
             cell.imageView?.addRoundedCorners(corners: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner], radius: 8.0)
+            cell.layer.masksToBounds = true
+            cell.layer.cornerRadius = 5
         }
         
         return cell

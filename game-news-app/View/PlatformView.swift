@@ -8,9 +8,11 @@
 import UIKit
 
 class PlatformView: UIView {
+    let stores : [Stores]
+    var delegate: StoreButtonDelegate?
     
     private lazy var platformAvailability: UILabel = {
-        let label = UILabelFactory.build(text: "Platform availability", font: Fonts.bold(ofSite: 20))
+        let label = UILabelFactory.build(text: "Game store availability", font: Fonts.bold(ofSite: 20))
         label.numberOfLines = 0
         label.textColor = Colors.headerText
         label.textAlignment = .center
@@ -23,43 +25,33 @@ class PlatformView: UIView {
         //textView.backgroundColor = Colors.textColor
         return textView
     }()
-
     
-    private lazy var psButton: UIButton = {
-        let button = UIButtonFactory.build(color: .systemBlue, text: "PS")
-//        button.accessibilityIdentifier = ScreenIdentifier.TipInputView.tenPercentButton.rawValue
-//        button.tapPublisher.flatMap {
-//            Just(Tip.tenPercent)
-//        }.assign(to: \.value, on: tipSubject)
-//            .store(in: &cancelables)
-        return button
-    }()
-    
-    private lazy var xBoxButton: UIButton = {
-        let button = UIButtonFactory.build(color: .systemGreen, text: "Xbox")
-//        button.accessibilityIdentifier = ScreenIdentifier.TipInputView.fifteenPercentButton.rawValue
-//        button.tapPublisher.flatMap {
-//            Just(Tip.fifteenPercent)
-//        }.assign(to: \.value, on: tipSubject)
-//            .store(in: &cancelables)
-        return button
-    }()
-    
-    private lazy var pcButton: UIButton = {
-        let button = UIButtonFactory.build(color: .gray, text: "PC")
-//        button.accessibilityIdentifier = ScreenIdentifier.TipInputView.twentyPercentButton.rawValue
-//        button.tapPublisher.flatMap {
-//            Just(Tip.twentyPercent)
-//        }.assign(to: \.value, on: tipSubject)
-//            .store(in: &cancelables)
-        return button
+    private lazy var storeButtons: [UIButton] = {
+        var buttons : [UIButton] = []
+        
+        for i in 0..<stores.count {
+            let button = UIButtonFactory.build(color: Colors.headerText, text: stores[i].store.name)
+            button.titleLabel?.adjustsFontSizeToFitWidth = true
+            button.titleLabel?.textColor = Colors.headerText
+            button.titleLabel?.font = Fonts.semibold(ofSite: 15)
+            button.tag = i
+            button.addTarget(self, action: #selector(goToStore(sender:)), for: .touchUpInside)
+            buttons.append(button)
+        }
+        return buttons
     }()
         
-    private lazy var hStack: UIStackView = {
-        let hStackView: UIStackView = UIStackView(arrangedSubviews: [
-            psButton,
-            xBoxButton,
-            pcButton])
+    private lazy var hStackOne: UIStackView = {
+        let hStackView: UIStackView = UIStackView(arrangedSubviews: Array(storeButtons[0...storeButtons.count/2]))
+        hStackView.distribution = .fillEqually
+        hStackView.spacing = 16
+        hStackView.axis = .horizontal
+        
+        return hStackView
+    }()
+    
+    private lazy var hStackTwo: UIStackView = {
+        let hStackView: UIStackView = UIStackView(arrangedSubviews: Array(storeButtons[storeButtons.count/2..<storeButtons.count]))
         hStackView.distribution = .fillEqually
         hStackView.spacing = 16
         hStackView.axis = .horizontal
@@ -70,7 +62,8 @@ class PlatformView: UIView {
     private lazy var buttonVStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             platformAvailability,
-            hStack])
+            hStackOne,
+            hStackTwo])
         
         stack.axis = .vertical
         stack.spacing = 16
@@ -87,7 +80,8 @@ class PlatformView: UIView {
 //
 //    private var cancelables = Set<AnyCancellable>()
     
-    init() {
+    init(stores: [Stores]) {
+        self.stores = stores
         super.init(frame: .zero)
         layout()
 //        observe()
@@ -112,17 +106,7 @@ class PlatformView: UIView {
            // make.edges.equalToSuperview()//            make.top.bottom.trailing.equalToSuperview()//           make.top.bottom.leading.trailing.equalToSuperview()
 //            make.rightMargin.equalToSuperview().offset(10)
         }
-        
-        psButton.snp.makeConstraints { make in
-            make.height.equalTo(50)
-        }
-        xBoxButton.snp.makeConstraints { make in
-            make.height.equalTo(50)
-        }
-        pcButton.snp.makeConstraints { make in
-            make.height.equalTo(50)
-        }
-        
+                
 //        headerView.snp.makeConstraints { make in
 //            make.leading.equalToSuperview()
 //            make.trailing.equalTo(buttonVStack.snp.leading).offset(-24)
@@ -131,6 +115,9 @@ class PlatformView: UIView {
 //            //            make.centerY.equalTo(textFieldContinerView.snp.centerY)
 //            //            make.trailing.equalTo(textFieldContinerView.snp.leading).offset(-24)
 //        }
+    }
+    @objc private func goToStore(sender: UIButton) {
+      self.delegate?.storeButtonPressed(link: stores[sender.tag].store.domain)
     }
     
 //    private func observe() {
