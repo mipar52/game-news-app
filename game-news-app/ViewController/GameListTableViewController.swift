@@ -85,12 +85,41 @@ class GameListTableViewController: UITableViewController {
     
     func setupBarItem() {
         let image = UIImage(systemName: Text.UIImages.sortSlider)?.withTintColor(Colors.buttonColor, renderingMode: .automatic)
+
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: image,style: .plain, target: self, action: #selector(sortSettings))
-        self.navigationItem.rightBarButtonItem?.tintColor = Colors.redish
+            let sortOne = UIAction(title: Text.UIStrings.sortOne) { [unowned self] action in
+                self.gameList = self.gameList.sorted(by: {$0.name_original < $1.name_original})
+                self.tableView.reloadData()
+            }
+        
+            let sortTwo = UIAction(title: Text.UIStrings.sortTwo) { [unowned self] action in
+                self.gameList = self.gameList.sorted(by: {$1.name_original < $0.name_original})
+                self.tableView.reloadData()
+            }
+            
+            let sortThree = UIAction(title: Text.UIStrings.sortThree) { [unowned self] action in
+                self.gameList = self.gameList.sorted(by: {$1.metacritic < $0.metacritic})
+                self.tableView.reloadData()
+            }
+            let sortFour = UIAction(title: Text.UIStrings.sortFour) { [unowned self] action in
+                self.gameList = self.gameList.sorted(by: {$0.metacritic < $1.metacritic})
+                self.tableView.reloadData()
+            }
+
+            
+            let elements = [sortOne, sortTwo, sortThree, sortFour]
+        elements.forEach { action in
+            action.image?.withTintColor(Colors.headerText)
+        }
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .refresh, menu: UIMenu(title: Text.UIStrings.sortGames, image: image, children: elements))
+        self.navigationItem.rightBarButtonItem?.tintColor = Colors.headerText
+//        self.navigationItem.rightBarButtonItem.showsMenuAsPrimaryAction = true
+//            docVerSelection.menu = UIMenu(title: "Document Verification", children: elements)
     }
 
     @objc func sortSettings() {
+ 
         dismiss(animated: true)
     }
 }

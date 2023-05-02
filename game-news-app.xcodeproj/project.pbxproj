@@ -45,6 +45,8 @@
 		A1DC197D2A00253600B0F08F /* GameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC197C2A00253600B0F08F /* GameDetailView.swift */; };
 		A1DC197F2A0100B400B0F08F /* PlatformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC197E2A0100B400B0F08F /* PlatformView.swift */; };
 		A1DC19812A01012B00B0F08F /* UIButtonFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC19802A01012B00B0F08F /* UIButtonFactory.swift */; };
+		A1DC19842A01359C00B0F08F /* UIAlertFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC19832A01359C00B0F08F /* UIAlertFactory.swift */; };
+		A1DC19862A01463900B0F08F /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC19852A01463900B0F08F /* ReviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +87,8 @@
 		A1DC197C2A00253600B0F08F /* GameDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailView.swift; sourceTree = "<group>"; };
 		A1DC197E2A0100B400B0F08F /* PlatformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformView.swift; sourceTree = "<group>"; };
 		A1DC19802A01012B00B0F08F /* UIButtonFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonFactory.swift; sourceTree = "<group>"; };
+		A1DC19832A01359C00B0F08F /* UIAlertFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertFactory.swift; sourceTree = "<group>"; };
+		A1DC19852A01463900B0F08F /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +174,7 @@
 				A1DC197529FFC78E00B0F08F /* SpinnerController.swift */,
 				A1DC197C2A00253600B0F08F /* GameDetailView.swift */,
 				A1DC197E2A0100B400B0F08F /* PlatformView.swift */,
+				A1DC19852A01463900B0F08F /* ReviewView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 				A1DC195E29FE609200B0F08F /* UILabelFactory.swift */,
 				A1DC197329FFC73400B0F08F /* Spinner.swift */,
 				A1DC19802A01012B00B0F08F /* UIButtonFactory.swift */,
+				A1DC19832A01359C00B0F08F /* UIAlertFactory.swift */,
 			);
 			path = UIFactory;
 			sourceTree = "<group>";
@@ -304,12 +310,14 @@
 				A1DC197D2A00253600B0F08F /* GameDetailView.swift in Sources */,
 				A1DC192129FAA70E00B0F08F /* HomeViewController.swift in Sources */,
 				A1DC194129FBD0FE00B0F08F /* Game.swift in Sources */,
+				A1DC19842A01359C00B0F08F /* UIAlertFactory.swift in Sources */,
 				A1DC193F29FBCDE200B0F08F /* GameGenres.swift in Sources */,
 				A1DC191D29FAA70E00B0F08F /* AppDelegate.swift in Sources */,
 				A1DC197029FFC30900B0F08F /* GameViewModel.swift in Sources */,
 				A1DC193429FAAA9B00B0F08F /* NetworkManager.swift in Sources */,
 				A1DC197629FFC78E00B0F08F /* SpinnerController.swift in Sources */,
 				A1DC196529FE7D6C00B0F08F /* ScrollView+Extension.swift in Sources */,
+				A1DC19862A01463900B0F08F /* ReviewView.swift in Sources */,
 				A1DC196D29FFC2AC00B0F08F /* UIResponder+Extension.swift in Sources */,
 				A1DC196329FE712600B0F08F /* GamePageView.swift in Sources */,
 				A1DC193629FAABD500B0F08F /* NetworkError.swift in Sources */,

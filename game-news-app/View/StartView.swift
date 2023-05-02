@@ -82,19 +82,23 @@ class StartView: UIView {
     }
     
     @objc func searchForCategories() {
+        UIAlertFactory.buildSpinner(message: Text.Alert.categories, vc: parentViewController!)
                 let rootVC = GameGenreSelectTableViewController()
                 let networkManager = NetworkManager()
                 Task {
                     do {
                         rootVC.gameGanres = try await networkManager.getGamesGenres().sorted(by: {$0!.name < $1!.name})
                     } catch {
+                        UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: parentViewController!)
                         print(error)
                     }
-                    let navigationVC = UINavigationController(rootViewController: rootVC)
-                    navigationVC.navigationBar.prefersLargeTitles = true
-                    //rootVC.title = rootVC.gameResults?.results[0].genres[0].name
-                    navigationVC.modalPresentationStyle = .fullScreen
-                    parentViewController?.present(navigationVC, animated: true)
+                    parentViewController?.dismiss(animated: true, completion: { [weak self] in
+                        let navigationVC = UINavigationController(rootViewController: rootVC)
+                        navigationVC.navigationBar.prefersLargeTitles = true
+                        //rootVC.title = rootVC.gameResults?.results[0].genres[0].name
+                        navigationVC.modalPresentationStyle = .fullScreen
+                        self?.parentViewController?.present(navigationVC, animated: true)
+                    })
                 }
 
     }

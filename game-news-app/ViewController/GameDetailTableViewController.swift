@@ -15,6 +15,11 @@ class GameDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Colors.backgroundColor
+        //layout()
+      //  layout()
+    }
+    
+    override func viewDidLayoutSubviews() {
         layout()
     }
     
@@ -24,9 +29,9 @@ class GameDetailViewController: UIViewController {
     
     private lazy var verticalscrollView: UIScrollView = {
        let scrollView = UIScrollView()
-        scrollView.isPagingEnabled = true
+      //  scrollView.isPagingEnabled = true
         scrollView.bounces = true
-        scrollView.contentSize = view.frame.size
+        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height * 1.1)
         return scrollView
     }()
     
@@ -69,15 +74,36 @@ class GameDetailViewController: UIViewController {
             label.textAlignment = .center
             return label
     }()
+    private lazy var screenshotImageViews: [UIImageView] = {
+        let screenshotOne = UIImageView()
+        let screenshotTwo = UIImageView()
+        let screenshotThree = UIImageView()
+        
+        screenshotOne.kf.setImage(with: game?.background_image)
+        screenshotTwo.kf.setImage(with: game?.background_image)
+        screenshotThree.kf.setImage(with: game?.background_image)
+        
+        return [screenshotOne, screenshotTwo, screenshotThree]
+    }()
     
-//    private lazy var platformAvailability: UILabel = {
-//        let label = UILabelFactory.build(text: "Platform availability", font: Fonts.bold(ofSite: 20))
-//        label.numberOfLines = 0
-//        label.textColor = Colors.headerText
-//        label.textAlignment = .center
-//        return label
-//    }()
+    private lazy var reviewlabelView: UILabel = {
+        let label = UILabelFactory.build(text: "Game reviews", font: Fonts.bold(ofSite: 30))
+        label.numberOfLines = 0
+        label.textColor = Colors.headerText
+        label.textAlignment = .center
+        return label
+    }()
 
+    
+    private lazy var reviewView: ReviewView = {
+        let reviewView = ReviewView()
+        return reviewView
+    }()
+
+    private lazy var screenshotView: GamePageView = {
+        let gameView = GamePageView(contentWidth: view.frame.width,views: screenshotImageViews)
+        return gameView
+    }()
     
     private lazy var vStack: UIStackView = {
         let uiStackView = UIStackView(arrangedSubviews: [
@@ -88,28 +114,17 @@ class GameDetailViewController: UIViewController {
             UIView(),
             platformView,
             UIView(),
-            gameScreenshotsTitleView])
+            gameScreenshotsTitleView,
+            screenshotView,
+            UIView(),
+            reviewlabelView,
+            reviewView
+            ])
         uiStackView.axis = .vertical
         uiStackView.spacing = 16
         return uiStackView
     }()
     
-    
-//    private lazy var developerView: GameDetailView = {
-//        return GameDetailView(text: "Developer:\n\(game?.developers.first)")
-//    }()
-//
-//    private lazy var releasedView: GameDetailView = {
-//        return GameDetailView(text: "Released:\n\(game?.released)")
-//    }()
-    
-//    private lazy var hStack: UIStackView = {
-//        let hstck = UIStackView(arrangedSubviews: [developerView, releasedView])
-//        hstck.distribution = .fillEqually
-//        hstck.spacing = 16
-//        hstck.axis = .horizontal
-//        return hstck
-//    }()
     
     func layout() {
         view.addSubview(verticalscrollView)
@@ -151,36 +166,18 @@ class GameDetailViewController: UIViewController {
         platformView.snp.makeConstraints { make in
             make.rightMargin.equalToSuperview().offset(-10)
         }
-//
-////        platformAvailability.snp.makeConstraints { make in
-////            make.trailing.equalToSuperview().offset(5)
-////        }
-//        platformView.snp.makeConstraints { make in
-//            make.rightMargin.leftMargin.equalToSuperview().offset(5)
-//           // make.left.right.equalTo(verticalscrollView)
-//           // make.right.equalToSuperview().offset(10)
-//           // make.width.equalTo(view.frame.width).offset(5)
-//            make.height.equalTo(100)
-//            //make.width.equalTo(verticalscrollView.frame.width).offset(10)
-//        }
         
-//        verticalscrollView.addSubview(hStack)
+        screenshotView.snp.makeConstraints { make in
+            make.height.equalTo(200)
+        }
         
-//        hStack.snp.makeConstraints { make in
-//            make.height.equalTo(200)
-//            make.width.equalTo(verticalscrollView.frame.width).offset(10)
-//        }
-       // self.view.addSubview(verticalscrollView)
-//        verticalscrollView.snp.makeConstraints { make in
-//            make.top.equalTo(verticalscrollView.snp.bottom)
-//            make.bottom.left.right.equalToSuperview()
-//        }
-//
-//        verticalscrollView.addSubview(titlelabelView)
-//        titlelabelView.snp.makeConstraints { make in
-//            make.top.equalToSuperview().offset(10)
-//            make.width.equalToSuperview().multipliedBy(0.8)
-//            make.centerX.equalToSuperview()
-//        }
+        reviewlabelView.snp.makeConstraints { make in
+            
+        }
+        
+        reviewView.snp.makeConstraints { make in
+            make.rightMargin.equalToSuperview().offset(-10)
+            //make.edges.equalToSuperview()
+        }
     }
 }

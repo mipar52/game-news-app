@@ -20,6 +20,7 @@ class GameGenreSelectTableViewController: UITableViewController {
         self.tableView = UITableView(frame: .zero, style: .insetGrouped)
         self.tableView.separatorStyle = .singleLine
         setupUI()
+        setupNavController()
     }
     
     private func setupUI() {
@@ -92,6 +93,7 @@ class GameGenreSelectTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        UIAlertFactory.buildSpinner(message: Text.Alert.games, vc: self)
         let manager = NetworkManager()
         let titleView = UIImageView()
         Task {
@@ -104,12 +106,15 @@ class GameGenreSelectTableViewController: UITableViewController {
                     gameListVC.gameList.append(obtainedGame!)
                 }
             } catch {
+                UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)
                 print(error)
             }
             
             gameListVC.titleImageView = titleView
             gameListVC.gameGenreTitle = gameGanres![indexPath.section]!.name
-            navigationController?.pushViewController(gameListVC, animated: true)
+            self.dismiss(animated: true) { [weak self] in
+                self?.navigationController?.pushViewController(gameListVC, animated: true)
+            }
         }
     }
     
@@ -119,8 +124,22 @@ class GameGenreSelectTableViewController: UITableViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image,style: .plain, target: self, action: #selector(restartFlow))
         self.navigationItem.leftBarButtonItem?.tintColor = Colors.headerText
     }
+    private func setupNavController() {
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.foregroundColor: Colors.textColor]
+        appearance.largeTitleTextAttributes = [.foregroundColor: Colors.headerText]
+
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.tintColor = Colors.headerText
+        
+        //navigationItem.leftBarButtonItem. = appearance
+    }
 
     @objc func restartFlow() {
-        dismiss(animated: true)
+        UIAlertFactory.buildTwoActionAlert(title: Text.Alert.exitTitle, message: Text.Alert.exitMessage, actionTitle: Text.Alert.yes, vc: self) { _ in
+            self.dismiss(animated: true)
+        }
+        
     }
 }
