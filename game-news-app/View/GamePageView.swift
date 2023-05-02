@@ -19,6 +19,7 @@ class GamePageView: UIView {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.isPagingEnabled = true
         scrollView.bounces = true
+        scrollView.contentSize = CGSize(width: Int(contentWidth) * views.count, height: 200)
         scrollView.delegate = self
         return scrollView
     }()
@@ -60,7 +61,6 @@ class GamePageView: UIView {
 //            make.width.equalTo(contentWidth * CGFloat(views.count))
             
         }
-        scrollView.contentSize = CGSize(width: Int(contentWidth) * views.count, height: 200)
 
         for i in 0..<views.count {
             scrollView.addSubview(views[i])

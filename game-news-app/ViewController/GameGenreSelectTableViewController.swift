@@ -94,7 +94,6 @@ class GameGenreSelectTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         UIAlertFactory.buildSpinner(message: Text.Alert.games, vc: self)
-        let manager = NetworkManager()
         let titleView = UIImageView()
         Task {
             let gameListVC = GameListTableViewController()
@@ -102,8 +101,12 @@ class GameGenreSelectTableViewController: UITableViewController {
                 let games = gameGanres?[indexPath.section]?.games
                 titleView.kf.setImage(with: gameGanres![indexPath.section]?.image_background)
                 for game in games! {
-                    let obtainedGame = try await manager.getGamebyId(id: game.id)
-                    gameListVC.gameList.append(obtainedGame!)
+                    let obtainedGame = try await NetworkManager.sharedInstance.getGamebyId(id: game.id)
+                    if let obtainedGame = obtainedGame {
+                        gameListVC.gameList.append(obtainedGame)
+                    } else {
+                        UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)
+                    }
                 }
             } catch {
                 UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)

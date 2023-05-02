@@ -10,9 +10,7 @@ import UIKit
 struct UIAlertFactory {
     static func buildErrorAlert(message: String, vc: UIViewController) {
         let alert = UIAlertController(title: Text.Alert.exitTitle, message: Text.Alert.errorMessage, preferredStyle: .alert)
-        let action = UIAlertAction(title: Text.Alert.ok, style: .cancel) { action in
-            vc.dismiss(animated: true)
-        }
+        let action = UIAlertAction(title: Text.Alert.ok, style: .cancel)
         alert.addAction(action)
         vc.present(alert, animated: true)
     }
@@ -22,10 +20,8 @@ struct UIAlertFactory {
        // alert.view.backgroundColor = Colors.backgroundColor
         alert.view.tintColor = Colors.headerText
         let action = UIAlertAction(title: actionTitle, style: .default, handler: action)
-        let finish = UIAlertAction(title: Text.Alert.cancel, style: .cancel) { action in
-            vc.dismiss(animated: true, completion: nil)
-        }
-
+        let finish = UIAlertAction(title: Text.Alert.cancel, style: .cancel)
+        
         alert.addAction(action)
         alert.addAction(finish)
         vc.present(alert, animated: true, completion: nil)

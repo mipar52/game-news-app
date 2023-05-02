@@ -11,6 +11,8 @@ import CombineCocoa
 
 class StartView: UIView {
     
+    var delegate: StartButtonDelegate?
+    
     private let startLabel: UILabel = {
         UILabelFactory.build(text: Text.UIStrings.findAGame, font: Fonts.semibold(ofSite: 18), textColor: Colors.backgroundColor)
     }()
@@ -23,10 +25,6 @@ class StartView: UIView {
         let text = NSMutableAttributedString(string: Text.UIStrings.pickCategory, attributes: [.font: Fonts.semibold(ofSite: 20), .foregroundColor: Colors.backgroundColor])
         startButton.setAttributedTitle(text, for: .normal)
         startButton.addTarget(self, action: #selector(searchForCategories), for: .touchUpInside)
-//        startButton.tapPublisher.sink { [weak self] _ in
-//            self?.searchForCategories()
-//        }.store(in: &cancelables)
-        
         return startButton
     }()
     
@@ -82,61 +80,8 @@ class StartView: UIView {
     }
     
     @objc func searchForCategories() {
-        UIAlertFactory.buildSpinner(message: Text.Alert.categories, vc: parentViewController!)
-                let rootVC = GameGenreSelectTableViewController()
-                let networkManager = NetworkManager()
-                Task {
-                    do {
-                        rootVC.gameGanres = try await networkManager.getGamesGenres().sorted(by: {$0!.name < $1!.name})
-                    } catch {
-                        UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: parentViewController!)
-                        print(error)
-                    }
-                    parentViewController?.dismiss(animated: true, completion: { [weak self] in
-                        let navigationVC = UINavigationController(rootViewController: rootVC)
-                        navigationVC.navigationBar.prefersLargeTitles = true
-                        //rootVC.title = rootVC.gameResults?.results[0].genres[0].name
-                        navigationVC.modalPresentationStyle = .fullScreen
-                        self?.parentViewController?.present(navigationVC, animated: true)
-                    })
-                }
-
+        self.delegate?.startButtonPressed(startButton)
     }
-    
-//    static func createSpinnerView() {
-//        let child = SpinnerViewController()
-//
-//        // add the spinner view controller
-//        parentViewController?.addChild(child)
-//        child.view.frame = view.frame
-//        view.addSubview(child.view)
-//        child.didMove(toParent: self)
-//
-//        // wait two seconds to simulate some work happening
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//            // then remove the spinner view controller
-//            child.willMove(toParent: nil)
-//            child.view.removeFromSuperview()
-//            child.removeFromParent()
-//        }
-//    }
-
-    
-//    @objc func didTapStartButton() {
-//        
-//        let rootVC = GameGenreSelectTableViewController()
-//        Task {
-//            do {
-//                rootVC.gameGanres = try await manager.getGamesGenres().sorted(by: {$0!.name < $1!.name})
-//            } catch {
-//                print(error)
-//            }
-//            let navigationVC = UINavigationController(rootViewController: rootVC)
-//            navigationVC.navigationBar.prefersLargeTitles = true
-//            //rootVC.title = rootVC.gameResults?.results[0].genres[0].name
-//            navigationVC.modalPresentationStyle = .fullScreen
-//            present(navigationVC, animated: true)
-//        }
-//    }
 }
+
 

@@ -10,70 +10,40 @@ import Kingfisher
 
 class GameDetailViewController: UIViewController {
     var game: Game?
-    let platformView = PlatformView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Colors.backgroundColor
-        //layout()
-      //  layout()
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     override func viewDidLayoutSubviews() {
         layout()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-
-    }
     
     private lazy var verticalscrollView: UIScrollView = {
        let scrollView = UIScrollView()
-      //  scrollView.isPagingEnabled = true
         scrollView.bounces = true
-        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height * 1.1)
+        scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height * 1.2)
         return scrollView
     }()
     
-    private lazy var titleImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.kf.setImage(with: game?.background_image)
-        imageView.contentMode = .scaleToFill
-       // imageView.addRoundedCorners(radius: 8.0)
-        return imageView
+    private lazy var headerView: GameHeaderView = {
+        let headerView = GameHeaderView(imageUrl: game?.background_image, gameName: game?.name_original ?? "Data not found")
+        return headerView
     }()
     
-    private lazy var titlelabelView: UILabel = {
-        let label = UILabelFactory.build(text: game?.name_original, font: Fonts.bold(ofSite: 30))
-        label.numberOfLines = 0
-        label.textColor = Colors.headerText
-        label.textAlignment = .center
-        return label
+    private lazy var releaseInfoView: ReleaseInfoView = {
+        let releaseInfo = ReleaseInfoView(developers: game!.developers, releaseDate: game!.released)
+        return releaseInfo
     }()
     
-    private lazy var developersLabelView: UILabel = {
-        let label = UILabelFactory.build(text: "Developers: \(game!.developers[0].name)", font: Fonts.semibold(ofSite: 20))
-        label.numberOfLines = 0
-        label.textColor = Colors.textColor
-        label.textAlignment = .left
-        return label
-    }()
-
-    private lazy var releasedlabelView: UILabel = {
-        let label = UILabelFactory.build(text: "Release date: \(game!.released)", font: Fonts.semibold(ofSite: 20))
-        label.numberOfLines = 0
-        label.textColor = Colors.textColor
-        label.textAlignment = .left
-        return label
+    private lazy var platformView : PlatformView = {
+        return PlatformView()
     }()
     
-    private lazy var gameScreenshotsTitleView: UILabel = {
-            let label = UILabelFactory.build(text: "Gameplay screenshots", font: Fonts.bold(ofSite: 20))
-            label.numberOfLines = 0
-            label.textColor = Colors.headerText
-            label.textAlignment = .center
-            return label
-    }()
+    
     private lazy var screenshotImageViews: [UIImageView] = {
         let screenshotOne = UIImageView()
         let screenshotTwo = UIImageView()
@@ -86,42 +56,27 @@ class GameDetailViewController: UIViewController {
         return [screenshotOne, screenshotTwo, screenshotThree]
     }()
     
-    private lazy var reviewlabelView: UILabel = {
-        let label = UILabelFactory.build(text: "Game reviews", font: Fonts.bold(ofSite: 30))
-        label.numberOfLines = 0
-        label.textColor = Colors.headerText
-        label.textAlignment = .center
-        return label
+    private lazy var screenshotView: ScreenshotView = {
+        let screenshotView = ScreenshotView(screenshots: screenshotImageViews, contentWidth: view.frame.width)
+        return screenshotView
     }()
-
     
-    private lazy var reviewView: ReviewView = {
-        let reviewView = ReviewView()
+    private lazy var reviewView: AllReviewView = {
+        let reviewView = AllReviewView()
         return reviewView
     }()
-
-    private lazy var screenshotView: GamePageView = {
-        let gameView = GamePageView(contentWidth: view.frame.width,views: screenshotImageViews)
-        return gameView
-    }()
+    
     
     private lazy var vStack: UIStackView = {
         let uiStackView = UIStackView(arrangedSubviews: [
-            titleImageView,
-            titlelabelView,
-            releasedlabelView,
-            developersLabelView,
-            UIView(),
+            headerView,
+            releaseInfoView,
             platformView,
-            UIView(),
-            gameScreenshotsTitleView,
-            screenshotView,
-            UIView(),
-            reviewlabelView,
+           screenshotView,
             reviewView
             ])
         uiStackView.axis = .vertical
-        uiStackView.spacing = 16
+        uiStackView.spacing = 32
         return uiStackView
     }()
     
@@ -131,6 +86,10 @@ class GameDetailViewController: UIViewController {
        
         verticalscrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+//            make.top.bottom.edges.equalToSuperview()
+//            make.left.edges.equalToSuperview().offset(5)
+//            make.right.edges.equalToSuperview().offset(-5)
+            
 //            make.leading.equalTo(view.snp.leadingMargin).offset(5)
 //            make.trailing.equalTo(view.snp.trailingMargin).offset(-5)
 //            make.bottom.equalTo(view.snp.bottomMargin).offset(-5)
@@ -141,43 +100,13 @@ class GameDetailViewController: UIViewController {
         verticalscrollView.addSubview(vStack)
         
         vStack.snp.makeConstraints { make in
+            
             make.width.equalToSuperview()//.offset(10)
             //            make.height.equalTo(100)
         }
         
-//        TODO: make 'billinputview' for platofmrs & reviews
-        
-        
-        titleImageView.snp.makeConstraints { make in
-            make.height.equalTo(200)
-           // make.width.equalTo(view.frame.width)
-        }
-//        titlelabelView.snp.makeConstraints { make in
-//            make.leftMargin.equalToSuperview().offset(5)
-//        }
-        releasedlabelView.snp.makeConstraints { make in
-            make.leftMargin.equalToSuperview().offset(10)
-        }
-        
-        developersLabelView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(10)
-        }
-        
         platformView.snp.makeConstraints { make in
             make.rightMargin.equalToSuperview().offset(-10)
-        }
-        
-        screenshotView.snp.makeConstraints { make in
-            make.height.equalTo(200)
-        }
-        
-        reviewlabelView.snp.makeConstraints { make in
-            
-        }
-        
-        reviewView.snp.makeConstraints { make in
-            make.rightMargin.equalToSuperview().offset(-10)
-            //make.edges.equalToSuperview()
-        }
+        }        
     }
 }

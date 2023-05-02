@@ -5,7 +5,7 @@
 //  Created by Milan Parađina on 27.04.2023..
 //
 
-//TODO: -> Create GameDetailVC, add alerts, fix navigation controller, additional -> fix scroll view on HomeVC, add firebase, fix cells on GameListVC
+//TODO: -> add alerts, fix navigation controller, additional -> fix scroll view on HomeVC, add firebase, fix cells on GameListVC
 
 import UIKit
 
@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //setupUI()
+        startView.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -47,7 +48,7 @@ class ViewController: UIViewController {
     }()
     
     private lazy var onboardingScreen: GamePageView = {
-        let onboardingScreen = GamePageView(contentWidth: view.frame.width - CGFloat(50), views: views)
+        let onboardingScreen = GamePageView(contentWidth: view.frame.width, views: views)
         return onboardingScreen
     }()
         
@@ -79,4 +80,30 @@ class ViewController: UIViewController {
         }
         bottomLabel.adjustsFontSizeToFitWidth = true
     }
+}
+
+extension ViewController: StartButtonDelegate {
+    func startButtonPressed(_ sender: UIButton) {
+        UIAlertFactory.buildSpinner(message: Text.Alert.categories, vc: self)
+                let rootVC = GameGenreSelectTableViewController()
+                Task {
+                    do {
+                        
+                        rootVC.gameGanres = try await NetworkManager.sharedInstance.getGamesGenres().sorted(by: {$0!.name < $1!.name})
+                    } catch {
+                        UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)
+                        print(error)
+                    }
+                        self.dismiss(animated: true, completion: { [weak self] in
+                        let navigationVC = UINavigationController(rootViewController: rootVC)
+                        navigationVC.navigationBar.prefersLargeTitles = true
+                        //rootVC.title = rootVC.gameResults?.results[0].genres[0].name
+                        navigationVC.modalPresentationStyle = .fullScreen
+                        self?.present(navigationVC, animated: true)
+                    })
+                }
+
+    }
+    
+    
 }
