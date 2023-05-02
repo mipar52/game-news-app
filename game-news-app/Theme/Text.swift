@@ -29,6 +29,24 @@ struct Text {
         static let onboardingTextFour = "You can even enter a specific game, where you can view its metascore, ratings, platforms & store availability."
         static let onboardingTextFive = "Like the app?\nYou can see the source-code on my GitHub page here!"
         static let loadingData = "Loading game data..."
+        static let sortGames = "Sort Games"
+        static let sortOne = "Aphabetical: A → Z"
+        static let sortTwo = "Reverse: Z → A"
+        static let sortThree = "Best Metacritic: 10 → 1"
+        static let sortFour = "Worst Metacritic: 1 → 10"
+
+    }
+    
+    struct Alert {
+        static let errorTitle = "Error"
+        static let exitTitle = "Exit"
+        static let errorMessage = "Error with getting the data!\nMake sure you have a stable internet connecting and try again!"
+        static let exitMessage = "Are you sure you want to exit the application?\nYou can always go back, but still..."
+        static let categories = "Loading categories..."
+        static let games = "Loading games..."
+        static let ok = "Sure"
+        static let yes = "Yes"
+        static let cancel = "Cancel"
     }
     
     struct UIImages {
@@ -38,7 +56,7 @@ struct Text {
         static let onboardingImageThree = "line.3.horizontal.circle"
         static let onboardingImageFour = "playstation.logo"
         static let onboardingImageFive = "laptopcomputer"
-        static let restartArrow = "arrow.counterclockwise"
+        static let restartArrow = "arrow.left"
         static let sortSlider = "slider.horizontal.3"
         static let controllerFill = "gamecontroller.fill"
     }

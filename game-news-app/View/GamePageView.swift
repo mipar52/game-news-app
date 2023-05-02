@@ -9,18 +9,9 @@ import UIKit
 
 class GamePageView: UIView {
     var contentWidth: CGFloat
-    var contentHeight: CGFloat
+    let views: [UIView]
     
     var index = 0
-    
-    var pageViewOne = OnboardingView(image: UIImage(systemName: Text.UIImages.logoViewImageGameController)!, title: Text.UIStrings.onboardingTitleOne, infoDescription: Text.UIStrings.onboardingTextOne)
-    var pageViewTwo = OnboardingView(image: UIImage(systemName: Text.UIImages.onboardingImageTwo)!, title: Text.UIStrings.onboardingTitleTwo, infoDescription: Text.UIStrings.onboardingTextTwo)
-    var pageViewThree = OnboardingView(image: UIImage(systemName: Text.UIImages.onboardingImageThree)!, title: Text.UIStrings.oboardingTitleThree, infoDescription: Text.UIStrings.onboardingTextThree)
-    var pageViewFour = OnboardingView(image: UIImage(systemName: Text.UIImages.onboardingImageFour)!, title: Text.UIStrings.onboardingTitleFour, infoDescription: Text.UIStrings.onboardingTextFour)
-    var pageViewFive = OnboardingView(image: UIImage(systemName: Text.UIImages.onboardingImageFive)!, title: Text.UIStrings.onboardingTitleFive, infoDescription: Text.UIStrings.onboardingTextFive)
-
-
-     lazy var views: [OnboardingView] = [pageViewOne, pageViewTwo, pageViewThree, pageViewFour, pageViewFive]
     
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -41,8 +32,6 @@ class GamePageView: UIView {
         
     }()
     
-
-    
     @objc private func pageControlerSwipe(sender: UIPageControl) {
         print("swipe")
         scrollView.scrollToView(horizontalPage: sender.currentPage, animated: true)
@@ -52,12 +41,13 @@ class GamePageView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(contentWidth: CGFloat, contentHeight: CGFloat) {
+    init(contentWidth: CGFloat, views: [UIView]) {
         self.contentWidth = contentWidth
-        self.contentHeight = contentHeight
+        self.views = views
         super.init(frame: .zero)
         layout()
     }
+    
     private func layout() {
         backgroundColor = Colors.backgroundColor
         addSubview(scrollView)

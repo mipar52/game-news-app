@@ -11,7 +11,6 @@ import UIKit
 
 class ViewController: UIViewController {
     let logoView = LogoView()
-    var pageView : GamePageView?
     let startView = StartView()
     let bottomLabel = UILabelFactory.build(text: Text.UIStrings.bottomLabelStartScreen, font: Fonts.regular(ofSite: 15))
     
@@ -21,14 +20,13 @@ class ViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        pageView = GamePageView(contentWidth: view.frame.width - CGFloat(55), contentHeight: view.frame.height)
         setupUI()
     }
     
     private lazy var verticalStackView: UIStackView = {
         let verticalStackView = UIStackView(arrangedSubviews: [
         logoView,
-        pageView!,
+        onboardingScreen,
         startView,
         bottomLabel
         ])
@@ -36,6 +34,21 @@ class ViewController: UIViewController {
         verticalStackView.axis = .vertical
         verticalStackView.spacing = 36
         return verticalStackView
+    }()
+    
+    private var views: [UIView] = {
+        var pageViewOne = OnboardingView(image: UIImage(systemName: Text.UIImages.logoViewImageGameController)!, title: Text.UIStrings.onboardingTitleOne, infoDescription: Text.UIStrings.onboardingTextOne)
+        var pageViewTwo = OnboardingView(image: UIImage(systemName: Text.UIImages.onboardingImageTwo)!, title: Text.UIStrings.onboardingTitleTwo, infoDescription: Text.UIStrings.onboardingTextTwo)
+        var pageViewThree = OnboardingView(image: UIImage(systemName: Text.UIImages.onboardingImageThree)!, title: Text.UIStrings.oboardingTitleThree, infoDescription: Text.UIStrings.onboardingTextThree)
+        var pageViewFour = OnboardingView(image: UIImage(systemName: Text.UIImages.onboardingImageFour)!, title: Text.UIStrings.onboardingTitleFour, infoDescription: Text.UIStrings.onboardingTextFour)
+        var pageViewFive = OnboardingView(image: UIImage(systemName: Text.UIImages.onboardingImageFive)!, title: Text.UIStrings.onboardingTitleFive, infoDescription: Text.UIStrings.onboardingTextFive)
+
+        return [pageViewOne, pageViewTwo, pageViewThree, pageViewFour, pageViewFive]
+    }()
+    
+    private lazy var onboardingScreen: GamePageView = {
+        let onboardingScreen = GamePageView(contentWidth: view.frame.width - CGFloat(50), views: views)
+        return onboardingScreen
     }()
         
     func setupUI() {
@@ -52,7 +65,7 @@ class ViewController: UIViewController {
         logoView.snp.makeConstraints { make in
             make.height.equalTo(100)
         }
-        pageView!.snp.makeConstraints { make in
+        onboardingScreen.snp.makeConstraints { make in
             make.height.equalTo(200)
         }
         
