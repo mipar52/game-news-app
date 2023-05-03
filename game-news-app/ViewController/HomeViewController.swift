@@ -5,7 +5,7 @@
 //  Created by Milan Parađina on 27.04.2023..
 //
 
-//TODO: -> padding, cells, error handling, firebase, readme
+//TODO: -> error handling, firebase, readme
 
 import UIKit
 
@@ -16,12 +16,13 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //setupUI()
+        setupUI()
         startView.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
-        setupUI()
+        onboardingScreen.resizeScrollViewContentSize()
+        onboardingScreen.reconfigureViews()
     }
     
     private lazy var verticalStackView: UIStackView = {
@@ -42,8 +43,18 @@ class ViewController: UIViewController {
         var pageViewTwo = OnboardingView(image: UIImage(systemName: Text.UIImages.onboardingImageTwo)!, title: Text.UIStrings.onboardingTitleTwo, infoDescription: Text.UIStrings.onboardingTextTwo)
         var pageViewThree = OnboardingView(image: UIImage(systemName: Text.UIImages.onboardingImageThree)!, title: Text.UIStrings.oboardingTitleThree, infoDescription: Text.UIStrings.onboardingTextThree)
         var pageViewFour = OnboardingView(image: UIImage(systemName: Text.UIImages.onboardingImageFour)!, title: Text.UIStrings.onboardingTitleFour, infoDescription: Text.UIStrings.onboardingTextFour)
+        
         var pageViewFive = OnboardingView(image: UIImage(systemName: Text.UIImages.onboardingImageFive)!, title: Text.UIStrings.onboardingTitleFive, infoDescription: Text.UIStrings.onboardingTextFive)
-
+        
+        let text = NSMutableAttributedString(string: Text.UIStrings.onboardingTextFive, attributes: [.font: Fonts.semibold(ofSite: 15)])
+        
+        if let url = URL(string: Text.UIStrings.gitHubLink) {
+            text.addAttributes([.font: Fonts.semibold(ofSite: 15), .foregroundColor: Colors.textColor, .link: url], range: NSMakeRange(Text.UIStrings.onboardingTextFive.count - 6, 5))
+            pageViewFive.isUserInteractionEnabled = true
+            pageViewFive.addGestureRecognizer(UITapGestureRecognizer(target: pageViewFive, action: #selector(pageViewFive.goToGitHubPage(_:))))
+            pageViewFive.descriptionLabel.attributedText = text
+        }
+        
         return [pageViewOne, pageViewTwo, pageViewThree, pageViewFour, pageViewFive]
     }()
     
@@ -66,7 +77,9 @@ class ViewController: UIViewController {
         logoView.snp.makeConstraints { make in
             make.height.equalTo(100)
         }
+        
         onboardingScreen.snp.makeConstraints { make in
+           // make.width.equalTo(view.snp.width)
             make.height.equalTo(200)
         }
         
@@ -78,6 +91,7 @@ class ViewController: UIViewController {
           //  make.leading.equalTo(view.snp.leadingMargin).offset(20)
             make.height.equalTo(30)
         }
+        
         bottomLabel.adjustsFontSizeToFitWidth = true
     }
 }
@@ -88,22 +102,19 @@ extension ViewController: StartButtonDelegate {
                 let rootVC = GameGenreSelectTableViewController()
                 Task {
                     do {
-                        
                         rootVC.gameGanres = try await NetworkManager.sharedInstance.getGamesGenres().sorted(by: {$0!.name < $1!.name})
-                    } catch {
-                        UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)
-                        print(error)
-                    }
                         self.dismiss(animated: true, completion: { [weak self] in
                         let navigationVC = UINavigationController(rootViewController: rootVC)
                         navigationVC.navigationBar.prefersLargeTitles = true
-                        //rootVC.title = rootVC.gameResults?.results[0].genres[0].name
                         navigationVC.modalPresentationStyle = .fullScreen
                         self?.present(navigationVC, animated: true)
                     })
+                    } catch {
+                        self.dismiss(animated: true, completion: {
+                            UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)
+                            print(error)
+                    })
+                    }
                 }
-
     }
-    
-    
 }

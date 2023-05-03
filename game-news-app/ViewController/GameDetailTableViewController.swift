@@ -15,12 +15,15 @@ class GameDetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = Colors.backgroundColor
         navigationItem.largeTitleDisplayMode = .never
+        layout()
         platformView.delegate = self
         releaseInfoView.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
-        layout()
+        screenshotView.screenshotView.resizeScrollViewContentSize()
+        screenshotView.screenshotView.reconfigureViews()
+
     }
     
     
@@ -88,29 +91,14 @@ class GameDetailViewController: UIViewController {
        
         verticalscrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-
-//            make.top.bottom.edges.equalToSuperview()
-//            make.left.edges.equalToSuperview().offset(5)
-//            make.right.edges.equalToSuperview().offset(-5)
-            
-//            make.leading.equalTo(view.snp.leadingMargin).offset(5)
-//            make.trailing.equalTo(view.snp.trailingMargin).offset(-5)
-//            make.bottom.equalTo(view.snp.bottomMargin).offset(-5)
-//            make.top.equalTo(view.snp.topMargin).offset(5)
-            
         }
         
         verticalscrollView.addSubview(vStack)
         
         vStack.snp.makeConstraints { make in
-            
-            make.width.equalToSuperview().offset(10)
-            //            make.height.equalTo(100)
+            make.width.equalToSuperview().inset(10)
+            make.leadingMargin.equalToSuperview().offset(2)
         }
-        
-        platformView.snp.makeConstraints { make in
-            make.rightMargin.equalToSuperview().offset(-10)
-        }        
     }
 }
 

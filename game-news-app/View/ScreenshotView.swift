@@ -19,7 +19,7 @@ class ScreenshotView: UIView {
             return label
     }()
     
-    private lazy var screenshotView: GamePageView = {
+     lazy var screenshotView: GamePageView = {
         let gameView = GamePageView(contentWidth: contentWidth,views: screenshotImageView)
         return gameView
     }()

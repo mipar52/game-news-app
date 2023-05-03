@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class GamePageView: UIView {
     var contentWidth: CGFloat
@@ -18,8 +19,9 @@ class GamePageView: UIView {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.isPagingEnabled = true
-        scrollView.bounces = true
-        scrollView.contentSize = CGSize(width: Int(contentWidth) * views.count, height: 200)
+        
+        scrollView.contentSize = CGSize(width: contentWidth * CGFloat(views.count), height: 200)
+    
         scrollView.delegate = self
         return scrollView
     }()
@@ -52,19 +54,16 @@ class GamePageView: UIView {
     private func layout() {
         backgroundColor = Colors.backgroundColor
         addSubview(scrollView)
-        addSubview(pageControl)
-        //Int(frame.size.width)
+        
         scrollView.snp.makeConstraints { make in
-//            make.top.left.right.equalToSuperview()
             make.edges.equalToSuperview()
             make.height.equalTo(200)
-//            make.width.equalTo(contentWidth * CGFloat(views.count))
-            
         }
-
+        
         for i in 0..<views.count {
             scrollView.addSubview(views[i])
             let viewOffset = contentWidth * CGFloat(i)
+            
             print("view offset: \(viewOffset)")
             views[i].snp.makeConstraints { make in
                 make.width.equalToSuperview()
@@ -72,24 +71,21 @@ class GamePageView: UIView {
                 make.left.equalToSuperview().offset(viewOffset)
             }
         }
-        
+        addSubview(pageControl)
+
         pageControl.snp.makeConstraints { make in
-          //  make.center.equalTo(scrollView.snp.center)
             make.bottom.equalTo(scrollView.snp.bottom)//.offset(10)
             make.centerX.equalTo(scrollView.snp.centerX)
         }
                 
         addShadow(off: CGSize(width: 0, height: 3), color: .black, radius: 12.0, opacity: 0.1)
     }
-    
 }
+
 extension GamePageView: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageIndex = round(scrollView.contentOffset.x / frame.width)
         pageControl.currentPage = Int(pageIndex)
-//        if pageControl.currentPage > 2 {
-//            pageControl.currentPage = 0
-//        }
     }
     
     func update()  {
@@ -97,6 +93,44 @@ extension GamePageView: UIScrollViewDelegate {
         let x = CGFloat(index) * scrollView.frame.size.width
         scrollView.setContentOffset(CGPoint(x:x, y:0), animated: true)
     }
+    
+    override var intrinsicContentSize: CGSize {
+        print(views.first!.frame.width * CGFloat(views.count))
+        return CGSize(width: views.first!.frame.width * CGFloat(views.count), height: 200)
+    }
 }
+//MARK: Additional helper methods to assist with auto-layout of the scrollview
+extension GamePageView {
+    
+    func reconfigureViews() {
+        if views.count != 0 {
+            for i in 0..<views.count {
+                let offset = views[i].frame.width * CGFloat(i)
+                views[i].snp.makeConstraints { make in
+                    print("New offset: \(offset)")
+                    make.width.equalToSuperview()
+                    make.height.equalTo(200)
+                    make.left.equalToSuperview().offset(offset)
+                }
+                views[i].layoutIfNeeded()
+            }
+        }
+    }
+    
+    func resizeScrollViewContentSize() {
+        var contentRect = CGRect.zero
+        var width: CGFloat = .zero
+        for view in self.scrollView.subviews {
+            if view is UIPageControl {
+                print(view.frame.width)
+            } else {
+                width += view.frame.width
+            }
+        }
+        let finalWidth = Int(width)
+        print(finalWidth)
+        self.scrollView.layoutIfNeeded()
+        self.scrollView.contentSize = CGSize(width: finalWidth, height: 200)
+    }
 
-
+}

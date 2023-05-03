@@ -27,7 +27,7 @@ class OnboardingView: UIView {
         UILabelFactory.build(text: title, font: Fonts.bold(ofSite: 16), textColor: Colors.headerText, textAligment: .center)
     }()
     
-    private lazy var descriptionLabel: UILabel = {
+     lazy var descriptionLabel: UILabel = {
        let label = UILabel()
         label.textAlignment = .center
         label.numberOfLines = 5
@@ -84,6 +84,15 @@ class OnboardingView: UIView {
             
         }
     }
+    
+    @objc func goToGitHubPage(_ sender: OnboardingView) {
+        if let url = URL(string: Text.UIStrings.gitHubLink) {
+            UIApplication.shared.openURL(url)
+        } else {
+            print("Invalid link!")
+        }
+    }
+
     
 //    func configure(amount: Double) {
 //        let text = NSMutableAttributedString(string: "Heheh lol", attributes: [.font: Fonts.bold(ofSite: 24)])

@@ -22,6 +22,7 @@ struct Text {
         static let oboardingTitleThree = "Searching"
         static let onboardingTitleFour = "Game details"
         static let onboardingTitleFive = "Source code"
+        static let gitHubLink = "https://github.com/mipar52/game-news-app"
         
         static let onboardingTextOne = "This simple application uses RAWG.io API to fetch data about various trending and non-trending video games for different gaming platforms"
         static let onboardingTextTwo = "Once you read the onboarding text, you can start by pressing the yellow button in the field below to search for a specific gaming category. Each category contains the six most popular games"
