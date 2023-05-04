@@ -9,11 +9,13 @@ import UIKit
 import Kingfisher
 
 class GameGenreSelectTableViewController: UITableViewController {
-    var gameGanres: [Results?]?
+    
+    var gameGanres: [Results] = []
+    let userDefaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBarItem()
-       // setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -23,27 +25,10 @@ class GameGenreSelectTableViewController: UITableViewController {
         setupNavController()
     }
     
-    private func setupUI() {
-        self.title = "Select your category"
-        navigationController?.navigationBar.barTintColor = Colors.headerText
-//        navigationController?.navigationBar.tintColor = Colors.headerText
-//        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Colors.headerText]
-        view.backgroundColor = Colors.headerText
-        self.tableView.backgroundColor = Colors.backgroundColor
-        self.tableView.separatorStyle = .singleLine
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.title = "Select your category"
-        tableView.reloadData()
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        if let gameGanres = gameGanres {
-            return gameGanres.count
-        } else {
-            return 0
-        }
+        return gameGanres.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,80 +44,67 @@ class GameGenreSelectTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "gameGanresCell")
             cell.textLabel?.text = Text.UIStrings.loadingData
-        cell.backgroundColor = Colors.backgroundColor
-        cell.layer.masksToBounds = true
-        cell.layer.cornerRadius = 5
-        cell.layer.borderWidth = 2
-        //    cell.imageView?.image = UIImage(systemName: Text.UIImages.controllerFill)
-        //    cell.imageView?.tintColor = Colors.headerText
-        cell.layer.borderColor = Colors.textColor.cgColor
+            cell.backgroundColor = Colors.backgroundColor
+            cell.layer.masksToBounds = true
+            cell.layer.cornerRadius = 5
+            cell.layer.borderWidth = 2
+            cell.layer.borderColor = Colors.textColor.cgColor
 
-        if let gameGanres = gameGanres,
-           let games = gameGanres[indexPath.section]?.games {
-           let ganre = gameGanres[indexPath.section]
-            cell.imageView?.kf.setImage(with: ganre?.image_background, placeholder: UIImage(systemName: Text.UIImages.controllerFill))
+            let ganre = gameGanres[indexPath.section]
+            cell.imageView?.kf.setImage(with: ganre.image_background, placeholder: UIImage(systemName: Text.UIImages.controllerFill))
             cell.imageView?.tintColor = Colors.backgroundColor
-            cell.textLabel?.text = gameGanres[indexPath.section]?.name
+            cell.textLabel?.text = ganre.name
             cell.textLabel?.font = Fonts.bold(ofSite: 20)
             cell.textLabel?.textColor = Colors.headerText
             cell.textLabel?.adjustsFontSizeToFitWidth = true
-            cell.detailTextLabel?.text = "\(games.first!.name) & more"
-            cell.detailTextLabel?.font = Fonts.semibold(ofSite: 15)
-            cell.detailTextLabel?.textColor = Colors.textColor
-            cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
+        
+            if let name = ganre.games.first?.name {
+                cell.detailTextLabel?.text = "\(String(describing: name)) & more"
+                cell.detailTextLabel?.font = Fonts.semibold(ofSite: 10)
+                cell.detailTextLabel?.textColor = Colors.textColor
+                cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
+            }
             
             cell.imageView?.snp.makeConstraints { make in
                 make.height.equalTo(100)
                 make.width.equalTo(130)
-                make.topMargin.equalTo(cell.snp.topMargin).offset(5)
-                make.bottomMargin.equalTo(cell.snp.bottomMargin).offset(10)
-               // make.leftMargin.equalTo(cell.snp.leftMargin)
+                make.left.lessThanOrEqualToSuperview()
+            }
+            
+            cell.textLabel?.snp.makeConstraints { make in
+                make.left.equalTo(cell.imageView!.snp.right).offset(16)
+                make.top.equalTo(cell.snp.topMargin).offset(8)
+                make.right.equalTo(cell.snp.rightMargin).offset(-2)
+            }
+            
+            cell.detailTextLabel?.snp.makeConstraints { make in
+                make.left.equalTo(cell.imageView!.snp.right).offset(16)
+                make.top.equalTo(cell.textLabel!.snp.bottom).offset(5)
+                make.right.equalTo(cell.snp.rightMargin).offset(-2)
             }
             
             cell.imageView?.addRoundedCorners(corners: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner], radius: 8.0)
             cell.layer.masksToBounds = true
             cell.layer.cornerRadius = 5
-        }
-        
+            
         return cell
     }
     
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        UIAlertFactory.buildSpinner(message: Text.Alert.games, vc: self)
-        let titleView = UIImageView()
-        Task {
-            let gameListVC = GameListTableViewController()
-            do {
-                let games = gameGanres?[indexPath.section]?.games
-                titleView.kf.setImage(with: gameGanres![indexPath.section]?.image_background)
-                for game in games! {
-                    let obtainedGame = try await NetworkManager.sharedInstance.getGamebyId(id: game.id)
-                    if let obtainedGame = obtainedGame {
-                        gameListVC.gameList.append(obtainedGame)
-                    } else {
-                        UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)
-                    }
-                }
-            } catch {
-                UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)
-                print(error)
-            }
-            
-            gameListVC.titleImageView = titleView
-            gameListVC.gameGenreTitle = gameGanres![indexPath.section]!.name
-            self.dismiss(animated: true) { [weak self] in
-                self?.navigationController?.pushViewController(gameListVC, animated: true)
-            }
-        }
+        self.getGames(indexPath.section)
     }
+}
+
+extension GameGenreSelectTableViewController {
     
-    func setupBarItem() {
+    private func setupBarItem() {
         let image = UIImage(systemName: Text.UIImages.restartArrow)?.withTintColor(Colors.buttonColor, renderingMode: .automatic)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: image,style: .plain, target: self, action: #selector(restartFlow))
         self.navigationItem.leftBarButtonItem?.tintColor = Colors.headerText
     }
+
+    
     private func setupNavController() {
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [.foregroundColor: Colors.textColor]
@@ -141,14 +113,64 @@ class GameGenreSelectTableViewController: UITableViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationController?.navigationBar.tintColor = Colors.headerText
-        
-        //navigationItem.leftBarButtonItem. = appearance
+    }
+    
+    private func setupUI() {
+        navigationController?.navigationBar.barTintColor = Colors.headerText
+        view.backgroundColor = Colors.headerText
+        self.tableView.backgroundColor = Colors.backgroundColor
+        self.tableView.separatorStyle = .singleLine
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.title = "Select your category"
+        tableView.reloadData()
     }
 
+
+}
+
+extension GameGenreSelectTableViewController {
+    func getGames(_ gameGanreIndex: Int) {
+        UIAlertFactory.buildSpinner(message: Text.Alert.games, vc: self)
+        Task {
+            do {
+                let titleView = UIImageView()
+                let gameListVC = GameListTableViewController()
+                let games = self.gameGanres[gameGanreIndex].games
+                titleView.kf.setImage(with: gameGanres[gameGanreIndex].image_background)
+                
+                for game in games {
+                    let obtainedGame = try await NetworkManager.sharedInstance.getGamebyId(id: game.id)
+                    switch obtainedGame {
+                    case .success(let success):
+                        if let obtainedGame = success {
+                            gameListVC.gameList.append(obtainedGame)
+                        }
+                    case .failure(let failure):
+                        self.dismiss(animated: true) { [unowned self] in
+                            UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)
+                        }
+                        print(failure.localizedDescription)
+                        break
+                    }
+                }
+                gameListVC.titleImageView = titleView
+                gameListVC.gameGenreTitle = gameGanres[gameGanreIndex].name
+                self.dismiss(animated: true) { [weak self] in
+                    self?.navigationController?.pushViewController(gameListVC, animated: true)
+                }
+            } catch {
+                UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)
+                print(error)
+            }
+        }
+    }
+    
     @objc func restartFlow() {
-        UIAlertFactory.buildTwoActionAlert(title: Text.Alert.exitTitle, message: Text.Alert.exitMessage, actionTitle: Text.Alert.yes, vc: self) { _ in
-            self.dismiss(animated: true)
+        UIAlertFactory.buildTwoActionAlert(title: Text.Alert.exitTitle, message: Text.Alert.exitMessage, actionTitle: Text.Alert.yes, vc: self) { [weak self] _ in
+            self?.userDefaults.set(false, forKey: K.isUserOnboarded)
+            self?.dismiss(animated: true)
         }
         
     }
+
 }

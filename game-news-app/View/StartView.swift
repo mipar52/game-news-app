@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import Combine
-import CombineCocoa
 
 class StartView: UIView {
     

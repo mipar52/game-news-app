@@ -9,4 +9,5 @@ import Foundation
 
 struct K {
     static let rawgApiKey = "d02fab6a726a49f7b2891018368571e7"
+    static let isUserOnboarded = "isUserOnboarded"
 }

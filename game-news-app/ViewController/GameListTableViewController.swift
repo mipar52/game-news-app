@@ -15,12 +15,7 @@ class GameListTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //titleImageView.contentMode = .scaleAspectFill
-        view.backgroundColor = Colors.backgroundColor
-        titleImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
-        navigationItem.titleView = titleImageView
         setupBarItem()
-      //  setupUI()
     }
 
     // MARK: - Table view data source
@@ -30,22 +25,10 @@ class GameListTableViewController: UITableViewController {
         self.tableView.separatorStyle = .singleLine
         setupUI()
     }
-    
-    private func setupUI() {
-        self.title = gameGenreTitle
-        view.backgroundColor = Colors.backgroundColor
-        self.tableView.backgroundColor = Colors.backgroundColor
-        self.tableView.separatorStyle = .singleLine
-        self.tableView.rowHeight = UITableView.automaticDimension
-        tableView.reloadData()
-    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return gameList.count
     }
-    
- 
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
@@ -74,24 +57,39 @@ class GameListTableViewController: UITableViewController {
         
         cell.imageView?.tintColor = Colors.backgroundColor
         cell.textLabel?.text = game.name_original
-        cell.textLabel?.font = Fonts.bold(ofSite: 20)
+        cell.textLabel?.font = Fonts.bold(ofSite: 15)
         cell.textLabel?.textColor = Colors.headerText
         cell.textLabel?.adjustsFontSizeToFitWidth = true
-        cell.detailTextLabel?.text = "Metacritic score: \(game.metacritic)"
-         cell.detailTextLabel?.font = Fonts.regular(ofSite: 15)
-         cell.detailTextLabel?.textColor = Colors.textColor
-        cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
-
-        cell.textLabel?.adjustsFontSizeToFitWidth = true
         
+        if let metacritic = game.metacritic {
+            cell.detailTextLabel?.text = "Metacritic score: \(metacritic)"
+        } else {
+            cell.detailTextLabel?.text = "Game does not have metacritic score"
+        }
+        
+        cell.detailTextLabel?.font = Fonts.semibold(ofSite: 13)
+        cell.detailTextLabel?.textColor = Colors.textColor
+        cell.detailTextLabel?.adjustsFontSizeToFitWidth = true
         cell.imageView?.snp.makeConstraints { make in
             make.height.equalTo(100)
-            make.width.equalTo(130)
-            make.topMargin.equalTo(cell.snp.topMargin).offset(5)
-            make.bottomMargin.equalTo(cell.snp.bottomMargin).offset(10)
-           // make.leftMargin.equalTo(cell.snp.leftMargin)
+            make.width.equalTo(110)
+            make.left.lessThanOrEqualToSuperview()
         }
-
+        
+        cell.textLabel?.snp.makeConstraints { make in
+            make.left.equalTo(cell.imageView!.snp.right).offset(16)
+            make.top.equalTo(cell.snp.topMargin).offset(8)
+            make.right.equalTo(cell.snp.rightMargin).offset(-2)
+        }
+        
+        cell.detailTextLabel?.snp.makeConstraints { make in
+            make.left.equalTo(cell.imageView!.snp.right).offset(16)
+            make.top.equalTo(cell.textLabel!.snp.bottom).offset(5)
+        }
+        
+        cell.imageView?.addRoundedCorners(corners: [.layerMaxXMaxYCorner, .layerMaxXMinYCorner], radius: 8.0)
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = 5
 
         return cell
     }
@@ -101,44 +99,54 @@ class GameListTableViewController: UITableViewController {
         gameDetailVC.game = gameList[indexPath.section]
         navigationController?.pushViewController(gameDetailVC, animated: true)
     }
-    
-    func setupBarItem() {
-        let image = UIImage(systemName: Text.UIImages.sortSlider)?.withTintColor(Colors.buttonColor, renderingMode: .automatic)
+}
 
+extension GameListTableViewController {
+    
+    private func setupUI() {
+        self.title = gameGenreTitle
+        self.tableView.backgroundColor = Colors.backgroundColor
+        self.tableView.separatorStyle = .singleLine
+        self.tableView.rowHeight = UITableView.automaticDimension
         
-            let sortOne = UIAction(title: Text.UIStrings.sortOne) { [unowned self] action in
+        view.backgroundColor = Colors.backgroundColor
+        titleImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 50))
+        navigationItem.titleView = titleImageView
+
+        tableView.reloadData()
+    }
+    
+    private func setupBarItem() {
+
+        let sortOne = UIAction(title: Text.UIStrings.sortOne, image: UIImage(systemName: Text.UIImages.a)) { [unowned self] action in
                 self.gameList = self.gameList.sorted(by: {$0.name_original < $1.name_original})
                 self.tableView.reloadData()
             }
         
-            let sortTwo = UIAction(title: Text.UIStrings.sortTwo) { [unowned self] action in
+        let sortTwo = UIAction(title: Text.UIStrings.sortTwo, image: UIImage(systemName: Text.UIImages.z)) { [unowned self] action in
                 self.gameList = self.gameList.sorted(by: {$1.name_original < $0.name_original})
                 self.tableView.reloadData()
             }
-            
-            let sortThree = UIAction(title: Text.UIStrings.sortThree) { [unowned self] action in
-                self.gameList = self.gameList.sorted(by: {$1.metacritic < $0.metacritic})
-                self.tableView.reloadData()
-            }
-            let sortFour = UIAction(title: Text.UIStrings.sortFour) { [unowned self] action in
-                self.gameList = self.gameList.sorted(by: {$0.metacritic < $1.metacritic})
-                self.tableView.reloadData()
-            }
 
+        let sortThree = UIAction(title: Text.UIStrings.sortThree, image: UIImage(systemName: Text.UIImages.starGood) ) { [unowned self] action in
+            self.gameList = self.gameList.sorted(by: { $0.rating > $1.rating })
+                self.tableView.reloadData()
+            }
+        
+        let sortFour = UIAction(title: Text.UIStrings.sortFour, image: UIImage(systemName: Text.UIImages.starBad)) { [unowned self] action in
+            self.gameList = self.gameList.sorted(by: { $0.rating < $1.rating })
+                self.tableView.reloadData()
+            }
             
             let elements = [sortOne, sortTwo, sortThree, sortFour]
-        elements.forEach { action in
+            elements.forEach { action in
             action.image?.withTintColor(Colors.headerText)
         }
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .refresh, menu: UIMenu(title: Text.UIStrings.sortGames, image: image, children: elements))
+        let menu = UIMenu(title: Text.UIStrings.sortGames, image: nil, identifier: nil, options: [], children: elements)
+        let image = UIImage(systemName: Text.UIImages.sortSlider)?.withTintColor(Colors.buttonColor, renderingMode: .automatic)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", image: image, primaryAction: nil, menu: menu)
         self.navigationItem.rightBarButtonItem?.tintColor = Colors.headerText
-//        self.navigationItem.rightBarButtonItem.showsMenuAsPrimaryAction = true
-//            docVerSelection.menu = UIMenu(title: "Document Verification", children: elements)
     }
 
-    @objc func sortSettings() {
- 
-        dismiss(animated: true)
-    }
 }
