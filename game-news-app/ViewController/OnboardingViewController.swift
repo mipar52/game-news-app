@@ -5,8 +5,6 @@
 //  Created by Milan Parađina on 27.04.2023..
 //
 
-//TODO: -> readme
-
 import UIKit
 import FirebaseAnalytics
 
