@@ -9,10 +9,10 @@ import Foundation
 
 struct Game: Decodable {
     let name_original: String
-    let metacritic: Int
+    let metacritic: Int?
     let released: String
     let background_image: URL
-    let website: URL?
+    let website: String?
     let rating: Double
     let playtime: Int
     let reddit_name: String

@@ -33,8 +33,8 @@ struct Text {
         static let sortGames = "Sort Games"
         static let sortOne = "Aphabetical: A → Z"
         static let sortTwo = "Reverse: Z → A"
-        static let sortThree = "Best Metacritic: 10 → 1"
-        static let sortFour = "Worst Metacritic: 1 → 10"
+        static let sortThree = "Best rating: 10 → 1"
+        static let sortFour = "Worst rating: 1 → 10"
 
     }
     
@@ -60,5 +60,9 @@ struct Text {
         static let restartArrow = "arrow.left"
         static let sortSlider = "slider.horizontal.3"
         static let controllerFill = "gamecontroller.fill"
+        static let a = "a.circle.fill"
+        static let z = "z.circle.fill"
+        static let starGood = "star.fill"
+        static let starBad = "star.leadinghalf.filled"
     }
 }

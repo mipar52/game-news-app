@@ -8,10 +8,10 @@
 import Foundation
 
 struct GameList: Decodable {
-    let results: [Result]
+    let results: [GameResult]
 }
 
-struct Result: Decodable {
+struct GameResult: Decodable {
     let name: String
     let playtime: Int
     let platforms: [Platforms]

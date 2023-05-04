@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  OnboardingViewController.swift
 //  game-news-app
 //
 //  Created by Milan Parađina on 27.04.2023..
@@ -9,15 +9,20 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    let logoView = LogoView()
-    let startView = StartView()
-    let bottomLabel = UILabelFactory.build(text: Text.UIStrings.bottomLabelStartScreen, font: Fonts.regular(ofSite: 15))
+class OnboardingViewController: UIViewController {
+    
+    let userDefault = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if userDefault.bool(forKey: K.isUserOnboarded) {
+            self.getGameCategories()
+        }
+        
         setupUI()
         startView.delegate = self
+        userDefault.set(false, forKey: K.isUserOnboarded)
     }
     
     override func viewDidLayoutSubviews() {
@@ -25,19 +30,21 @@ class ViewController: UIViewController {
         onboardingScreen.reconfigureViews()
     }
     
-    private lazy var verticalStackView: UIStackView = {
-        let verticalStackView = UIStackView(arrangedSubviews: [
-        logoView,
-        onboardingScreen,
-        startView,
-        bottomLabel
-        ])
-        
-        verticalStackView.axis = .vertical
-        verticalStackView.spacing = 36
-        return verticalStackView
+    private lazy var logoView: LogoView = {
+        let logoView = LogoView()
+        return logoView
     }()
     
+    private lazy var startView : StartView = {
+        let startView = StartView()
+        return startView
+    }()
+    
+    private lazy var bottomLabel: UILabel = {
+        let bottomLabel = UILabelFactory.build(text: Text.UIStrings.bottomLabelStartScreen, font: Fonts.regular(ofSite: 15))
+        return bottomLabel
+    }()
+
     private var views: [UIView] = {
         var pageViewOne = OnboardingView(image: UIImage(systemName: Text.UIImages.logoViewImageGameController)!, title: Text.UIStrings.onboardingTitleOne, infoDescription: Text.UIStrings.onboardingTextOne)
         var pageViewTwo = OnboardingView(image: UIImage(systemName: Text.UIImages.onboardingImageTwo)!, title: Text.UIStrings.onboardingTitleTwo, infoDescription: Text.UIStrings.onboardingTextTwo)
@@ -62,6 +69,21 @@ class ViewController: UIViewController {
         let onboardingScreen = GamePageView(contentWidth: view.frame.width, views: views)
         return onboardingScreen
     }()
+
+    
+    private lazy var verticalStackView: UIStackView = {
+        let verticalStackView = UIStackView(arrangedSubviews: [
+        logoView,
+        onboardingScreen,
+        startView,
+        bottomLabel
+        ])
+        
+        verticalStackView.axis = .vertical
+        verticalStackView.spacing = 36
+        return verticalStackView
+    }()
+    
         
     func setupUI() {
         view.backgroundColor = Colors.backgroundColor
@@ -88,7 +110,6 @@ class ViewController: UIViewController {
         }
         
         bottomLabel.snp.makeConstraints { make in
-          //  make.leading.equalTo(view.snp.leadingMargin).offset(20)
             make.height.equalTo(30)
         }
         
@@ -96,25 +117,44 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: StartButtonDelegate {
+extension OnboardingViewController: StartButtonDelegate {
     func startButtonPressed(_ sender: UIButton) {
+        getGameCategories()
+    }
+}
+
+extension OnboardingViewController {
+    func getGameCategories() {
         UIAlertFactory.buildSpinner(message: Text.Alert.categories, vc: self)
-                let rootVC = GameGenreSelectTableViewController()
-                Task {
-                    do {
-                        rootVC.gameGanres = try await NetworkManager.sharedInstance.getGamesGenres().sorted(by: {$0!.name < $1!.name})
-                        self.dismiss(animated: true, completion: { [weak self] in
-                        let navigationVC = UINavigationController(rootViewController: rootVC)
-                        navigationVC.navigationBar.prefersLargeTitles = true
-                        navigationVC.modalPresentationStyle = .fullScreen
-                        self?.present(navigationVC, animated: true)
-                    })
-                    } catch {
-                        self.dismiss(animated: true, completion: {
+            Task {
+                do {
+                    let gameGanresResults = try await NetworkManager.sharedInstance.getGamesGenres()
+                    self.dismiss(animated: true, completion: { [unowned self] in
+                        switch gameGanresResults {
+                            
+                        case .success(let success):
+                            if let gameGanres = success {
+                                let rootVC = GameGenreSelectTableViewController()
+                                rootVC.gameGanres = gameGanres.sorted(by: {$0.name < $1.name})
+                                self.userDefault.set(true, forKey: K.isUserOnboarded)
+                                let navigationVC = UINavigationController(rootViewController: rootVC)
+                                    navigationVC.navigationBar.prefersLargeTitles = true
+                                    navigationVC.modalPresentationStyle = .fullScreen
+                                self.present(navigationVC, animated: true)
+                            }
+                            
+                        case .failure(let failure):
+                            print(failure)
                             UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)
+                        }
+                    })
+                } catch {
+                    self.dismiss(animated: true, completion: {
+                        UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)
                             print(error)
                     })
-                    }
                 }
+            }
     }
+
 }
