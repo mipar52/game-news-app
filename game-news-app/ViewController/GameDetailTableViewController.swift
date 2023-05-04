@@ -55,7 +55,7 @@ class GameDetailViewController: UIViewController {
         let screenshotThree = UIImageView()
         
         screenshotOne.kf.setImage(with: game?.background_image)
-        screenshotTwo.kf.setImage(with: game?.background_image)
+        screenshotTwo.kf.setImage(with: game?.background_image_additional)
         screenshotThree.kf.setImage(with: game?.background_image)
         
         return [screenshotOne, screenshotTwo, screenshotThree]
@@ -67,7 +67,15 @@ class GameDetailViewController: UIViewController {
     }()
     
     private lazy var reviewView: AllReviewView = {
-        let reviewView = AllReviewView(reviews: game!.ratings, metacritic: "\(game!.metacritic)")
+        
+        var metacriticReview = String()
+        if let metacriticScore = game?.metacritic {
+            metacriticReview = "\(metacriticScore)"
+        } else {
+            metacriticReview = "N/A"
+        }
+
+        let reviewView = AllReviewView(reviews: game!.ratings, metacritic: metacriticReview)
         return reviewView
     }()
     

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-//changing fonts -> https://stackoverflow.com/questions/52095864/change-uialertcontrollers-title-fontsize
+
 struct UIAlertFactory {
     static func buildErrorAlert(message: String, vc: UIViewController) {
         let alert = UIAlertController(title: Text.Alert.exitTitle, message: Text.Alert.errorMessage, preferredStyle: .alert)

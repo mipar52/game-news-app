@@ -20,14 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         window?.rootViewController = OnboardingViewController()
-        
-//        if (UserDefaults.standard.bool(forKey: K.isUserOnboarded)) {
-//            window?.rootViewController = GameGenreSelectTableViewController()
-//            window?.makeKeyAndVisible()
-//        } else {
-//            window?.rootViewController = ViewController()
-//            window?.makeKeyAndVisible()
-//        }
             
         func sceneDidDisconnect(_ scene: UIScene) {
             // Called as the scene is being released by the system.

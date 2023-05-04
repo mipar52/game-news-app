@@ -11,9 +11,7 @@ import SnapKit
 class GamePageView: UIView {
     var contentWidth: CGFloat
     let views: [UIView]
-    
-    var index = 0
-    
+        
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -74,7 +72,7 @@ class GamePageView: UIView {
         addSubview(pageControl)
 
         pageControl.snp.makeConstraints { make in
-            make.bottom.equalTo(scrollView.snp.bottom)//.offset(10)
+            make.bottom.equalTo(scrollView.snp.bottom)
             make.centerX.equalTo(scrollView.snp.centerX)
         }
                 
@@ -88,17 +86,12 @@ extension GamePageView: UIScrollViewDelegate {
         pageControl.currentPage = Int(pageIndex)
     }
     
-    func update()  {
-        index = index + 1
-        let x = CGFloat(index) * scrollView.frame.size.width
-        scrollView.setContentOffset(CGPoint(x:x, y:0), animated: true)
-    }
-    
     override var intrinsicContentSize: CGSize {
         print(views.first!.frame.width * CGFloat(views.count))
         return CGSize(width: views.first!.frame.width * CGFloat(views.count), height: 200)
     }
 }
+
 //MARK: Additional helper methods to assist with auto-layout of the scrollview
 extension GamePageView {
     
@@ -132,5 +125,4 @@ extension GamePageView {
         self.scrollView.layoutIfNeeded()
         self.scrollView.contentSize = CGSize(width: finalWidth, height: 200)
     }
-
 }

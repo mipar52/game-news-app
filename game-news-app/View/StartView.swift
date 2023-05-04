@@ -66,7 +66,6 @@ class StartView: UIView {
         
         horizontalLineView.snp.makeConstraints { make in
             make.height.equalTo(2)
-          //  let width = vStackView.snp.width as! CGFloat
         }
         
         addShadow(off: CGSize(width: 0, height: 3), color: .black, radius: 12.0, opacity: 0.1)
@@ -82,5 +81,3 @@ class StartView: UIView {
         self.delegate?.startButtonPressed(startButton)
     }
 }
-
-

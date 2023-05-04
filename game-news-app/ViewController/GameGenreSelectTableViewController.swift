@@ -155,6 +155,7 @@ extension GameGenreSelectTableViewController {
                 }
                 gameListVC.titleImageView = titleView
                 gameListVC.gameGenreTitle = gameGanres[gameGanreIndex].name
+                FirebaseManager.sharedInstance.logFBevent(eventTitle: K.FirebaseEvents.enteredCategory + ":\(gameGanres[gameGanreIndex].name)")
                 self.dismiss(animated: true) { [weak self] in
                     self?.navigationController?.pushViewController(gameListVC, animated: true)
                 }
@@ -168,6 +169,7 @@ extension GameGenreSelectTableViewController {
     @objc func restartFlow() {
         UIAlertFactory.buildTwoActionAlert(title: Text.Alert.exitTitle, message: Text.Alert.exitMessage, actionTitle: Text.Alert.yes, vc: self) { [weak self] _ in
             self?.userDefaults.set(false, forKey: K.isUserOnboarded)
+            FirebaseManager.sharedInstance.logFBevent(eventTitle: K.FirebaseEvents.userOnboardReset)
             self?.dismiss(animated: true)
         }
         

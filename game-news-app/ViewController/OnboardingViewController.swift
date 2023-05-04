@@ -5,9 +5,10 @@
 //  Created by Milan Parađina on 27.04.2023..
 //
 
-//TODO: -> error handling, firebase, readme
+//TODO: -> readme
 
 import UIKit
+import FirebaseAnalytics
 
 class OnboardingViewController: UIViewController {
     
@@ -134,6 +135,7 @@ extension OnboardingViewController {
                             
                         case .success(let success):
                             if let gameGanres = success {
+                                FirebaseManager.sharedInstance.logFBevent(eventTitle: K.FirebaseEvents.userOnboardFinished)
                                 let rootVC = GameGenreSelectTableViewController()
                                 rootVC.gameGanres = gameGanres.sorted(by: {$0.name < $1.name})
                                 self.userDefault.set(true, forKey: K.isUserOnboarded)

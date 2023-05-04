@@ -18,8 +18,6 @@ class GameListTableViewController: UITableViewController {
         setupBarItem()
     }
 
-    // MARK: - Table view data source
-
     override func viewWillAppear(_ animated: Bool) {
         self.tableView = UITableView(frame: .zero, style: .insetGrouped)
         self.tableView.separatorStyle = .singleLine
@@ -97,6 +95,7 @@ class GameListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let gameDetailVC = GameDetailViewController()
         gameDetailVC.game = gameList[indexPath.section]
+        FirebaseManager.sharedInstance.logFBevent(eventTitle: K.FirebaseEvents.enteredGame + ":\(gameList[indexPath.section].name_original)")
         navigationController?.pushViewController(gameDetailVC, animated: true)
     }
 }
@@ -148,5 +147,4 @@ extension GameListTableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "", image: image, primaryAction: nil, menu: menu)
         self.navigationItem.rightBarButtonItem?.tintColor = Colors.headerText
     }
-
 }

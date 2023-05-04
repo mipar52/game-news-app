@@ -47,9 +47,5 @@ class ScreenshotView: UIView {
         vStack.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-//        screenshotView.snp.makeConstraints { make in
-//            make.height.equalTo(150)
-//        }
     }
 }

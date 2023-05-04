@@ -11,7 +11,6 @@ class OnboardingView: UIView {
     
     private let image: UIImage
     private let title: String
-   // private let textAligment: NSTextAlignment
     private let infoDescription: String
     
     private lazy var imageView: UIImageView = {
@@ -34,11 +33,7 @@ class OnboardingView: UIView {
         label.textColor = Colors.textColor
         let text = NSMutableAttributedString(string: infoDescription, attributes: [.font: Fonts.semibold(ofSite: 15)])
         
-      //  text.addAttributes([.font: Fonts.semibold(ofSite: 16)], range: NSMakeRange(text.string.count - 1, 1))
         label.attributedText = text
-    //    label.accessibilityIdentifier = amountLabelIdentifier
-       // label.adjustsFontSizeToFitWidth = true
-        
         return label
     }()
     
@@ -57,7 +52,6 @@ class OnboardingView: UIView {
         self.title = title
         self.image = image
         self.infoDescription = infoDescription
-       // self.amountLabelIdentifier = amountLabelIdentifer
         super.init(frame: .zero)
         layout()
     }
@@ -71,10 +65,6 @@ class OnboardingView: UIView {
         
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-//            make.top.equalTo(snp.top).offset(24)
-//            make.leading.equalTo(snp.leading).offset(24)
-//            make.trailing.equalTo(snp.trailing).offset(-24)
-//            make.bottom.equalTo(snp.bottom).offset(-24)
         }
         
         imageView.snp.makeConstraints { make in
@@ -92,11 +82,4 @@ class OnboardingView: UIView {
             print("Invalid link!")
         }
     }
-
-    
-//    func configure(amount: Double) {
-//        let text = NSMutableAttributedString(string: "Heheh lol", attributes: [.font: Fonts.bold(ofSite: 24)])
-//        text.addAttributes([.font: Fonts.bold(ofSite: 16)], range: NSMakeRange(text.string.count - 1, 1))
-//        amountLabel.attributedText = text
-//    }
 }

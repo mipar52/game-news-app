@@ -53,6 +53,7 @@ class NetworkManager {
     
     func getGamebyId(id: Int) async throws -> Result <Game?, NetworkError>  {
        let gamesUrl = baseUrl + "games/\(id)?key=\(K.rawgApiKey)"
+        print(gamesUrl)
        guard let url = URL(string: gamesUrl) else {
            throw NetworkError.badUrl(value: "Incorrect URL: \(gamesUrl)")
        }

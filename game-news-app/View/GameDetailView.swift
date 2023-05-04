@@ -42,10 +42,7 @@ class GameDetailView:UIView {
         textFieldContinerView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
-         //   make.leading.equalTo(currencyDenomLabel.snp.trailing).offset(16)
             make.trailing.equalTo(textFieldContinerView.snp.trailing).offset(-16)
         }
     }
-    
-    
 }

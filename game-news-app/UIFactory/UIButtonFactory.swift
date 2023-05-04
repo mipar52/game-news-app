@@ -16,7 +16,6 @@ struct UIButtonFactory {
         button.addCornerRadius(radius: 8.0)
         let text = NSMutableAttributedString(string: text, attributes: [.font: Fonts.bold(ofSite: 20),.foregroundColor: UIColor.white])
         
-//        text.addAttributes([.font:Fonts.semibold(ofSite: 14)], range: NSMakeRange(2, 1))
         button.setAttributedTitle(text, for: .normal)
         return button
     }
