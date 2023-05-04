@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A12F2BE92A03D57900B33207 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A12F2BE82A03D57900B33207 /* GoogleService-Info.plist */; };
+		A12F2BEC2A03D5D700B33207 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = A12F2BEB2A03D5D700B33207 /* FirebaseAnalytics */; };
+		A12F2BEE2A03DF0200B33207 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12F2BED2A03DF0200B33207 /* FirebaseManager.swift */; };
 		A15A14412A01731B00A1D2B9 /* StartButtonProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A14402A01731B00A1D2B9 /* StartButtonProtocol.swift */; };
 		A15A14432A0176E500A1D2B9 /* GameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A14422A0176E500A1D2B9 /* GameHeaderView.swift */; };
 		A15A14452A017A3400A1D2B9 /* ReleaseInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A15A14442A017A3400A1D2B9 /* ReleaseInfoView.swift */; };
@@ -39,7 +42,6 @@
 		A1DC196529FE7D6C00B0F08F /* ScrollView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC196429FE7D6C00B0F08F /* ScrollView+Extension.swift */; };
 		A1DC196729FE84DB00B0F08F /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC196629FE84DB00B0F08F /* OnboardingView.swift */; };
 		A1DC196D29FFC2AC00B0F08F /* UIResponder+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC196C29FFC2AC00B0F08F /* UIResponder+Extension.swift */; };
-		A1DC197629FFC78E00B0F08F /* SpinnerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC197529FFC78E00B0F08F /* SpinnerController.swift */; };
 		A1DC197929FFCEEF00B0F08F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A1DC197829FFCEEF00B0F08F /* Kingfisher */; };
 		A1DC197B29FFE4FF00B0F08F /* UIImageView+Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC197A29FFE4FF00B0F08F /* UIImageView+Extenstion.swift */; };
 		A1DC197D2A00253600B0F08F /* GameDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DC197C2A00253600B0F08F /* GameDetailView.swift */; };
@@ -50,6 +52,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A12F2BE82A03D57900B33207 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A12F2BED2A03DF0200B33207 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		A15A14402A01731B00A1D2B9 /* StartButtonProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartButtonProtocol.swift; sourceTree = "<group>"; };
 		A15A14422A0176E500A1D2B9 /* GameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHeaderView.swift; sourceTree = "<group>"; };
 		A15A14442A017A3400A1D2B9 /* ReleaseInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseInfoView.swift; sourceTree = "<group>"; };
@@ -83,7 +87,6 @@
 		A1DC196429FE7D6C00B0F08F /* ScrollView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScrollView+Extension.swift"; sourceTree = "<group>"; };
 		A1DC196629FE84DB00B0F08F /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		A1DC196C29FFC2AC00B0F08F /* UIResponder+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Extension.swift"; sourceTree = "<group>"; };
-		A1DC197529FFC78E00B0F08F /* SpinnerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerController.swift; sourceTree = "<group>"; };
 		A1DC197A29FFE4FF00B0F08F /* UIImageView+Extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extenstion.swift"; sourceTree = "<group>"; };
 		A1DC197C2A00253600B0F08F /* GameDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameDetailView.swift; sourceTree = "<group>"; };
 		A1DC197E2A0100B400B0F08F /* PlatformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformView.swift; sourceTree = "<group>"; };
@@ -99,6 +102,7 @@
 			files = (
 				A1DC197929FFCEEF00B0F08F /* Kingfisher in Frameworks */,
 				A1DC195C29FE5BDD00B0F08F /* SnapKit in Frameworks */,
+				A12F2BEC2A03D5D700B33207 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				A1DC193329FAAA9B00B0F08F /* NetworkManager.swift */,
+				A12F2BED2A03DF0200B33207 /* FirebaseManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -153,6 +158,7 @@
 				A1DC192529FAA71000B0F08F /* Assets.xcassets */,
 				A1DC192729FAA71000B0F08F /* LaunchScreen.storyboard */,
 				A1DC192A29FAA71000B0F08F /* Info.plist */,
+				A12F2BE82A03D57900B33207 /* GoogleService-Info.plist */,
 			);
 			path = "game-news-app";
 			sourceTree = "<group>";
@@ -186,7 +192,6 @@
 				A1DC195829FE51A600B0F08F /* StartView.swift */,
 				A1DC196229FE712600B0F08F /* GamePageView.swift */,
 				A1DC196629FE84DB00B0F08F /* OnboardingView.swift */,
-				A1DC197529FFC78E00B0F08F /* SpinnerController.swift */,
 				A1DC197C2A00253600B0F08F /* GameDetailView.swift */,
 				A1DC197E2A0100B400B0F08F /* PlatformView.swift */,
 				A1DC19852A01463900B0F08F /* ReviewView.swift */,
@@ -250,6 +255,7 @@
 			packageProductDependencies = (
 				A1DC195B29FE5BDD00B0F08F /* SnapKit */,
 				A1DC197829FFCEEF00B0F08F /* Kingfisher */,
+				A12F2BEB2A03D5D700B33207 /* FirebaseAnalytics */,
 			);
 			productName = "game-news-app";
 			productReference = A1DC191929FAA70E00B0F08F /* game-news-app.app */;
@@ -282,6 +288,7 @@
 			packageReferences = (
 				A1DC195A29FE5BDD00B0F08F /* XCRemoteSwiftPackageReference "SnapKit" */,
 				A1DC197729FFCEEF00B0F08F /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				A12F2BEA2A03D5D700B33207 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = A1DC191A29FAA70E00B0F08F /* Products */;
 			projectDirPath = "";
@@ -299,6 +306,7 @@
 			files = (
 				A1DC192929FAA71000B0F08F /* LaunchScreen.storyboard in Resources */,
 				A1DC192629FAA71000B0F08F /* Assets.xcassets in Resources */,
+				A12F2BE92A03D57900B33207 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,7 +329,6 @@
 				A1DC193F29FBCDE200B0F08F /* GameGenres.swift in Sources */,
 				A1DC191D29FAA70E00B0F08F /* AppDelegate.swift in Sources */,
 				A1DC193429FAAA9B00B0F08F /* NetworkManager.swift in Sources */,
-				A1DC197629FFC78E00B0F08F /* SpinnerController.swift in Sources */,
 				A1DC196529FE7D6C00B0F08F /* ScrollView+Extension.swift in Sources */,
 				A15A14412A01731B00A1D2B9 /* StartButtonProtocol.swift in Sources */,
 				A1DC19862A01463900B0F08F /* ReviewView.swift in Sources */,
@@ -338,6 +345,7 @@
 				A1DC195F29FE609200B0F08F /* UILabelFactory.swift in Sources */,
 				A1DC196129FE615700B0F08F /* UIView+Extension.swift in Sources */,
 				A15A14432A0176E500A1D2B9 /* GameHeaderView.swift in Sources */,
+				A12F2BEE2A03DF0200B33207 /* FirebaseManager.swift in Sources */,
 				A1DC194B29FBDDD700B0F08F /* Colors.swift in Sources */,
 				A1DC194629FBDAD300B0F08F /* GameListTableViewController.swift in Sources */,
 				A1DC194429FBDAC000B0F08F /* GameGenreSelectTableViewController.swift in Sources */,
@@ -560,6 +568,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A12F2BEA2A03D5D700B33207 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 		A1DC195A29FE5BDD00B0F08F /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -579,6 +595,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A12F2BEB2A03D5D700B33207 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A12F2BEA2A03D5D700B33207 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
 		A1DC195B29FE5BDD00B0F08F /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A1DC195A29FE5BDD00B0F08F /* XCRemoteSwiftPackageReference "SnapKit" */;

@@ -16,7 +16,6 @@ class GameHeaderView: UIView {
         let imageView = UIImageView()
         imageView.kf.setImage(with: imageURL)
         imageView.contentMode = .scaleToFill
-       // imageView.addRoundedCorners(radius: 8.0)
         return imageView
     }()
     

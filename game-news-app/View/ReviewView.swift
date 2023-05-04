@@ -18,7 +18,6 @@ class ReviewView: UIView {
             let reviewCount = "\(review.count)"
             let button = UIButtonFactory.build(color: Colors.textColor, text: "\(review.title): \(review.count)")
             button.titleLabel?.adjustsFontSizeToFitWidth = true
-           // button.backgroundColor = Colors.textColor
             let text = NSMutableAttributedString(string: reviewName.capitalized + reviewCount , attributes: [.font: Fonts.bold(ofSite: 15), .foregroundColor: Colors.headerText])
             
             text.addAttributes([.font: Fonts.bold(ofSite: 15), .foregroundColor: Colors.backgroundColor], range: NSMakeRange(reviewName.count - 1, reviewCount.count + 1))
