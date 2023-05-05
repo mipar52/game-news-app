@@ -170,9 +170,43 @@ extension GameGenreSelectTableViewController {
         UIAlertFactory.buildTwoActionAlert(title: Text.Alert.exitTitle, message: Text.Alert.exitMessage, actionTitle: Text.Alert.yes, vc: self) { [weak self] _ in
             self?.userDefaults.set(false, forKey: K.isUserOnboarded)
             FirebaseManager.sharedInstance.logFBevent(eventTitle: K.FirebaseEvents.userOnboardReset)
-            self?.dismiss(animated: true)
+            self?.dismiss(animated: true, completion: {
+                let onboardingScreen = OnboardingViewController()
+                onboardingScreen.modalPresentationStyle = .fullScreen
+                self?.present(onboardingScreen,animated: true)
+            })
         }
         
+    }
+
+}
+
+extension GameGenreSelectTableViewController {
+    func getGameCategories() {
+        UIAlertFactory.buildSpinner(message: Text.Alert.categories, vc: self)
+            Task {
+                do {
+                    let gameGanresResults = try await NetworkManager.sharedInstance.getGamesGenres()
+                    self.dismiss(animated: true, completion: { [unowned self] in
+                        switch gameGanresResults {
+                            
+                        case .success(let success):
+                            if let gameGanres = success {
+                                self.gameGanres = gameGanres.sorted(by: {$0.name < $1.name})
+                                self.tableView.reloadData()
+                            }
+                        case .failure(let failure):
+                            print(failure)
+                            UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)
+                        }
+                    })
+                } catch {
+                    self.dismiss(animated: true, completion: {
+                        UIAlertFactory.buildErrorAlert(message: Text.Alert.errorMessage, vc: self)
+                            print(error)
+                    })
+                }
+            }
     }
 
 }
