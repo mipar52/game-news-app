@@ -100,7 +100,6 @@ class OnboardingViewController: UIViewController {
         }
         
         onboardingScreen.snp.makeConstraints { make in
-           // make.width.equalTo(view.snp.width)
             make.height.equalTo(200)
         }
         
@@ -156,5 +155,4 @@ extension OnboardingViewController {
                 }
             }
     }
-
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>142677550625-f01n401v126u68dk9v91h3ni5ol01f2m.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.142677550625-f01n401v126u68dk9v91h3ni5ol01f2m</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBgxduAnrgHN5y6DpWOkk9xXVI1qTJtgqk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>142677550625</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.game-news-app</string>
+	<key>PROJECT_ID</key>
+	<string>game-news-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>game-news-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:142677550625:ios:dbad23047cb35e7a7a6560</string>
+</dict>
+</plist>

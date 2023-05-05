@@ -18,8 +18,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window?.makeKeyAndVisible()
-        window?.rootViewController = OnboardingViewController()
+        if UserDefaults.standard.bool(forKey: K.isUserOnboarded) {
+            let rootVC = GameGenreSelectTableViewController()
+            let navigationVC = UINavigationController(rootViewController: rootVC)
+                navigationVC.navigationBar.prefersLargeTitles = true
+                navigationVC.modalPresentationStyle = .fullScreen
+            window?.rootViewController = navigationVC
+            window?.makeKeyAndVisible()
+            rootVC.getGameCategories()
+        } else {
+            window?.makeKeyAndVisible()
+            window?.rootViewController = OnboardingViewController()
+        }
+
             
         func sceneDidDisconnect(_ scene: UIScene) {
             // Called as the scene is being released by the system.
