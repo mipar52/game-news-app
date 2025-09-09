@@ -13,7 +13,7 @@ struct OnboardingCard: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [.appBackground, .appRed], startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(colors: [.appBackground, .appOrange, .appBackground], startPoint: .topLeading, endPoint: .bottomTrailing)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
 
             VStack(spacing: 8) {
@@ -21,13 +21,13 @@ struct OnboardingCard: View {
                 HStack {
                     Image(systemName: page.image)
                         .font(.system(size: 40, weight: .semibold))
-                        .foregroundStyle(.black.opacity(0.8))
+                        .foregroundStyle(AppColors.appYellow)
                     Text(page.title)
-                        .font(.system(size: 20, weight: .bold))
+                        .font(.appBoldFont(size: 20))
                         .foregroundStyle(.white)
                 }
                 Text(page.description)
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(.appSemiBoldFont(size: 16))
                     .foregroundStyle(.white.opacity(0.9))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 12)
@@ -35,7 +35,7 @@ struct OnboardingCard: View {
             .padding()
         }
         .frame(height: 250)
-        .containerRelativeFrame(.horizontal, count: 1, span: 1, spacing: 20)
+       // .containerRelativeFrame(.horizontal, count: 1, span: 1, spacing: 20)
         .id(page.id)
     }
 }
