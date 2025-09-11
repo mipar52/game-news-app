@@ -52,6 +52,7 @@ struct AppText {
     struct UIImages {
         static let logoViewImageDpad = "dpad"
         static let logoViewImageGameController = "gamecontroller"
+        static let errorSymbol = "network.slash"
         static let onboardingImageTwo = "lasso.and.sparkles"
         static let onboardingImageThree = "line.3.horizontal.circle"
         static let onboardingImageFour = "playstation.logo"
