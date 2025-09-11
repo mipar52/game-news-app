@@ -19,6 +19,7 @@ struct OnboardingView: View {
     ]
     
     @State private var selectedPage: Int = 0
+    @State private var onboardingFinished: Bool = false
     
     var body: some View {
         
@@ -37,17 +38,20 @@ struct OnboardingView: View {
                 
                 Spacer()
                 
-                OnboardingButtons(selectedPage: $selectedPage, onboardingPagesCount: onboardingPages.count) {
+                OnboardingButtons(selectedPage: $selectedPage, onboardingFinihsed: $onboardingFinished, onboardingPagesCount: onboardingPages.count) {
                     print("Finished onboarding")
                 } onBackPressed: {
                     withAnimation(.spring) {
                         selectedPage = 0
                     }
                 }
-                }
             }
         }
+        .fullScreenCover(isPresented: $onboardingFinished) {
+            GameGenresView(viewModel: GameGenreViewModel(gameApiProvider: RawgIOApiClient()))
+        }
     }
+}
 
 
 #Preview {

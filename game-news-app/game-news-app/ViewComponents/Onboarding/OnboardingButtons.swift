@@ -10,6 +10,8 @@ import SwiftUI
 struct OnboardingButtons: View {
     
     @Binding var selectedPage: Int
+    @Binding var onboardingFinihsed: Bool
+    
     let onboardingPagesCount: Int
     
     let onFinishonboarding: () -> Void
@@ -26,6 +28,8 @@ struct OnboardingButtons: View {
                     withAnimation(.snappy(duration: 0.25)) {
                         selectedPage += 1
                     }
+                } else {
+                    onboardingFinihsed.toggle()
                 }
             } label: {
                 if !isLastPage {
@@ -63,8 +67,8 @@ struct OnboardingButtons: View {
     #Preview {
         @Previewable @State var selectedPage = 0
         @Previewable @State var onboardingPagesCount = 3
-        
-        OnboardingButtons(selectedPage: $selectedPage, onboardingPagesCount: onboardingPagesCount) {
+        @Previewable @State var onboardingFinihsed: Bool = false
+        OnboardingButtons(selectedPage: $selectedPage, onboardingFinihsed: $onboardingFinihsed, onboardingPagesCount: onboardingPagesCount) {
             
         } onBackPressed: {
             
