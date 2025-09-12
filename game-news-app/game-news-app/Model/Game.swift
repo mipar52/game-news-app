@@ -2,11 +2,23 @@
 //  Game.swift
 //  game-news-app
 //
-//  Created by Milan Parađina on 11.09.2025..
+//  Created by Milan Parađina on 12.09.2025..
 //
 
-import Foundation
+struct Game {
+    let id: Int
+    let name: String
+    let image: String?
+}
 
-struct Game: Decodable, Equatable {
-    
+struct Platform: Decodable, Equatable {
+    let id: Int
+    let name: String
+    let slug: String
+}
+
+struct Store: Decodable, Equatable {
+    let id: Int
+    let name: String
+    let slug: String
 }

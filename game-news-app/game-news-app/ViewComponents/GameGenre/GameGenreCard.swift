@@ -19,7 +19,7 @@ struct GameGenreCard: View {
                 AsyncImage(url: url) { imagePhase in
                     switch imagePhase {
                     case .empty:
-                        getImage(with: AppText.UIImages.logoViewImageGameController)
+                        ViewUtils.getImage(with: AppText.UIImages.logoViewImageGameController)
                         
                     case .success(let genreImage):
                         genreImage
@@ -27,13 +27,13 @@ struct GameGenreCard: View {
                             .scaledToFill()
                         
                     case .failure:
-                        getImage(with: AppText.UIImages.errorSymbol)
+                        ViewUtils.getImage(with: AppText.UIImages.errorSymbol)
                     @unknown default:
-                        getImage(with: AppText.UIImages.logoViewImageGameController)
+                        ViewUtils.getImage(with: AppText.UIImages.logoViewImageGameController)
                     }
                 }
             } else {
-                getImage(with: AppText.UIImages.logoViewImageGameController)
+                ViewUtils.getImage(with: AppText.UIImages.logoViewImageGameController)
             }
             
             VStack(alignment: .center, spacing: 8) {
@@ -57,15 +57,8 @@ struct GameGenreCard: View {
         .contentShape(Rectangle())
     }
     
-    @ViewBuilder
-    private func getImage(with symbolName: String) -> some View {
-        Image(systemName: symbolName)
-            .font(.appBoldFont(size: 40))
-            .foregroundStyle(AppColors.appYellow)
-            .symbolEffect(.pulse, isActive: true)
-    }
 }
 
 #Preview {
-    GameGenreCard(gameGenre: GameGenre(id: 0, name: "Elden Ring", slug: "elden_ring", gamesCount: 1000, imageBackground: "", games: nil))
+    GameGenreCard(gameGenre: GameGenre(id: 0, name: "Elden Ring", slug: "elden_ring", gamesCount: 1000, imageBackground: ""))
 }

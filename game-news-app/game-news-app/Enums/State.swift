@@ -6,9 +6,9 @@
 //
 import Foundation
 
-enum LoadingState: Equatable {
+enum LoadingState<T: Equatable>: Equatable {
     case idle
     case loading
-    case loaded([GameGenre])
+    case loaded([T])
     case failed(String)
 }

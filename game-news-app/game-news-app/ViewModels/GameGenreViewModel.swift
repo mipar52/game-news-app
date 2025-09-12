@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor
 final class GameGenreViewModel: ObservableObject {
-    @Published private(set) var state: LoadingState = .idle
+    @Published private(set) var state: LoadingState<GameGenre> = .idle
 
     private let gameApiProvider: GameServiceProvider
     private var loadTask: Task<Void, Error>?
@@ -28,7 +28,7 @@ final class GameGenreViewModel: ObservableObject {
             } catch is CancellationError {
                 
             } catch {
-                self.state = .failed(self.humanizeError(with: error))
+                self.state = .failed(Utils.humanizeError(with: error))
             }
         }
     }
@@ -40,20 +40,7 @@ final class GameGenreViewModel: ObservableObject {
         } catch is CancellationError {
             
         } catch {
-            state = .failed(self.humanizeError(with: error))
+            state = .failed(Utils.humanizeError(with: error))
         }
-    }
-    
-    private func humanizeError(with gameError: Error) -> String {
-        if let networkError = gameError as? NetworkError {
-            switch networkError {
-            case .invalidURL(let s): return "Invalid URL: \(s)"
-            case .badStatus(let code, let body): return "Server error (\(code)). \(body ?? "")"
-            case .decoding(let underlying): return "Decoding error: \(underlying.localizedDescription)"
-            case .transport(let underlying): return "Network error: \(underlying.localizedDescription)"
-            case .cancelled: return "Cancelled"
-        }
-        }
-        return gameError.localizedDescription
     }
 }

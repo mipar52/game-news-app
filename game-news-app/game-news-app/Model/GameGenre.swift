@@ -13,7 +13,7 @@ struct GameGenre: Decodable, Equatable {
     let slug: String
     let gamesCount: Int
     let imageBackground: String?
-    let games: [Game]?
+   // let games: [Game]?
     
 //    enum CodingKeys: String, CodingKey {
 //        case gameGenreId = "id"

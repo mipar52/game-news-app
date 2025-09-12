@@ -50,6 +50,7 @@ struct GameGenresView: View {
                         LazyVGrid(columns: columns) {
                             ForEach(filteredGenres, id: \.id) { genre in
                                 NavigationLink {
+                                    GameListView(viewModel: GameListViewModel(gameService: RawgIOApiClient(), genre: genre.slug))
                                     
                                 } label: {
                                     GameGenreCard(gameGenre: genre)

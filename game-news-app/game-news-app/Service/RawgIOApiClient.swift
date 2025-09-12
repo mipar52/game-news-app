@@ -42,8 +42,16 @@ actor RawgIOApiClient: GameServiceProvider, NetworkProvider {
         return payload.gameGenres
     }
     
+    func getGamesFromGenre(_ genre: String, forceRefresh: Bool = false) async throws -> [GamePreview] {
+        let path = AppConstants.gameListEndpoint
+        let request = try makeRequest(path: path, query: [URLQueryItem(name: "genre", value: genre)])
+        let data = try await self.data(for: request)
+        let payload = try decode(GameListResult.self, from: data)
+        return payload.games
+    }
+    
     func getGameById(_ id: Int) async throws -> Game {
-        return Game.init()
+        return try Game.init(id: 0, name: "elden ring", image: "elden-ring.jpg")
     }
     
     func data(for request: URLRequest) async throws -> Data {
