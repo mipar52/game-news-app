@@ -42,6 +42,8 @@ struct GameGenresView: View {
                 LoadErrorView(title: "Could not load Game Genres", errorText: error, buttonTitle: "Try again") {
                     viewModel.getGameGenres(forceRefresh: true)
                 }
+            case .loadedSingle(_):
+                EmptyView()
             case .loaded:
                 if filteredGenres.isEmpty {
                     ContentUnavailableView("No genres", image: AppText.UIImages.logoViewImageGameController)

@@ -48,7 +48,7 @@ struct OnboardingView: View {
             }
         }
         .fullScreenCover(isPresented: $onboardingFinished) {
-            GameGenresView(viewModel: GameGenreViewModel(gameApiProvider: RawgIOApiClient()))
+            MainTabView()
         }
     }
 }

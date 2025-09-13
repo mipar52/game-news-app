@@ -13,7 +13,10 @@ struct GamePreview: Decodable, Equatable {
     let name: String
     let metacritic: Int?
     let backgroundImage: String?
+    let shortScreenshots: [ShortScreenshot]
+
 //    let stores: [Store]
 //    let released: String
 //    let backgroundImage: String
 }
+struct ShortScreenshot: Decodable, Equatable, Sendable { let image: URL } //let id: Int?;

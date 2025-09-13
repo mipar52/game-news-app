@@ -72,5 +72,5 @@ struct GameListCard: View {
 }
 
 #Preview {
-    GameListCard(gamePreview: GamePreview(id: 0, slug: "elden_ring", name: "Elden Ring", metacritic: 83, backgroundImage: "elden_ring.jpg"))
+//    GameListCard(gamePreview: GamePreview(id: 0, slug: "elden_ring", name: "Elden Ring", metacritic: 83, backgroundImage: "elden_ring.jpg"), )
 }

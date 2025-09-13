@@ -10,5 +10,6 @@ enum LoadingState<T: Equatable>: Equatable {
     case idle
     case loading
     case loaded([T])
+    case loadedSingle(T)
     case failed(String)
 }

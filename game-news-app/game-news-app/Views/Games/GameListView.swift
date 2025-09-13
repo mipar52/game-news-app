@@ -20,12 +20,14 @@ struct GameListView: View {
                 LoadErrorView(title: "Could not load games with genre \(viewModel.genre)", errorText: error, buttonTitle: "Try again") {
                     viewModel.getGamesFromGenre()
                 }
+            case .loadedSingle(_):
+                EmptyView()
             case .loaded(let games):
                 ScrollView {
                     LazyVGrid(columns: columns) {
                         ForEach(games, id: \.id) { game in
                             NavigationLink {
-                                GameDetailsView(viewModel: GameDetailsViewModel(slug: game.slug, gameService: RawgIOApiClient()))
+                                GameDetailsView(viewModel: GameDetailsViewModel(gamePreview: game, gameService: RawgIOApiClient()))
                             } label: {
                                 GameListCard(gamePreview: game)
                                     .padding()

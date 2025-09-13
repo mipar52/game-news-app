@@ -8,22 +8,32 @@
 import Foundation
 @MainActor
 final class GameDetailsViewModel: ObservableObject {
-    private let slug: String
+    
+    @Published var gameDetailsState: LoadingState<GameDetail> = .idle
+    
+    let gamePreview: GamePreview
     private let gameService: GameServiceProvider
     
-    init(slug: String, gameService: GameServiceProvider) {
-        self.slug = slug
+    var currentTask: Task<Void, Never>?
+    
+    init(gamePreview: GamePreview, gameService: GameServiceProvider) {
+        self.gamePreview = gamePreview
         self.gameService = gameService
     }
     
     func getGameDetails() {
-        Task {
+        currentTask?.cancel()
+        gameDetailsState = .loading
+        
+        currentTask = Task {
             do {
-                debugPrint(try await gameService.getGameBySlug(slug))
+                let gameDetails = try await gameService.getGameBySlug(gamePreview.slug)
+                gameDetailsState = .loadedSingle(gameDetails)
             } catch is CancellationError {
                 
             } catch {
-                debugPrint("[GameDetailsVM] - \(Utils.humanizeError(with: error))")
+                debugPrint(Utils.humanizeError(with: error))
+                gameDetailsState = .failed(Utils.humanizeError(with: error))
             }
         }
     }
