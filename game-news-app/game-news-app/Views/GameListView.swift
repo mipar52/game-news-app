@@ -25,12 +25,28 @@ struct GameListView: View {
                     LazyVGrid(columns: columns) {
                         ForEach(games, id: \.id) { game in
                             NavigationLink {
-                                
+                                GameDetailsView(viewModel: GameDetailsViewModel(slug: game.slug, gameService: RawgIOApiClient()))
                             } label: {
                                 GameListCard(gamePreview: game)
                                     .padding()
                             }
-
+                            .onAppear {
+                                viewModel.loadMoreIfNeeded(currentGamePreview: game)
+                            }
+                        }
+                        
+                        if viewModel.hasMoreGamePreviews || viewModel.isLoadingMore {
+                            VStack {
+                                ProgressView()
+                                    .padding(.vertical, 16)
+                                Text("Getting more games, hang tight...")
+                                    .font(.appSemiBoldFont(size: 14))
+                                    .foregroundStyle(AppColors.appHeaderText)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .task {
+                                viewModel.loadMoreIfNeeded(currentGamePreview: games.last)
+                            }
                         }
                     }
                 }

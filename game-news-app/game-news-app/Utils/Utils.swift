@@ -13,7 +13,7 @@ struct Utils {
             switch networkError {
             case .invalidURL(let s): return "Invalid URL: \(s)"
             case .badStatus(let code, let body): return "Server error (\(code)). \(body ?? "")"
-            case .decoding(let underlying): return "Decoding error: \(underlying.localizedDescription)"
+            case .decoding(let underlying): return "Decoding error: \(underlying)"
             case .transport(let underlying): return "Network error: \(underlying.localizedDescription)"
             case .cancelled: return "Cancelled"
             }

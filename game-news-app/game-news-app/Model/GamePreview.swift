@@ -11,7 +11,7 @@ struct GamePreview: Decodable, Equatable {
     let id: Int
     let slug: String
     let name: String
-    let metacritic: Int
+    let metacritic: Int?
     let backgroundImage: String?
 //    let stores: [Store]
 //    let released: String

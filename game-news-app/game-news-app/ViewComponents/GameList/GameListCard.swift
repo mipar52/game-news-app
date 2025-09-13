@@ -47,10 +47,25 @@ struct GameListCard: View {
             Text(gamePreview.name)
                 .font(.appBoldFont(size: 20))
                 .foregroundStyle(AppColors.appHeaderText)
-            
-            Text("Metacritic score: \(gamePreview.metacritic)")
-                .font(.appBoldFont(size: 15))
-                .foregroundStyle(AppColors.appTextColor)
+            if let metacritic = gamePreview.metacritic {
+                Text("Metacritic score: \(metacritic)")
+                    .font(.appBoldFont(size: 15))
+                    .foregroundStyle(AppColors.appTextColor)
+//                if metacritic >= 90 {
+//                    Image(systemName: "emoji.stars")
+//                        .foregroundStyle(AppColors.appYellow)
+//                } else if metacritic >= 80 {
+//                    Image(systemName: "emoji.stars")
+//                        .foregroundStyle(AppColors.appOrange)
+//                } else {
+//                    Image(systemName: "emoji.stars")
+//                }
+            } else {
+                Text("Game has not been scored yet")
+                    .font(.appBoldFont(size: 15))
+                    .foregroundStyle(AppColors.appTextColor)
+            }
+
                 
         }
     }
