@@ -15,7 +15,7 @@ actor RawgIOApiClient: GameServiceProvider, NetworkProvider {
     private let decoder: JSONDecoder
     
     private var genresCache: [GameGenre]?
-    private var gamesCache: [Int: Game] = [:]
+    private var gamesCache: [Int: GameDetail] = [:]
     
     init(session: URLSession? = nil, decoder: JSONDecoder? = nil) {
         self.gameBaseUrl = AppConstants.baseUrl
@@ -50,8 +50,37 @@ actor RawgIOApiClient: GameServiceProvider, NetworkProvider {
         return payload.games
     }
     
-    func getGameById(_ id: Int) async throws -> Game {
-        return try Game.init(id: 0, name: "elden ring", image: "elden-ring.jpg")
+    
+    func getGamesPage(genre: String, next: URL?) async throws -> PageEnvelope<GamePreview> {
+        
+        let path = AppConstants.gameListEndpoint
+        var query = [URLQueryItem(name: "genre", value: genre)]
+        
+        if let next = next {
+            debugPrint("[RAWGIOCLIENT] - going go next page: \(next.absoluteString)")
+            let pageNumber = String(next.absoluteString.split(separator: "page=").last ?? "1")
+            query.append(URLQueryItem(name: "page", value: pageNumber))
+        }
+        
+        let request = try makeRequest(path: path, query: query)
+        let data = try await self.data(for: request)
+        return try decode(PageEnvelope<GamePreview>.self, from: data)
+    }
+    
+    func getGameById(_ id: Int) async throws -> GameDetail {
+        let path = AppConstants.gameListEndpoint
+        let request = try makeRequest(path: path, query: [URLQueryItem(name: "id", value: "\(id)")])
+        let data = try await self.data(for: request)
+        let payload = try decode(GameDetail.self, from: data)
+        return payload
+    }
+    
+    func getGameBySlug(_ slug: String) async throws -> GameDetail {
+        let path = AppConstants.gameListEndpoint
+        let request = try makeRequest(path: "\(path)/\(slug)")
+        let data = try await self.data(for: request)
+        let payload = try decode(GameDetail.self, from: data)
+        return payload
     }
     
     func data(for request: URLRequest) async throws -> Data {
