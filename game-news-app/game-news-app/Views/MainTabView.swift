@@ -17,7 +17,7 @@ struct MainTabView: View {
                 TabLabelView(uiImageString: "gamecontroller", labelString: "Home")
             }
             Tab {
-                
+                GameSearchView()
             } label: {
                 TabLabelView(uiImageString: "magnifyingglass.circle.fill", labelString: "Search")
             }
@@ -27,7 +27,6 @@ struct MainTabView: View {
             } label: {
                 TabLabelView(uiImageString: "gear.circle", labelString: "Settings")
             }
-            
         }
     }
 }

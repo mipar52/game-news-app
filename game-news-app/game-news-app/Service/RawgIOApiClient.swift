@@ -8,13 +8,13 @@
 import Foundation
 
 actor RawgIOApiClient: GameServiceProvider, NetworkProvider {
-    
+
     nonisolated let gameBaseUrl: String
     private let apiKey: String
     private let session: URLSession
     private let decoder: JSONDecoder
     
-    private var genresCache: [GameGenre]?
+   // private var genresCache: [GameGenre]?
     private var gamesCache: [Int: GameDetail] = [:]
     
     init(session: URLSession? = nil, decoder: JSONDecoder? = nil) {
@@ -33,16 +33,17 @@ actor RawgIOApiClient: GameServiceProvider, NetworkProvider {
     }
     
     func getGameGenres(forceRefresh: Bool = false) async throws -> [GameGenre]{
-        if !forceRefresh, let cached = genresCache { return  cached }
+       // if !forceRefresh, let cached = genresCache { return  cached }
         let path = "\(AppConstants.genresEndpoint)"
         let request = try makeRequest(path: path)
         let data = try await self.data(for: request)
         let payload = try decode(GameGenreResults.self, from: data)
-        genresCache = payload.gameGenres
+    //    genresCache = payload.gameGenres
         return payload.gameGenres
     }
     
     func getGamesFromGenre(_ genre: String, forceRefresh: Bool = false) async throws -> [GamePreview] {
+        debugPrint(">>> Fetching games for genre: \(genre)")
         let path = AppConstants.gameListEndpoint
         let request = try makeRequest(path: path, query: [URLQueryItem(name: "genre", value: genre)])
         let data = try await self.data(for: request)
@@ -52,7 +53,8 @@ actor RawgIOApiClient: GameServiceProvider, NetworkProvider {
     
     
     func getGamesPage(genre: String, next: URL?) async throws -> PageEnvelope<GamePreview> {
-        
+        debugPrint(">>> Fetching games for genre: \(genre)")
+
         let path = AppConstants.gameListEndpoint
         var query = [URLQueryItem(name: "genre", value: genre)]
         
@@ -63,6 +65,7 @@ actor RawgIOApiClient: GameServiceProvider, NetworkProvider {
         }
         
         let request = try makeRequest(path: path, query: query)
+        debugPrint("[getGamesPage] - request: [\(String(describing: request))]")
         let data = try await self.data(for: request)
         return try decode(PageEnvelope<GamePreview>.self, from: data)
     }
@@ -82,6 +85,55 @@ actor RawgIOApiClient: GameServiceProvider, NetworkProvider {
         let payload = try decode(GameDetail.self, from: data)
         return payload
     }
+    
+    func searchGames(query: String, filters: GameSearchFilters, next: URL?) async throws -> PageEnvelope<GamePreview> {
+        let path = AppConstants.gameListEndpoint
+        var items: [URLQueryItem] = [URLQueryItem(name: "search", value: query)]
+        
+        if filters.precise { items.append(.init(name: "search_precise", value: "true")) }
+        if filters.exact   { items.append(.init(name: "search_exact", value: "true")) }
+
+        if !filters.genres.isEmpty { items.append(.init(name: "genres", value: filters.genres.joined(separator: ","))) }
+        if !filters.platforms.isEmpty { items.append(.init(name: "platforms", value: filters.platforms.map(String.init).joined(separator: ","))) }
+        if !filters.parentPlatforms.isEmpty { items.append(.init(name: "parent_platforms", value: filters.parentPlatforms.map(String.init).joined(separator: ","))) }
+        if !filters.stores.isEmpty { items.append(.init(name: "stores", value: filters.stores.map(String.init).joined(separator: ","))) }
+        if let mc = filters.metacritic { items.append(.init(name: "metacritic", value: "\(mc.lowerBound),\(mc.upperBound)")) }
+        if let (from, to) = filters.dates { items.append(.init(name: "dates", value: "\(from),\(to)")) }
+        if let ord = filters.ordering { items.append(.init(name: "ordering", value: ord)) }
+        
+        let request = try makeRequest(path: path, query: items)
+        debugPrint("[searchGames] - request: [\(String(describing: request))]")
+        let data = try await self.data(for: request)
+        let payload = try decode(PageEnvelope<GamePreview>.self, from: data)
+        return payload
+    }
+    
+//    func searchGames(query: String, filters: GameSearchFilters, next: URL?) async throws -> PageEnvelope<GamePreview> {
+//        if let next {                                    // ← use server-provided cursor verbatim
+//            return try await makeRequest(path: next)
+//        }
+//
+//        var comps = URLComponents(url: base.appending(path: "/games"), resolvingAgainstBaseURL: false)!
+//        var items: [URLQueryItem] = [
+//            .init(name: "key", value: apiKey),
+//            .init(name: "search", value: query),
+//            .init(name: "page_size", value: String(filters.pageSize))
+//        ]
+//        if filters.precise { items.append(.init(name: "search_precise", value: "true")) }
+//        if filters.exact   { items.append(.init(name: "search_exact", value: "true")) }
+//
+//        if !filters.genres.isEmpty { items.append(.init(name: "genres", value: filters.genres.joined(separator: ","))) }
+//        if !filters.platforms.isEmpty { items.append(.init(name: "platforms", value: filters.platforms.map(String.init).joined(separator: ","))) }
+//        if !filters.parentPlatforms.isEmpty { items.append(.init(name: "parent_platforms", value: filters.parentPlatforms.map(String.init).joined(separator: ","))) }
+//        if !filters.stores.isEmpty { items.append(.init(name: "stores", value: filters.stores.map(String.init).joined(separator: ","))) }
+//        if let mc = filters.metacritic { items.append(.init(name: "metacritic", value: "\(mc.lowerBound),\(mc.upperBound)")) }
+//        if let (from, to) = filters.dates { items.append(.init(name: "dates", value: "\(from),\(to)")) }
+//        if let ord = filters.ordering { items.append(.init(name: "ordering", value: ord)) }
+//
+//        comps.queryItems = items
+//        return try await request(url: comps.url!)
+//    }
+
     
     func data(for request: URLRequest) async throws -> Data {
         do {

@@ -54,7 +54,7 @@ struct GameListView: View {
                 }
             }
         }
-        .navigationTitle(viewModel.genre)
+        .navigationTitle(viewModel.genre.name)
         .navigationBarTitleDisplayMode(.large)
         .task {
             viewModel.getGamesFromGenre()
@@ -66,5 +66,5 @@ struct GameListView: View {
 }
 
 #Preview {
-    GameListView(viewModel: GameListViewModel(gameService: RawgIOApiClient(), genre: "action"))
+ //   GameListView(viewModel: GameListViewModel(gameService: RawgIOApiClient(), genre: "action"))
 }

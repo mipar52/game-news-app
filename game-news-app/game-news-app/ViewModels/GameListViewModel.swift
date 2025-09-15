@@ -17,12 +17,13 @@ final class GameListViewModel: ObservableObject {
     private var loadTask: Task<Void, Error>?
     private var nextPageUrl: URL?
     
-    let genre: String
+    let genre: GameGenre
     var hasMoreGamePreviews: Bool { nextPageUrl != nil }
     
-    init(gameService: GameServiceProvider, genre: String) {
+    init(gameService: GameServiceProvider, genre: GameGenre) {
         self.gameService = gameService
         self.genre = genre
+        print("GENRE: \(genre)")
     }
     
     func getGamesFromGenre() {
@@ -35,7 +36,7 @@ final class GameListViewModel: ObservableObject {
             guard let self = self else { return }
             
             do {
-                let page = try await self.gameService.getGamesPage(genre: genre, next: nextPageUrl)
+                let page = try await self.gameService.getGamesPage(genre: genre.slug, next: nextPageUrl)
                 self.nextPageUrl = page.next
                 self.state = .loaded(page.results)
 //                let games = try await self.gameService.getGamesFromGenre(self.genre, forceRefresh: false)
@@ -61,7 +62,7 @@ final class GameListViewModel: ObservableObject {
         Task { [weak self] in
             guard let self = self else { return }
             do {
-                let page = try await self.gameService.getGamesPage(genre: self.genre, next: url)
+                let page = try await self.gameService.getGamesPage(genre: self.genre.slug, next: url)
                 self.nextPageUrl = page.next
                 self.state = .loaded(gamePreviews + page.results)
             } catch is CancellationError {

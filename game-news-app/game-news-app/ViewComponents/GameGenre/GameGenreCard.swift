@@ -14,6 +14,9 @@ struct GameGenreCard: View {
         ZStack(alignment: .center) {
             LinearGradient(colors: [AppColors.appBackground, AppColors.appRed], startPoint: .bottomLeading, endPoint: .topTrailing)
                 .ignoresSafeArea(edges: .all)
+            // maskirat
+            // rectangle
+            // teme -> npr crvena, zelena -> customizacija
             
             if let urlString = gameGenre.imageBackground, let url = URL(string: urlString) {
                 AsyncImage(url: url) { imagePhase in

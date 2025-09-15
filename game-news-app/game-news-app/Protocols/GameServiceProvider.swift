@@ -14,4 +14,5 @@ protocol GameServiceProvider {
     func getGamesPage(genre: String, next: URL?) async throws -> PageEnvelope<GamePreview>
     func getGameById(_ id: Int) async throws -> GameDetail
     func getGameBySlug(_ slug: String) async throws -> GameDetail
+    func searchGames(query: String, filters: GameSearchFilters, next: URL?) async throws -> PageEnvelope<GamePreview>
 }
