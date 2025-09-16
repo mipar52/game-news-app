@@ -12,34 +12,44 @@ struct MultiSelectGrid<T, ID: Hashable>: View {
     @Binding var selectedIDs: Set<ID>
     let id: KeyPath<T, ID>
     let label: KeyPath<T, String>
-
-    private let columns: [GridItem]
-
+    private let minChipWidth: CGFloat
+    private let spacing: CGFloat
+    private let numOfColumns: Int
+    
+    private var columns: [GridItem] {
+        Array(repeating: GridItem(.flexible(), spacing: spacing), count: numOfColumns)
+    }
+    
     init(
         allItems: [T],
         selectedIDs: Binding<Set<ID>>,
         id: KeyPath<T, ID>,
         label: KeyPath<T, String>,
         minChipWidth: CGFloat = 120,
-        spacing: CGFloat = 8
+        spacing: CGFloat = 8,
+        numsOfColumns: Int = 3
     ) {
         self.allItems = allItems
         self._selectedIDs = selectedIDs
         self.id = id
         self.label = label
-        self.columns = [GridItem(.adaptive(minimum: minChipWidth), spacing: spacing)]
+        self.minChipWidth = minChipWidth
+        self.spacing = spacing
+        self.numOfColumns = numsOfColumns
     }
 
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 8) {
-            ForEach(allItems, id: id) { item in
-                let isOn = selectedIDs.contains(item[keyPath: id])
-                SelectableTag(
-                    title: item[keyPath: label],
-                    selected: isOn
-                ) {
-                    let key = item[keyPath: id]
-                    if isOn { selectedIDs.remove(key) } else { selectedIDs.insert(key) }
+        ScrollView(.horizontal) {
+            LazyHGrid(rows: columns, spacing: 8) {
+                ForEach(allItems, id: id) { item in
+                    let isOn = selectedIDs.contains(item[keyPath: id])
+                    SelectableTag(
+                        title: item[keyPath: label],
+                        selected: isOn
+                    ) {
+                        let key = item[keyPath: id]
+                        if isOn { selectedIDs.remove(key) } else { selectedIDs.insert(key) }
+                    }
                 }
             }
         }

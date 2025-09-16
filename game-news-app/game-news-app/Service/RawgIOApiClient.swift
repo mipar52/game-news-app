@@ -95,18 +95,24 @@ actor RawgIOApiClient: GameServiceProvider, NetworkProvider {
     
     func searchGames(query: String, filters: GameSearchFilters, next: URL?) async throws -> PageEnvelope<GamePreview> {
         let path = AppConstants.gameListEndpoint
-        var items: [URLQueryItem] = [URLQueryItem(name: "search", value: query)]
-        
+        var items: [URLQueryItem] = []
+        if !query.isEmpty {
+            items.append(URLQueryItem(name: "search", value: query))
+        }
+        print(filters)
         if filters.precise { items.append(.init(name: "search_precise", value: "true")) }
         if filters.exact   { items.append(.init(name: "search_exact", value: "true")) }
 
-        if !filters.genres.isEmpty { items.append(.init(name: "genres", value: filters.genres.joined(separator: ","))) }
-        if !filters.platforms.isEmpty { items.append(.init(name: "platforms", value: filters.platforms.map(String.init).joined(separator: ","))) }
+        if !filters.genres.isEmpty      { items.append(.init(name: "genres", value: filters.genres.joined(separator: ","))) }
+        if !filters.platforms.isEmpty   { items.append(.init(name: "platforms", value: filters.platforms.map(String.init).joined(separator: ","))) }
         if !filters.parentPlatforms.isEmpty { items.append(.init(name: "parent_platforms", value: filters.parentPlatforms.map(String.init).joined(separator: ","))) }
-        if !filters.stores.isEmpty { items.append(.init(name: "stores", value: filters.stores.map(String.init).joined(separator: ","))) }
+        if !filters.stores.isEmpty      { items.append(.init(name: "stores", value: filters.stores.map(String.init).joined(separator: ","))) }
+
         if let mc = filters.metacritic { items.append(.init(name: "metacritic", value: "\(mc.lowerBound),\(mc.upperBound)")) }
-        if let (from, to) = filters.dates { items.append(.init(name: "dates", value: "\(from),\(to)")) }
-        if let ord = filters.ordering { items.append(.init(name: "ordering", value: ord)) }
+        if let (from, to) = filters.dateRange {
+            items.append(.init(name: "dates", value: "\(isoDate(from)),\(isoDate(to))"))
+        }
+        if let ord = filters.ordering { items.append(.init(name: "ordering", value: ord.rawValue)) }
         
         let request = try makeRequest(path: path, query: items)
         debugPrint("[searchGames] - request: [\(String(describing: request))]")
@@ -193,5 +199,11 @@ actor RawgIOApiClient: GameServiceProvider, NetworkProvider {
         request.httpMethod = HTTPMethod.GET.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         return request
+    }
+    
+    private func isoDate(_ d: Date) -> String {
+        let f = DateFormatter();
+        f.locale = .init(identifier: "en_US_POSIX")
+        f.dateFormat = "yyyy-MM-dd"; return f.string(from: d)
     }
 }

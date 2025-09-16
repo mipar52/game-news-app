@@ -116,15 +116,15 @@ struct GameSearchView: View {
 //        }
     }
 
-    // Helpers to read/update filters via closures (keeps the view concise)
-    private var currentFilters: GameSearchFilters {
-        // You can expose filters as @Published in the VM if you prefer.
-        // For brevity, we rebuild from defaults here; in practice, store in VM.
-        GameSearchFilters()
-    }
-    private var viewModelOrdering: String? { nil }
-    private func updatedFilters(ordering: String?) -> GameSearchFilters {
-        var f = currentFilters; f.ordering = ordering; return f
-    }
+//    // Helpers to read/update filters via closures (keeps the view concise)
+//    private var currentFilters: GameSearchFilters {
+//        // You can expose filters as @Published in the VM if you prefer.
+//        // For brevity, we rebuild from defaults here; in practice, store in VM.
+//        GameSearchFilters()
+//    }
+//    private var viewModelOrdering: String? { nil }
+//    private func updatedFilters(ordering: String?) -> GameSearchFilters {
+//        var f = currentFilters; f.ordering = ordering; return f
+//    }
 }
 
