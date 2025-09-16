@@ -9,13 +9,17 @@ import SwiftUI
 
 struct GameSearchView: View {
     @StateObject var viewModel = GameSearchViewModel(service: RawgIOApiClient())
-    private let columns = [GridItem(.adaptive(minimum: .infinity, maximum: .infinity))]
+    private let columns =
+    [
+        GridItem(.adaptive(minimum: .infinity, maximum: .infinity)),
+       // GridItem(.adaptive(minimum: .infinity, maximum: .infinity))
+    ]
 
     var body: some View {
         NavigationStack {
             Group {
                 switch viewModel.state {
-                case .loadedSingle(let game):
+                case .loadedSingle(_):
                     SkeletonGrid(columns: columns)
 
                 case .idle:
@@ -24,6 +28,13 @@ struct GameSearchView: View {
                         Text("Search for games").font(.headline)
                         Text("Try “Portal 2”, “Little Nightmares”, or “horror platformer”.")
                             .font(.subheadline).foregroundStyle(.secondary)
+                        
+                        NavigationLink {
+                            GameSpecificSearchView(viewModel: GameSpecificSearchViewModel(service: RawgIOApiClient()))
+                        } label: {
+                            Text("Looking for something else?")
+                        }
+
                     }
                     .padding()
 
@@ -35,10 +46,20 @@ struct GameSearchView: View {
                         title: "Could not search games",
                         errorText: error,
                         buttonTitle: "Try again"
-                    ) { viewModel.submitSearch() }
+                    ) {  } //viewModel.submitSearch()
 
                 case .loaded(let results):
                     ScrollView {
+                        if results.isEmpty {
+                            VStack {
+                                Text("No games found.").font(.headline)
+                                NavigationLink {
+                                    GameSpecificSearchView(viewModel: GameSpecificSearchViewModel(service: RawgIOApiClient()))
+                                } label: {
+                                    Text("Try specificing the search")
+                                }
+                            }
+                        }
                         LazyVGrid(columns: columns) {
                             ForEach(results, id: \.id) { game in
                                 NavigationLink {
@@ -66,33 +87,33 @@ struct GameSearchView: View {
             .navigationTitle("Search")
         }
         .searchable(text: $viewModel.searchQuery, placement: .navigationBarDrawer(displayMode: .always))
-        .onChange(of: viewModel.searchQuery) { _ in viewModel.debounceSearch() }
-        .onSubmit(of: .search) { viewModel.submitSearch() }
-        .toolbar {
-            Menu {
-                // Simple ordering filter demo
-                Picker("Sort by", selection: Binding(
-                    get: { viewModelOrdering },
-                    set: { new in viewModel.setFilters(updatedFilters(ordering: new)) }
-                )) {
-                    Text("Relevance").tag(Optional<String>.none)
-                    Text("Updated ↓").tag(Optional("-updated"))
-                    Text("Rating ↓").tag(Optional("-rating"))
-                    Text("Metacritic ↓").tag(Optional("-metacritic"))
-                    Text("Released ↓").tag(Optional("-released"))
-                }
-                Toggle("Exact match", isOn: Binding(
-                    get: { currentFilters.exact },
-                    set: { on in var f = currentFilters; f.exact = on; viewModel.setFilters(f) }
-                ))
-                Toggle("Precise (no fuzziness)", isOn: Binding(
-                    get: { currentFilters.precise },
-                    set: { on in var f = currentFilters; f.precise = on; viewModel.setFilters(f) }
-                ))
-            } label: {
-                Label("Filters", systemImage: "line.3.horizontal.decrease.circle")
-            }
-        }
+      //  .onChange(of: viewModel.searchQuery) { _ in viewModel.debounceSearch() }
+      //  .onSubmit(of: .search) { viewModel.submitSearch() }
+//        .toolbar {
+//            Menu {
+//                // Simple ordering filter demo
+//                Picker("Sort by", selection: Binding(
+//                    get: { viewModelOrdering },
+//                    set: { new in viewModel.setFilters(updatedFilters(ordering: new)) }
+//                )) {
+//                    Text("Relevance").tag(Optional<String>.none)
+//                    Text("Updated ↓").tag(Optional("-updated"))
+//                    Text("Rating ↓").tag(Optional("-rating"))
+//                    Text("Metacritic ↓").tag(Optional("-metacritic"))
+//                    Text("Released ↓").tag(Optional("-released"))
+//                }
+//                Toggle("Exact match", isOn: Binding(
+//                    get: { currentFilters.exact },
+//                    set: { on in var f = currentFilters; f.exact = on; viewModel.setFilters(f) }
+//                ))
+//                Toggle("Precise (no fuzziness)", isOn: Binding(
+//                    get: { currentFilters.precise },
+//                    set: { on in var f = currentFilters; f.precise = on; viewModel.setFilters(f) }
+//                ))
+//            } label: {
+//                Label("Filters", systemImage: "line.3.horizontal.decrease.circle")
+//            }
+//        }
     }
 
     // Helpers to read/update filters via closures (keeps the view concise)

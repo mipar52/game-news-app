@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 @MainActor
 final class GameSearchViewModel: ObservableObject {
@@ -19,21 +20,35 @@ final class GameSearchViewModel: ObservableObject {
     private var searchTask: Task<Void, Never>?
     private var nextPageUrl: URL?
     private var filters = GameSearchFilters()
+    private var cancellables: Set<AnyCancellable> = []
     var hasMore: Bool { nextPageUrl != nil }
     
     init(service: GameServiceProvider) {
         self.service = service
+        self.bindSearchQuery()
     }
     
-    func debounceSearch() {
+    private func bindSearchQuery() {
+        $searchQuery
+            .map {$0.trimmingCharacters(in: .whitespacesAndNewlines)}
+            .filter({ [weak self] query in
+                if query.isEmpty && query.count < 2 {
+                    self?.state = .idle
+                    return false
+                }
+                return true
+            })
+            .removeDuplicates()
+            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+            .sink { [weak self] query in
+                guard let self = self else { return }
+                self.debounceSearch(with: query)
+            }
+            .store(in: &cancellables)
+    }
+    
+    func debounceSearch(with query: String) {
         searchTask?.cancel()
-        
-        let currentQuery = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard currentQuery.count >= 2 else {
-            state = .idle
-            nextPageUrl = nil
-            return
-        }
         
         state = .loading
         nextPageUrl = nil
@@ -41,7 +56,7 @@ final class GameSearchViewModel: ObservableObject {
         searchTask = Task {
             
             do {
-                let page = try await service.searchGames(query: currentQuery, filters: filters, next: nil)
+                let page = try await service.searchGames(query: query, filters: filters, next: nil)
                 self.nextPageUrl = page.next
                 self.state = .loaded(page.results)
             } catch is CancellationError {
@@ -52,14 +67,14 @@ final class GameSearchViewModel: ObservableObject {
         }
     }
     
-    func submitSearch () {
-        debounceSearch()
-    }
-    
-    func setFilters(_ newFilters: GameSearchFilters) {
-        filters = newFilters
-        debounceSearch()
-    }
+//    func submitSearch () {
+//        debounceSearch()
+//    }
+//    
+//    func setFilters(_ newFilters: GameSearchFilters) {
+//        filters = newFilters
+//        debounceSearch()
+//    }
     
     func loadMoreIfNeeded(currentItem: GamePreview?) {
         guard case .loaded(let gamePreviews) = state,

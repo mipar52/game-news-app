@@ -42,6 +42,13 @@ actor RawgIOApiClient: GameServiceProvider, NetworkProvider {
         return payload.gameGenres
     }
     
+    func getGamePlatforms(forceRefresh: Bool) async throws -> [Platform] {
+        let request = try makeRequest(path: AppConstants.gamePlatformsEndpoint)
+        let data = try await self.data(for: request)
+        let payload = try decode(GamePlatformResults.self, from: data)
+        return payload.gamePlatforms
+    }
+    
     func getGamesFromGenre(_ genre: String, forceRefresh: Bool = false) async throws -> [GamePreview] {
         debugPrint(">>> Fetching games for genre: \(genre)")
         let path = AppConstants.gameListEndpoint

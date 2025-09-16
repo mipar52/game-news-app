@@ -10,6 +10,7 @@ import Foundation
 protocol GameServiceProvider {
     var gameBaseUrl: String { get }
     func getGameGenres(forceRefresh: Bool) async throws -> [GameGenre]
+    func getGamePlatforms(forceRefresh: Bool) async throws -> [Platform]
     func getGamesFromGenre(_ genre: String, forceRefresh: Bool) async throws -> [GamePreview]
     func getGamesPage(genre: String, next: URL?) async throws -> PageEnvelope<GamePreview>
     func getGameById(_ id: Int) async throws -> GameDetail
