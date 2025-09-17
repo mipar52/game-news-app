@@ -23,6 +23,7 @@ struct GameListView: View {
             case .loadedSingle(_):
                 EmptyView()
             case .loaded(let games):
+                // why?? list
                 ScrollView {
                     LazyVGrid(columns: columns) {
                         ForEach(games, id: \.id) { game in

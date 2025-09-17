@@ -16,6 +16,7 @@ struct GameSpecificSearchView: View {
     @State private var maxMC: Int = 100
     @State private var fromDate = Calendar.current.date(byAdding: .year, value: -10, to: Date())!
     @State private var toDate = Date()
+    @State private var isPresented: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -126,16 +127,20 @@ struct GameSpecificSearchView: View {
                 }
             }
             
-            Button {
-                viewModel.performAdvancedSearch()
+            NavigationLink {
+                GameAdvanceSearchList(viewModel: GameAdvanceSearchViewModel(service: RawgIOApiClient(), filters: viewModel.gameFilter))
             } label: {
-                Text("Search")
+                SFSymbolButton(btnText: "Search", sfSymbolName: "dpad", symbolEffect: nil)
             }
 
+
 //            
-//            SFSymbolButton(btnText: "Search", sfSymbolName: "dpad", symbolEffect: nil)
+//
 
         }
+//        .fullScreenCover(isPresented: $isPresented) {
+//            GameListView(viewModel: GameListViewModel(service: RawgIOApiClient()))
+//        }
 
 
 //            switch viewModel.gamePlatformState {

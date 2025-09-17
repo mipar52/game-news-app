@@ -113,7 +113,11 @@ actor RawgIOApiClient: GameServiceProvider, NetworkProvider {
             items.append(.init(name: "dates", value: "\(isoDate(from)),\(isoDate(to))"))
         }
         if let ord = filters.ordering { items.append(.init(name: "ordering", value: ord.rawValue)) }
-        
+        if let next = next {
+            debugPrint("[RAWGIOCLIENT] - going go next page: \(next.absoluteString)")
+            let pageNumber = String(next.absoluteString.split(separator: "page=").last ?? "1")
+            items.append(URLQueryItem(name: "page", value: pageNumber))
+        }
         let request = try makeRequest(path: path, query: items)
         debugPrint("[searchGames] - request: [\(String(describing: request))]")
         let data = try await self.data(for: request)
