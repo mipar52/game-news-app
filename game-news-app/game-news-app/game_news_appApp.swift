@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct game_news_appApp: App {
+    @StateObject private var themeManager = ThemeManager()
+
     var body: some Scene {
         WindowGroup {
             OnboardingView()
+                .environmentObject(themeManager)
         }
     }
 }

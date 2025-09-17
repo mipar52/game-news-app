@@ -23,7 +23,7 @@ struct MainTabView: View {
             }
             
             Tab {
-                
+                SettingsView()
             } label: {
                 TabLabelView(uiImageString: "gear.circle", labelString: "Settings")
             }
