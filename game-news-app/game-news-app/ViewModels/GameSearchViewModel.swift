@@ -23,9 +23,11 @@ final class GameSearchViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     var hasMore: Bool { nextPageUrl != nil }
     
-    init(service: GameServiceProvider) {
+    init(service: GameServiceProvider, settings: SettingsStore) {
         self.service = service
         self.bindSearchQuery()
+        self.filters.precise = settings.usePreciseSearch
+        self.filters.exact = settings.useExactSearch
     }
     
     private func bindSearchQuery() {

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 final class ThemeManager: ObservableObject {
-    @AppStorage("selectedTheme") private var storedThemeRaw: String = AppTheme.classic.rawValue
+    @AppStorage("appTheme") private var storedThemeRaw: String = AppTheme.classic.rawValue
     @Published private(set) var theme: AppTheme = .classic
 
     init() {

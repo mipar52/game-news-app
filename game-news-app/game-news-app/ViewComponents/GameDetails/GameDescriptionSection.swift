@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GameDescriptionSection: View {
+    @EnvironmentObject var theme: ThemeManager
     let text: String
     @State private var expanded = false
     var body: some View {
@@ -15,7 +16,7 @@ struct GameDescriptionSection: View {
             Text("About").font(.headline).padding(.horizontal)
             Text(text)
                 .font(.appSemiBoldFont(size: 16))
-                .foregroundStyle(AppColors.appHeaderText)
+                .foregroundStyle(theme.theme.palette.header)
                 .lineLimit(expanded ? nil : 6)
                 .padding(.horizontal)
             Button(expanded ? "Show less" : "Read more") {

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoadErrorView: View {
+    @EnvironmentObject var theme: ThemeManager
     let title: String
     let errorText: String
     let buttonTitle: String
@@ -17,10 +18,10 @@ struct LoadErrorView: View {
         VStack(spacing: 12) {
             Text(title)
                 .font(.appBoldFont(size: 24))
-                .foregroundStyle(AppColors.appHeaderText)
+                .foregroundStyle(theme.theme.palette.header)
             
             Text(errorText)
-                .foregroundStyle(AppColors.appCellColor)
+                .foregroundStyle(theme.theme.palette.text)
                 .multilineTextAlignment(.center)
             Button(buttonTitle) { onButtonressed() }
                 .buttonStyle(.borderedProminent)

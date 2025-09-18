@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct GameRedditSection: View {
+    @EnvironmentObject var theme: ThemeManager
+    
     let url: URL?
     let logo: String?
     let displayName: String?     // redditName may be empty
@@ -42,20 +44,22 @@ struct GameRedditSection: View {
                         }
                     }
                     .frame(width: 40, height: 40)
-                    .background(Color.orange.opacity(0.15))
+                    .background(theme.theme.palette.header)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 }
 
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(titleText).font(.headline)
+                        .foregroundStyle(theme.theme.palette.header)
+
                     HStack(spacing: 8) {
                         if let subscribers { Label("\(subscribers.compact) members", systemImage: "person.3") }
                         if let twitch = twitchCount, twitch > 0 { Label("\(twitch.compact) Twitch", systemImage: "bolt.horizontal") }
                         if let yt = youtubeCount, yt > 0 { Label("\(yt.compact) YouTube", systemImage: "play.rectangle.fill") }
                     }
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.theme.palette.header)
                 }
 
                 Spacer()
@@ -65,6 +69,7 @@ struct GameRedditSection: View {
                         Label("Open", systemImage: "safari")
                             .labelStyle(.iconOnly)
                     }
+                    .foregroundStyle(theme.theme.palette.header)
                     .buttonStyle(.plain)
                 }
             }

@@ -11,14 +11,14 @@ import SwiftUI
 enum AppTheme: String, CaseIterable, Identifiable, Codable {
     case classic
     case neon
-    case mono
+    case blood
     var id: String { rawValue }
 
     var name: String {
         switch self {
         case .classic: "Classic"
         case .neon:    "Neon"
-        case .mono:    "Mono"
+        case .blood:    "Blood"
         }
     }
 
@@ -26,27 +26,27 @@ enum AppTheme: String, CaseIterable, Identifiable, Codable {
         switch self {
         case .classic:
             return .init(
-                header: Color(red: 0.18, green: 0.42, blue: 0.88),
-                text: Color.primary,
-                card: Color(.secondarySystemBackground),
-                background: Color(.systemBackground),
-                accent: Color(red: 0.99, green: 0.58, blue: 0.20)
+                header: AppColors.Classic.appHeaderText,
+                text: AppColors.Classic.appTextColor,
+                card: AppColors.Classic.appCardBorderColor,
+                background: AppColors.Classic.appBackground,
+                accent: AppColors.Classic.appAccent
             )
         case .neon:
             return .init(
-                header: Color.pink,
-                text: Color.white,
-                card: Color.black.opacity(0.85),
-                background: Color.black,
-                accent: Color.cyan
+                header: AppColors.Neon.appHeaderText,
+                text: AppColors.Neon.appTextColor,
+                card: AppColors.Neon.appCardBorderColor,
+                background: AppColors.Neon.appBackground,
+                accent: AppColors.Neon.appAccent
             )
-        case .mono:
+        case .blood:
             return .init(
-                header: Color.gray,
-                text: Color(.label),
-                card: Color(.secondarySystemBackground),
-                background: Color(.systemBackground),
-                accent: Color.gray.opacity(0.6)
+                header: AppColors.Blood.appHeaderText,
+                text: AppColors.Blood.appTextColor,
+                card: AppColors.Blood.appHeaderText,
+                background: AppColors.Blood.appBackground,
+                accent: AppColors.Blood.appAccent
             )
         }
     }

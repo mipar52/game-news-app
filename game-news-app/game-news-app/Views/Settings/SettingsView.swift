@@ -8,34 +8,59 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
+    @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var theme: ThemeManager
-    @State private var isExactSearchEnabled: Bool = false
-    @State private var isPreciseSearchEnabled: Bool = false
-    @State private var isLiquidGlassEnabled: Bool = false
-
+    
     var body: some View {
-        NavigationStack {
+            ZStack {
+                LinearGradient(
+                    colors: [theme.theme.palette.background, theme.theme.palette.accent],
+                    startPoint: .topLeading, endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea(.all)
+
                 Form {
-                    Section("Onboarding") {
+                    Section {
                         NavigationLink {
                             OnboardingView()
                         } label: {
                             Text("Go through onboarding again")
                         }
+                    } header: {
+                        FormSectionHeader(text: "Onboarding")
                     }
+                    .listRowBackground(theme.theme.palette.card)
                     
-                Section(header: Text("Search options")) {
-                    Toggle("Enable exact search", isOn: $isExactSearchEnabled)
-                    Toggle("Enable precise search (no fuzziness)", isOn: $isPreciseSearchEnabled)
-                }
+                    Section {
+                        Toggle("Enable exact search", isOn: $settings.useExactSearch)
+                        Toggle("Enable precise search (no fuzziness)", isOn: $settings.usePreciseSearch)
+                    } header: {
+                        FormSectionHeader(text: "Search options")
+                    }
+                    .listRowBackground(theme.theme.palette.card)
+                
+                    Section {
+                        Picker("Columns", selection: $settings.numberOfColumns) {
+                            ForEach(1...4, id: \.self) { n in
+                                Text("\(n)").tag(n)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .accessibilityLabel("Number of columns")
+                    } header: {
+                        FormSectionHeader(text: "Grid layout")
+                    }
+                    .listRowBackground(theme.theme.palette.card)
                     
-
-                    Section("Application Theme") {
+                    Section {
                         HStack(spacing: 12) {
                             ForEach(AppTheme.allCases) { t in
                                 VStack {
                                     ThemeShower(theme: t, selected: theme.theme == t) {
-                                        theme.setTheme(t)
+                                        Task {
+                                            theme.setTheme(t)
+                                        }
                                     }
                                     .frame(maxWidth: .infinity)
                                     
@@ -46,21 +71,30 @@ struct SettingsView: View {
 
                             }
                         }
-                        .listRowInsets(EdgeInsets()) // makes the row breathe
+                        .listRowInsets(EdgeInsets())
                         .padding(.vertical, 6)
+                    } header: {
+                        FormSectionHeader(text: "Application Theme")
                     }
+                    .listRowBackground(theme.theme.palette.card)
 
-                    
-                    Section("Liquid glass") {
-                        Toggle("Enable liquid glass", isOn: $isLiquidGlassEnabled)
+                    /// Liquid Glass reference:
+                    /// https://developer.apple.com/documentation/SwiftUI/Applying-Liquid-Glass-to-custom-views
+                    Section {
+                        Toggle("Enable liquid glass", isOn: $settings.useLiquidGlass)
+                    } header: {
+                        FormSectionHeader(text: "Liquid Glass")
                     }
+                    .listRowBackground(theme.theme.palette.card)
             }
+                .scrollContentBackground(.hidden)   // iOS 16+
+                .background(.clear)
                 .navigationTitle("GameNEWS Settings")
-        }
+            }
         
     }
 }
 
 #Preview {
-    SettingsView()
+   // SettingsView()
 }

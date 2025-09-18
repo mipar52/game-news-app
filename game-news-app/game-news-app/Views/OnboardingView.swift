@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    @EnvironmentObject var theme: ThemeManager
     
     @State private var onboardingPages: [OnboardingPage] = [
         .init(id: 0, title: AppText.UIStrings.onboardingTitleOne, description: AppText.UIStrings.onboardingTextOne, image: AppText.UIImages.logoViewImageGameController),
@@ -24,7 +25,7 @@ struct OnboardingView: View {
     var body: some View {
         
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [.appBackground, .appCellColor]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(gradient: Gradient(colors: [theme.theme.palette.background, theme.theme.palette.accent]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .ignoresSafeArea()
             
             VStack(spacing: 24) {

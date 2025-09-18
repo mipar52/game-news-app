@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct GameHeader: View {
+    @EnvironmentObject var theme: ThemeManager
+    
     let game: GameDetail
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             AsyncImage(url: game.backgroundImage) { phase in
                 switch phase {
-                case .empty: Color.gray.opacity(0.2)
+                case .empty: theme.theme.palette.background
                 case .success(let image): image.resizable().scaledToFill()
-                case .failure: Color.gray.opacity(0.2)
-                @unknown default: Color.gray.opacity(0.2)
+                case .failure: theme.theme.palette.background.opacity(0.2)
+                @unknown default: theme.theme.palette.background.opacity(0.2)
                 }
             }
             .frame(height: 220)
@@ -28,7 +30,7 @@ struct GameHeader: View {
             VStack(alignment: .leading, spacing: 6) {
                 Text(game.name).font(.title2.bold()).foregroundStyle(.white)
                 HStack(spacing: 12) {
-                    if let released = game.released { Text(released).foregroundStyle(.white.opacity(0.85)) }
+                    if let released = game.released { Text(released).foregroundStyle(theme.theme.palette.text.opacity(0.85)) }
                     if let mc = game.metacritic {
                         Text("Metacritic \(mc)")
                             .padding(.horizontal, 8).padding(.vertical, 4)

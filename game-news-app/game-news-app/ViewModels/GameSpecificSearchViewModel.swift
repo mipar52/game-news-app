@@ -14,14 +14,16 @@ final class GameSpecificSearchViewModel: ObservableObject {
     @Published private(set) var gameGenreState: LoadingState<GameGenre> = .idle
     @Published private(set) var resultsState: LoadingState<GamePreview> = .idle
     @Published private(set) var isLoadingMore = false
-
+    
     @Published var gameFilter: GameSearchFilters = .default
     
-    let service: GameServiceProvider
+    private let service: GameServiceProvider
     private var nextPageUrl: URL?
     
-    init(service: GameServiceProvider) {
+    init(service: GameServiceProvider, settings: SettingsStore) {
         self.service = service
+        gameFilter.precise = settings.usePreciseSearch
+        gameFilter.exact = settings.useExactSearch
     }
     
     func loadReferenceData() {

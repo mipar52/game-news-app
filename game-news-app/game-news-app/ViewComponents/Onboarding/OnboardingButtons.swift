@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnboardingButtons: View {
-    
+    @EnvironmentObject var theme: ThemeManager
     @Binding var selectedPage: Int
     @Binding var onboardingFinihsed: Bool
     
@@ -41,7 +41,7 @@ struct OnboardingButtons: View {
                     withAnimation(.easeIn(duration: 1)) {
                         SFSymbolButton(btnText: "Finish boarding", sfSymbolName: "checkmark.circle", symbolEffect: nil)
                             .padding(.horizontal, 10)  // inner paddings (for capsule to fit properly)
-                            .background(.white.opacity(0.15), in: Capsule())
+                            .background(theme.theme.palette.text, in: Capsule())
 
                     }
                 }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TagButton: View {
+    @EnvironmentObject var theme: ThemeManager
     @State var isSelected: Bool = false
     
     let text: String
@@ -19,10 +20,10 @@ struct TagButton: View {
         } label: {
             Text(text)
                 .padding()
-                .foregroundStyle(isSelected ? AppColors.appBackground : AppColors.appTextColor)
+                .foregroundStyle(isSelected ? theme.theme.palette.header : theme.theme.palette.text)
         }
         .font(isSelected ? .appBoldFont(size: 15) : .appSemiBoldFont(size: 15))
-        .background(isSelected ? AppColors.appRed : AppColors.appHeaderText, in: Capsule())
+        .background(isSelected ? theme.theme.palette.accent : theme.theme.palette.card, in: Capsule())
     }
 }
 

@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct GameListCard: View {
+    @EnvironmentObject var theme: ThemeManager
     let gamePreview: GamePreview
     
     var body: some View {
         VStack(spacing: 8) {
             ZStack {
-                LinearGradient(colors: [.appCellColor, .appYellow, .white], startPoint: .bottomLeading, endPoint: .topTrailing)
+                LinearGradient(colors: [theme.theme.palette.background, theme.theme.palette.accent], startPoint: .bottomLeading, endPoint: .topTrailing)
                 
                 if let urlString = gamePreview.backgroundImage,
                     let url = URL(string: urlString) {
@@ -40,17 +41,18 @@ struct GameListCard: View {
             .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
             .overlay(content: {
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .strokeBorder(AppColors.appHeaderText, lineWidth: 2)
+                    .strokeBorder(theme.theme.palette.card, lineWidth: 2)
             })
             .contentShape(Rectangle())
+            .aspectRatio(16/9, contentMode: .fit)
             
             Text(gamePreview.name)
                 .font(.appBoldFont(size: 20))
-                .foregroundStyle(AppColors.appHeaderText)
+                .foregroundStyle(theme.theme.palette.header)
             if let metacritic = gamePreview.metacritic {
                 Text("Metacritic score: \(metacritic)")
                     .font(.appBoldFont(size: 15))
-                    .foregroundStyle(AppColors.appTextColor)
+                    .foregroundStyle(theme.theme.palette.text)
 //                if metacritic >= 90 {
 //                    Image(systemName: "emoji.stars")
 //                        .foregroundStyle(AppColors.appYellow)
@@ -63,7 +65,7 @@ struct GameListCard: View {
             } else {
                 Text("Game has not been scored yet")
                     .font(.appBoldFont(size: 15))
-                    .foregroundStyle(AppColors.appTextColor)
+                    .foregroundStyle(theme.theme.palette.text)
             }
 
                 

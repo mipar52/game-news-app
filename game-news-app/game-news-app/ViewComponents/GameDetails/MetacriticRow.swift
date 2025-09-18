@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MetacriticRow: View {
+    @EnvironmentObject var theme: ThemeManager
+    
     let game: GameDetail
     var body: some View {
         HStack(spacing: 16) {
@@ -16,7 +18,7 @@ struct MetacriticRow: View {
             Label("\(game.ratingsCount ?? 0) ratings", systemImage: "person.3")
         }
         .font(.subheadline)
-        .foregroundStyle(.secondary)
+        .foregroundStyle(theme.theme.palette.text)
         .padding(.horizontal)
     }
 }

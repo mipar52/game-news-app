@@ -8,58 +8,50 @@
 import SwiftUI
 
 struct GameSearchView: View {
-    @StateObject var viewModel = GameSearchViewModel(service: RawgIOApiClient())
-    private let columns =
-    [
-        GridItem(.adaptive(minimum: .infinity, maximum: .infinity)),
-       // GridItem(.adaptive(minimum: .infinity, maximum: .infinity))
-    ]
-
+    @EnvironmentObject private var theme: ThemeManager
+    @EnvironmentObject private var settings: SettingsStore
+    @ObservedObject private var viewModel: GameSearchViewModel
+    
+    private var columns: [GridItem] {
+        Array(repeating: GridItem(.flexible(), spacing: 8), count: settings.numberOfColumns)
+    }
+    
+    init(viewModel: GameSearchViewModel) {
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
-        NavigationStack {
-            Group {
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [theme.theme.palette.background, theme.theme.palette.accent]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    .ignoresSafeArea(.all)
+                
                 switch viewModel.state {
                 case .loadedSingle(_):
                     SkeletonGrid(columns: columns)
-
+                    
                 case .idle:
-                    VStack(spacing: 12) {
-                        Image(systemName: "magnifyingglass").font(.largeTitle)
-                        Text("Search for games").font(.headline)
-                        Text("Try “Portal 2”, “Little Nightmares”, or “horror platformer”.")
-                            .font(.subheadline).foregroundStyle(.secondary)
-                        
-                        NavigationLink {
-                            GameSpecificSearchView(viewModel: GameSpecificSearchViewModel(service: RawgIOApiClient()))
-                        } label: {
-                            Text("Looking for something else?")
-                        }
-
+                    SearchSuggestionView {
+                        GameSpecificSearchView(viewModel: GameSpecificSearchViewModel(service: RawgIOApiClient(), settings: settings))
                     }
-                    .padding()
-
+                    
                 case .loading:
                     SkeletonGrid(columns: columns)
-
+                    
                 case .failed(let error):
                     LoadErrorView(
                         title: "Could not search games",
                         errorText: error,
                         buttonTitle: "Try again"
-                    ) {  } //viewModel.submitSearch()
-
+                    ) {  }
+                    
                 case .loaded(let results):
                     ScrollView {
                         if results.isEmpty {
-                            VStack {
-                                Text("No games found.").font(.headline)
-                                NavigationLink {
-                                    GameSpecificSearchView(viewModel: GameSpecificSearchViewModel(service: RawgIOApiClient()))
-                                } label: {
-                                    Text("Try specificing the search")
-                                }
+                            SearchSuggestionView(title: "No games found", subtitle: "It looks like there are no games with the searched phrase: \(viewModel.searchQuery)", sfSymbol: "x.circle.fill", suggestions: ["Elden Ring", "Lies of P", "Grand Theft Auto VI"], onSuggestionTap: nil) {
+                                GameSpecificSearchView(viewModel: GameSpecificSearchViewModel(service: RawgIOApiClient(), settings: settings))
                             }
                         }
+                        
                         LazyVGrid(columns: columns) {
                             ForEach(results, id: \.id) { game in
                                 NavigationLink {
@@ -71,60 +63,19 @@ struct GameSearchView: View {
                                     viewModel.loadMoreIfNeeded(currentItem: game)
                                 }
                             }
-
+                            
                             if viewModel.hasMore || viewModel.isLoadingMore {
-                                VStack {
-                                    ProgressView().padding(.vertical, 16)
-                                    Text("Loading more…").font(.footnote).foregroundStyle(.secondary)
+                                GameLoadingProgressView(text: "Loading more…") {
+                                    viewModel.loadMoreIfNeeded(currentItem: results.last)
                                 }
-                                .frame(maxWidth: .infinity)
-                                .task { viewModel.loadMoreIfNeeded(currentItem: results.last) }
                             }
                         }
                     }
+                    .padding()
                 }
             }
-            .navigationTitle("Search")
-        }
-        .searchable(text: $viewModel.searchQuery, placement: .navigationBarDrawer(displayMode: .always))
-      //  .onChange(of: viewModel.searchQuery) { _ in viewModel.debounceSearch() }
-      //  .onSubmit(of: .search) { viewModel.submitSearch() }
-//        .toolbar {
-//            Menu {
-//                // Simple ordering filter demo
-//                Picker("Sort by", selection: Binding(
-//                    get: { viewModelOrdering },
-//                    set: { new in viewModel.setFilters(updatedFilters(ordering: new)) }
-//                )) {
-//                    Text("Relevance").tag(Optional<String>.none)
-//                    Text("Updated ↓").tag(Optional("-updated"))
-//                    Text("Rating ↓").tag(Optional("-rating"))
-//                    Text("Metacritic ↓").tag(Optional("-metacritic"))
-//                    Text("Released ↓").tag(Optional("-released"))
-//                }
-//                Toggle("Exact match", isOn: Binding(
-//                    get: { currentFilters.exact },
-//                    set: { on in var f = currentFilters; f.exact = on; viewModel.setFilters(f) }
-//                ))
-//                Toggle("Precise (no fuzziness)", isOn: Binding(
-//                    get: { currentFilters.precise },
-//                    set: { on in var f = currentFilters; f.precise = on; viewModel.setFilters(f) }
-//                ))
-//            } label: {
-//                Label("Filters", systemImage: "line.3.horizontal.decrease.circle")
-//            }
-//        }
+            .navigationTitle("Search for games")
+            .searchable(text: $viewModel.searchQuery, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search: Lies of P")
     }
-
-//    // Helpers to read/update filters via closures (keeps the view concise)
-//    private var currentFilters: GameSearchFilters {
-//        // You can expose filters as @Published in the VM if you prefer.
-//        // For brevity, we rebuild from defaults here; in practice, store in VM.
-//        GameSearchFilters()
-//    }
-//    private var viewModelOrdering: String? { nil }
-//    private func updatedFilters(ordering: String?) -> GameSearchFilters {
-//        var f = currentFilters; f.ordering = ordering; return f
-//    }
 }
 

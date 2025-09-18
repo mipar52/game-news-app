@@ -13,7 +13,7 @@ struct ViewUtils {
     static func getImage(with symbolName: String) -> some View {
         Image(systemName: symbolName)
             .font(.appBoldFont(size: 40))
-            .foregroundStyle(AppColors.appYellow)
+            //.foregroundStyle(style)
             .symbolEffect(.pulse, isActive: true)
     }
 }

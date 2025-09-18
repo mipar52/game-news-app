@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct GameListView: View {
+    @EnvironmentObject var settings: SettingsStore
+    @EnvironmentObject var theme: ThemeManager
+    
     @ObservedObject var viewModel: GameListViewModel
-    private let columns = [GridItem(.adaptive(minimum: .infinity, maximum: .infinity))]
+    private var columns: [GridItem] {
+        Array(repeating: GridItem(.flexible(), spacing: 8), count: settings.numberOfColumns)
+    }
     
     var body: some View {
-        NavigationStack {
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [theme.theme.palette.background, theme.theme.palette.accent]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .ignoresSafeArea(.all)
+            
             switch viewModel.state {
             case .loading, .idle:
                 SkeletonGrid(columns: columns)
@@ -39,24 +47,16 @@ struct GameListView: View {
                         }
                         
                         if viewModel.hasMoreGamePreviews || viewModel.isLoadingMore {
-                            VStack {
-                                ProgressView()
-                                    .padding(.vertical, 16)
-                                Text("Getting more games, hang tight...")
-                                    .font(.appSemiBoldFont(size: 14))
-                                    .foregroundStyle(AppColors.appHeaderText)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .task {
+                            GameLoadingProgressView(text: "Getting more games, hang tight...") {
                                 viewModel.loadMoreIfNeeded(currentGamePreview: games.last)
                             }
                         }
                     }
                 }
             }
+            
         }
         .navigationTitle(viewModel.genre.name)
-        .navigationBarTitleDisplayMode(.large)
         .task {
             viewModel.getGamesFromGenre()
         }
@@ -67,5 +67,5 @@ struct GameListView: View {
 }
 
 #Preview {
- //   GameListView(viewModel: GameListViewModel(gameService: RawgIOApiClient(), genre: "action"))
+    //   GameListView(viewModel: GameListViewModel(gameService: RawgIOApiClient(), genre: "action"))
 }

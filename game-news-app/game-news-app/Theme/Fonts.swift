@@ -16,6 +16,6 @@ extension Font {
         return Font.custom("AvenirNext-Bold", size: size ?? 16)
     }
     static func appSemiBoldFont(size: CGFloat?) -> Font {
-        return Font.custom("AvenirNext-DemiBold", size: size ?? 16)
+        return Font.custom("AvenirNext-SemiBold", size: size ?? 16)
     }
 }

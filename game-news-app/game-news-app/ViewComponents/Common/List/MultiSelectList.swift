@@ -58,6 +58,7 @@ struct MultiSelectGrid<T, ID: Hashable>: View {
 
 /// Small pill-style tag that reflects selection state.
 struct SelectableTag: View {
+    @EnvironmentObject var theme: ThemeManager
     let title: String
     let selected: Bool
     let action: () -> Void
@@ -70,11 +71,11 @@ struct SelectableTag: View {
                 .minimumScaleFactor(0.8)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 8)
-                .foregroundStyle(selected ? Color.black : AppColors.appTextColor)
+                .foregroundStyle(selected ? theme.theme.palette.header: theme.theme.palette.text)
         }
         .buttonStyle(.plain)
         .background(
-            (selected ? AppColors.appHeaderText : AppColors.appBackground.opacity(0.1)),
+            (selected ? theme.theme.palette.accent : theme.theme.palette.background),
             in: Capsule()
         )
         .contentShape(Capsule())

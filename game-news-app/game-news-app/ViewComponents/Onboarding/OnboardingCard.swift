@@ -10,10 +10,10 @@ import SwiftUI
 struct OnboardingCard: View {
     let page: OnboardingPage
     @State private var isActive: Bool = false
-    
+    @EnvironmentObject var theme: ThemeManager
     var body: some View {
         ZStack {
-            LinearGradient(colors: [.appBackground, .appOrange, .appBackground], startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(colors: [theme.theme.palette.background, theme.theme.palette.header, theme.theme.palette.background], startPoint: .topLeading, endPoint: .bottomTrailing)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
 
             VStack(spacing: 8) {
@@ -21,14 +21,14 @@ struct OnboardingCard: View {
                 HStack {
                     Image(systemName: page.image)
                         .font(.system(size: 40, weight: .semibold))
-                        .foregroundStyle(AppColors.appYellow)
+                        .foregroundStyle(theme.theme.palette.header)
                     Text(page.title)
                         .font(.appBoldFont(size: 20))
                         .foregroundStyle(.white)
                 }
                 Text(page.description)
                     .font(.appSemiBoldFont(size: 16))
-                    .foregroundStyle(.white.opacity(0.9))
+                    .foregroundStyle(theme.theme.palette.text)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 12)
             }

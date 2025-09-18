@@ -8,21 +8,23 @@
 import SwiftUI
 
 struct SkeletonGrid: View {
+    @EnvironmentObject var theme: ThemeManager
     let columns: [GridItem]
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 12) {
                 ForEach(0..<20) { _ in
                     ZStack {
-                        Image(systemName: AppText.UIImages.logoViewImageDpad)
-                            .foregroundStyle(AppColors.appHeaderText)
-                            .font(.appBoldFont(size: 20))
-                            .symbolEffect(.pulse, isActive: true)
-                        
                         RoundedRectangle(cornerRadius: 14)
-                            .fill(Color.gray.opacity(0.2))
+                            .fill(theme.theme.palette.card)
                             .frame(height: 120)
                             .redacted(reason: .placeholder)
+                        
+                        Image(systemName: AppText.UIImages.logoViewImageDpad)
+                            .foregroundStyle(theme.theme.palette.header)
+                            .tint(theme.theme.palette.header)
+                            .font(.appBoldFont(size: 30))
+                            .symbolEffect(.pulse, isActive: true)
                     }
 
                 }

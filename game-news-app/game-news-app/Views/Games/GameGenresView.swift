@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct GameGenresView: View {
+    @EnvironmentObject private var theme: ThemeManager
+    @EnvironmentObject private var settings: SettingsStore
     @ObservedObject private var viewModel: GameGenreViewModel
     
-    private let columns = [GridItem(.adaptive(minimum: .infinity, maximum: .infinity))]
+    private var columns: [GridItem] {
+        Array(repeating: GridItem(.flexible(), spacing: 8), count: settings.numberOfColumns)
+    }
     @State private var searchText = ""
     
     var filteredGenres: [GameGenre] {
@@ -34,41 +38,43 @@ struct GameGenresView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            switch viewModel.state {
-            case .idle, .loading:
-                SkeletonGrid(columns: columns)
-            case .failed(let error):
-                LoadErrorView(title: "Could not load Game Genres", errorText: error, buttonTitle: "Try again") {
-                    viewModel.getGameGenres(forceRefresh: true)
-                }
-            case .loadedSingle(_):
-                EmptyView()
-            case .loaded:
-                if filteredGenres.isEmpty {
-                    ContentUnavailableView("No genres", image: AppText.UIImages.logoViewImageGameController)
-                } else {
-                    ScrollView {
-                        LazyVGrid(columns: columns) {
-                            ForEach(filteredGenres, id: \.id) { genre in
-                                NavigationLink {
-                                    GameListView(viewModel: GameListViewModel(gameService: RawgIOApiClient(), genre: genre))
-                                    
-                                } label: {
-                                    GameGenreCard(gameGenre: genre)
-                                        
-                                }
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [theme.theme.palette.background, theme.theme.palette.accent]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    .ignoresSafeArea(.all)
 
+                switch viewModel.state {
+                case .idle, .loading:
+                    SkeletonGrid(columns: columns)
+                case .failed(let error):
+                    LoadErrorView(title: "Could not load Game Genres", errorText: error, buttonTitle: "Try again") {
+                        viewModel.getGameGenres(forceRefresh: true)
+                    }
+                case .loadedSingle(_):
+                    EmptyView()
+                case .loaded:
+                    if filteredGenres.isEmpty {
+                        ContentUnavailableView("No genres", image: AppText.UIImages.logoViewImageGameController)
+                    } else {
+                        ScrollView {
+                            LazyVGrid(columns: columns) {
+                                ForEach(filteredGenres, id: \.id) { genre in
+                                    NavigationLink {
+                                        GameListView(viewModel: GameListViewModel(gameService: RawgIOApiClient(), genre: genre))
+                                        
+                                    } label: {
+                                        GameGenreCard(gameGenre: genre)
+                                            
+                                    }
+
+                                }
                             }
                         }
+                        .padding()
+                        .navigationTitle("Genres")
+                        .searchable(text: $searchText, prompt: "Search genres")
                     }
-                    .padding()
-                    .navigationTitle("Genres")
-                    .navigationBarTitleDisplayMode(.large)
-                    .searchable(text: $searchText, prompt: "Search genres")
                 }
             }
-        }
         .task {
             if viewModel.state == .idle {
                 viewModel.getGameGenres(forceRefresh: false)

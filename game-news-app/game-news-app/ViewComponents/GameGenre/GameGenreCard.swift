@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct GameGenreCard: View {
+    @EnvironmentObject var theme: ThemeManager
     let gameGenre: GameGenre
     
     var body: some View {
         ZStack(alignment: .center) {
-            LinearGradient(colors: [AppColors.appBackground, AppColors.appRed], startPoint: .bottomLeading, endPoint: .topTrailing)
+            LinearGradient(colors: [theme.theme.palette.background, theme.theme.palette.accent], startPoint: .bottomLeading, endPoint: .topTrailing)
                 .ignoresSafeArea(edges: .all)
             // maskirat
             // rectangle
@@ -42,11 +43,11 @@ struct GameGenreCard: View {
             VStack(alignment: .center, spacing: 8) {
                 Text(gameGenre.name)
                     .font(.appBoldFont(size: 25))
-                    .foregroundColor(.appHeaderText)
+                    .foregroundColor(theme.theme.palette.header)
                 
                 Text("\(gameGenre.gamesCount) games")
                     .font(.appSemiBoldFont(size: 20))
-                    .foregroundColor(.white)
+                    .foregroundColor(theme.theme.palette.text)
             }
             .padding(10)
             
@@ -55,9 +56,10 @@ struct GameGenreCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
         .overlay(content: {
             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .strokeBorder(AppColors.appHeaderText, lineWidth: 2)
+                .strokeBorder(theme.theme.palette.card, lineWidth: 2)
         })
         .contentShape(Rectangle())
+        .aspectRatio(16/9, contentMode: .fit) 
     }
     
 }
