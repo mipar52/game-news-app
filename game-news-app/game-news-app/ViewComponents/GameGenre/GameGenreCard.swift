@@ -9,6 +9,8 @@ import SwiftUI
 
 struct GameGenreCard: View {
     @EnvironmentObject var theme: ThemeManager
+    @EnvironmentObject var settings: SettingsStore
+    
     let gameGenre: GameGenre
     
     var body: some View {
@@ -42,24 +44,23 @@ struct GameGenreCard: View {
             
             VStack(alignment: .center, spacing: 8) {
                 Text(gameGenre.name)
-                    .font(.appBoldFont(size: 25))
+                    .font(.appBoldFont(size: CGFloat(25 / settings.numberOfColumns * 2)))
                     .foregroundColor(theme.theme.palette.header)
                 
                 Text("\(gameGenre.gamesCount) games")
-                    .font(.appSemiBoldFont(size: 20))
+                    .font(.appSemiBoldFont(size: CGFloat(20 / settings.numberOfColumns * 2)))
                     .foregroundColor(theme.theme.palette.text)
             }
             .padding(10)
             
         }
-        .frame(maxWidth: .infinity, idealHeight: 200)
+        .aspectRatio(16/9, contentMode: .fit)
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
         .overlay(content: {
             RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .strokeBorder(theme.theme.palette.card, lineWidth: 2)
         })
         .contentShape(Rectangle())
-        .aspectRatio(16/9, contentMode: .fit) 
     }
     
 }
