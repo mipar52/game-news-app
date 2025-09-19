@@ -1,40 +1,124 @@
-# gameNEWS application
+# GameNEWS — iOS App
+Discover, filter, and infinitely scroll video games with a modern iOS app that showcases: Swift Concurrency, MVVM, dependency injection, cursor pagination, theming, and ht iOS Liquid Glass UI.
 
-A simple application which fetches data from [RAWG.io API](https://rawg.io/) to obtain information about various video game categories and information like metacritic scores, playtime and other information.  
+---
 
-## Application flow:
-The application consists of several ViewControllers and custom views to give the end-user information about the application itself and how to use it, game categories, lists and game detailes. In the application, video game information like ratings, release date, screenshots, game store availability can be found.
+- **SwiftUI-first** (iOS 16+), `NavigationStack`, `TabView`, `Form`, `Searchable`
+- **MVVM** across features; **actor**-backed networking client for thread safety
+- **Swift Concurrency** (`async/await`, `Task`, `CancellationError`, `@MainActor`)
+- **Pagination** with RAWG’s `next` cursor, prefetch threshold & bottom sentinel, **de-dup on append**
+- **Advanced search**: genres, platforms, dates, Metacritic range, ordering, page size
+- **Global settings** (exact/precise search, grid columns 1–4, glass/solid bars) via `SettingsStore`
+- **Theming system** (`ThemeManager` + `ThemePalette`) with multiple colorways and app-wide bar styling
+- **Responsive cards** that auto-size with columns;
+- **Reusable UI**: elevated button, multi-select grid chips, skeletons, error states, search prompt
 
-### ViewControllers
-- ViewControllers can be found in [ViewController](https://github.com/mipar52/game-news-app/tree/main/game-news-app/ViewController) folder.
-- The application consists of four ViewControllers:
-    - Onboarding [ViewController](https://github.com/mipar52/game-news-app/blob/main/game-news-app/ViewController/OnboardingViewController.swift)
-    - Game category [TableViewController](https://github.com/mipar52/game-news-app/blob/main/game-news-app/ViewController/GameGenreSelectTableViewController.swift)
-    - Game list [TableViewController](https://github.com/mipar52/game-news-app/blob/main/game-news-app/ViewController/GameListTableViewController.swift)
-    - Game detail [ViewController](https://github.com/mipar52/game-news-app/blob/main/game-news-app/ViewController/GameDetailTableViewController.swift)
+---
 
-### Custom views
-- Custom views were mainly used for the Onboarding and GameDetail ViewControllers to give a better and more descriptive UI to the end-user
-- All of the custom views can be found in the [View](https://github.com/mipar52/game-news-app/tree/main/game-news-app/View) folder
-- Generic UI elements, like label, buttons and UIAlerts can be found [UIFactory](https://github.com/mipar52/game-news-app/tree/main/game-news-app/UIFactory) folder
+## App Overview
+**Tabs**
+- **Home** — Browse game **genres** in a configurable grid → drill into a genre → **infinite game list**
+- **Search** — Text search with **infinite scroll**; empty-state suggestions; **Advanced Search** screen
+- **Settings** — Global filters (exact/precise), **theme picker**, **grid column count (1–4)**, **glass effect**
 
-### Model
-- The application consists of a few model files, which can be found in the [Model](https://github.com/mipar52/game-news-app/tree/main/game-news-app/Model) folder:
-    - [NetworkError](https://github.com/mipar52/game-news-app/blob/main/game-news-app/Model/NetworkError.swift) : and enum which conforms to the Error protocol to give more details of the possible network issues end-user might come across during game search
-    - [GameGanres](https://github.com/mipar52/game-news-app/blob/main/game-news-app/Model/GameGenres.swift) : information from the verious video game categories from the API
-    - [GameList](https://github.com/mipar52/game-news-app/blob/main/game-news-app/Model/GameList.swift) : information about the games about a speicific game categories
-    - [Game](https://github.com/mipar52/game-news-app/blob/main/game-news-app/Model/Game.swift) : information about a specific game
+**Data Source** — RAWG Video Games Database API (public REST).
 
-### Managers:
-- The application has two managers, which can be found in the [Manager](https://github.com/mipar52/game-news-app/tree/main/game-news-app/Manager) folder:
-    - [NetworkManager](https://github.com/mipar52/game-news-app/blob/main/game-news-app/Manager/NetworkManager.swift) : manager who is in charge of communicating with the RAWG.io API to get video game information
-    - [FirebaseManager](https://github.com/mipar52/game-news-app/blob/main/game-news-app/Manager/FirebaseManager.swift) : manager who is in charge of sending user events to Firebase
+---
 
-## Third party libraries
-- [SnapKit](https://github.com/SnapKit/SnapKit): framework for auto-layout
-- [Kingfisher](https://github.com/onevcat/Kingfisher): framework for smoothly downloading images
-- [Firebase](https://github.com/firebase/firebase-ios-sdk): in this case, for event tracking
+## Architecture
+**Layering**
+- **Views**: SwiftUI, stateless, driven by `@Published` state
+- **ViewModels**: `@MainActor`, expose `LoadingState<T>`, orchestrate calls, paging, debouncing
+- **Service / Client**: `GameServiceProvider` protocol; concrete **`RawgIOApiClient` (actor)**
+- **Settings & Theme**: `SettingsStore` and `ThemeManager` as `ObservableObject`s injected via `@EnvironmentObject`
 
-## Running the project 
+**Core Types**
+- `LoadingState<T>` → `.idle | .loading | .loaded([T]) | .loadedSingle(T) | .failed(String)`
+- `PageEnvelope<T>` → `{ count, next, previous, results }`
+- `GameSearchFilters` → precise/exact/genres/platforms/dates/metacritic/ordering/pageSize with `merged(over:)`
 
-    1. Just git clone the project and run the application via Xcode!
+**Dependency Injection**
+- ViewModels init with `GameServiceProvider` + `SettingsStore`
+- Views use wrapper inits or parent injection (avoid reading env in `init`)
+
+---
+
+## Networking
+**Actor client** for thread safety; `URLComponents` for first page; **pass-through `next` URL** for subsequent pages to avoid duplicating page 1.
+
+**Decoding** resilient to `null`s (`Int?`, `URL?`); custom coding keys for RAWG fields (`short_screenshots` → `shortScreenshots`).  
+**Error mapping** → `NetworkError.badRequest / serverError / decode(value:) / unknown`.
+
+---
+
+## Search & Filters
+- **Keyword search** with **debounce** (0.4–0.6s), cancellation, and infinite scroll
+- **Advanced Search**: multi-select genres/platforms (generic `MultiSelectGrid<T,ID>`), date range, Metacritic range, ordering, page size
+- **Global filters** from `SettingsStore` are **merged** with screen-local filters (`merged(over:)`)
+
+---
+
+## Theming & Bars
+- `ThemeManager` with `AppTheme` cases (e.g., Classic / Neon / Mono), each providing a semantic `ThemePalette` (`header`, `text`, `card`, `background`, `accent`)
+- **Consistent bars**: modifier styles both **navigation** and **tab** bars with either a **solid theme color** or **glass (material)** if enabled
+- **Glass toggle** in Settings (`useLiquidGlass`) switches bars between `.ultraThinMaterial` and solid
+
+---
+
+## Reusable UI
+- **GameListCard**: width-driven height via `.aspectRatio(16/9)`, legibility gradient, compact Metacritic badge; typography scales with column count (clamped)
+- **BannerAwareGameImage**: detects ultrawide ratios and switches to **fit + blurred backdrop**
+- **MultiSelectGrid** (generic): key-path driven IDs/labels, `Set<ID>` selection, adaptive/fixed layouts
+- **ElevatedButton**: shadowed CTA that also works as a `NavigationLink` label
+- **Skeletons & Errors**: `SkeletonGrid`, `LoadErrorView`, `ContentUnavailableView`
+
+---
+
+## Settings & Persistence
+- `SettingsStore` (`ObservableObject`): `@Published` values for exact/precise search, `numberOfColumns` (1–4), `useLiquidGlass`, and selected theme; persisted with `UserDefaults`
+- `ThemeManager`: stores the current theme; also persisted
+- All views/VMs read via `@EnvironmentObject` (no singletons)
+
+---
+
+## Project Structure
+```
+GameNEWS/
+├─ App/
+│  ├─ GameNewsApp.swift
+│  ├─ Theme/
+│  │  ├─ ThemeManager.swift
+│  │  └─ AppTheme.swift
+│  └─ Settings/
+│     ├─ SettingsStore.swift
+│     └─ SettingsView.swift
+├─ Features/
+│  ├─ Genres/
+│  │  ├─ GameGenresView.swift
+│  │  ├─ GameGenreCard.swift
+│  │  └─ GameGenreViewModel.swift
+│  ├─ Games/
+│  │  ├─ GameListView.swift
+│  │  ├─ GameListViewModel.swift
+│  │  ├─ GameDetailsView.swift
+│  │  └─ GameDetailsViewModel.swift
+│  └─ Search/
+│     ├─ GameSearchView.swift
+│     ├─ GameSearchViewModel.swift
+│     ├─ Advanced/
+│     │  ├─ GameSpecificSearchView.swift
+│     │  └─ GameSpecificSearchViewModel.swift
+├─ Networking/
+│  ├─ RawgIOApiClient.swift
+│  ├─ GameServiceProvider.swift
+│  └─ Models/ (GamePreview, GameDetail, PageEnvelope, …)
+├─ Shared/
+│  ├─ Components/ (SearchPromptView, ElevatedButton, MultiSelectGrid, BannerAwareGameImage, SkeletonGrid, LoadErrorView, …)
+│  ├─ Utils/ (LoadingState, Extensions, Deduping, ViewUtils)
+│  └─ Styling/ (AppColors shim if used)
+└─ Assets/
+   ├─ AppIcon/
+   └─ Images/ (screenshots, generated gamer icon)
+```
+
+---
