@@ -44,6 +44,7 @@ struct GameListCard: View {
                             Color(.tertiarySystemFill)
                         }
                     }
+                    .frame(maxWidth: UIScreen.main.bounds.width / CGFloat(settings.numberOfColumns))
                     .drawingGroup()
                     .overlay(
                         LinearGradient(

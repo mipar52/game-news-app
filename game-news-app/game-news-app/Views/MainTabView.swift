@@ -40,14 +40,7 @@ struct MainTabView: View {
             }
             .tint(theme.theme.palette.header)
             
-            .toolbarBackground(theme.theme.palette.header, for: .tabBar)
-            .toolbarColorScheme(.dark, for: .tabBar)
-            .toolbarBackground(.visible, for: .tabBar)
-
-            .toolbarBackground(theme.theme.palette.header, for: .navigationBar)
-            .toolbarColorScheme(.dark, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
-            .navigationBarTitleDisplayMode(.large)
+            .modifier(LiquidGlassStyle(useGlass: settings.useLiquidGlass, solidColor: theme.theme.palette.header))
 
             .navigationBarTitleTextColor(theme.theme.palette.header)
         }
